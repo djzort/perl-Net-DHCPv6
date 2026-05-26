@@ -47,7 +47,11 @@ __END__
 
 =head1 SYNOPSIS
 
-  my $oro = Net::DHCPv6::Option::ORO->new(requested_options => [23, 24]);
+  use Net::DHCPv6::Constants qw($OPTION_DNS_SERVERS $OPTION_DOMAIN_LIST);
+
+  my $oro = Net::DHCPv6::Option::ORO->new(
+      requested_options => [$OPTION_DNS_SERVERS, $OPTION_DOMAIN_LIST],
+  );
 
 =head1 DESCRIPTION
 
