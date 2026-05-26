@@ -46,18 +46,37 @@ __END__
 =head1 SYNOPSIS
 
   use Net::DHCPv6::Option::ClientArchType;
-  my $opt = Net::DHCPv6::Option::ClientArchType->new(type => 0);
+  use Net::DHCPv6::Constants qw($CLIENT_ARCH_X86_UEFI arch_name);
+
+  my $opt = Net::DHCPv6::Option::ClientArchType->new(
+      type => $CLIENT_ARCH_X86_UEFI
+  );
+  print arch_name( $opt->type );  # X86_UEFI
 
 =head1 DESCRIPTION
 
-Carries a 16-bit client system architecture type per RFC 5970
-(e.g. 0 = x86 BIOS, 6 = EFI x86-64).
+Carries a 16-bit client system architecture type per RFC 5970.
+Common types include:
+
+=over
+
+=item C<$CLIENT_ARCH_X86_BIOS> (0) — x86 BIOS
+
+=item C<$CLIENT_ARCH_X86_UEFI> (6) — x86 UEFI
+
+=item C<$CLIENT_ARCH_ARM_64_UEFI> (11) — ARM 64-bit UEFI
+
+=back
+
+All 42 IANA-registered architecture types are available as constants in
+L<Net::DHCPv6::Constants/"Client Architecture Types (RFC 5970)">.
 
 =head1 METHODS
 
 =head2 new
 
-Constructor.  Requires C<type>, a 16-bit unsigned integer.
+Constructor.  Requires C<type>, a 16-bit unsigned integer matching one of
+the C<$CLIENT_ARCH_*> constants.
 
 =head2 type
 
@@ -65,4 +84,5 @@ Returns the architecture type code.
 
 =head1 SEE ALSO
 
+L<Net::DHCPv6::Constants/"Client Architecture Types (RFC 5970)">,
 L<Net::DHCPv6::Option>, L<Net::DHCPv6::OptionList>

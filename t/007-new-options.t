@@ -805,16 +805,16 @@ use Test::Net::DHCPv6;
 # ClientArchType (61) — 16-bit type
 # ----------------------------------------------------------------
 {
-    my $cat = Net::DHCPv6::Option::ClientArchType->new( type => 6 );
+    my $cat = Net::DHCPv6::Option::ClientArchType->new( type => $CLIENT_ARCH_X86_UEFI );
     is( $cat->code, $OPTION_CLIENT_ARCH_TYPE, 'ClientArchType code' );
-    is( $cat->type, 6,                        'ClientArchType type' );
+    is( $cat->type, $CLIENT_ARCH_X86_UEFI,    'ClientArchType type' );
 
     my $bytes = $cat->as_bytes;
     is( bytes2hex( $bytes ), '003d00020006', 'ClientArchType wire' );
 
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::ClientArchType' ), 'ClientArchType parsed class' );
-    is( $parsed->type, 6, 'ClientArchType parsed type' );
+    is( $parsed->type, $CLIENT_ARCH_X86_UEFI, 'ClientArchType parsed type' );
 
     ok( dies { Net::DHCPv6::Option::ClientArchType->new }, 'ClientArchType dies without type' );
     ok(

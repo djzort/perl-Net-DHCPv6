@@ -187,6 +187,58 @@ subtest 'DUID types' => sub {
 };
 
 # -------------------------------------------------------------------
+# Client architecture types (IANA Processor Architecture Types, RFC 5970)
+# -------------------------------------------------------------------
+subtest 'Client architecture types' => sub {
+    is( $CLIENT_ARCH_X86_BIOS,               0,  'CLIENT_ARCH_X86_BIOS' );
+    is( $CLIENT_ARCH_NEC_PC98,               1,  'CLIENT_ARCH_NEC_PC98' );
+    is( $CLIENT_ARCH_ITANIUM,                2,  'CLIENT_ARCH_ITANIUM' );
+    is( $CLIENT_ARCH_DEC_ALPHA,              3,  'CLIENT_ARCH_DEC_ALPHA' );
+    is( $CLIENT_ARCH_ARC_X86,                4,  'CLIENT_ARCH_ARC_X86' );
+    is( $CLIENT_ARCH_INTEL_LEAN_CLIENT,      5,  'CLIENT_ARCH_INTEL_LEAN_CLIENT' );
+    is( $CLIENT_ARCH_X86_UEFI,               6,  'CLIENT_ARCH_X86_UEFI' );
+    is( $CLIENT_ARCH_X64_UEFI,               7,  'CLIENT_ARCH_X64_UEFI' );
+    is( $CLIENT_ARCH_EFI_XSCALE,             8,  'CLIENT_ARCH_EFI_XSCALE' );
+    is( $CLIENT_ARCH_EBC,                    9,  'CLIENT_ARCH_EBC' );
+    is( $CLIENT_ARCH_ARM_32_UEFI,            10, 'CLIENT_ARCH_ARM_32_UEFI' );
+    is( $CLIENT_ARCH_ARM_64_UEFI,            11, 'CLIENT_ARCH_ARM_64_UEFI' );
+    is( $CLIENT_ARCH_PPC_OPEN_FIRMWARE,      12, 'CLIENT_ARCH_PPC_OPEN_FIRMWARE' );
+    is( $CLIENT_ARCH_PPC_EPAPR,              13, 'CLIENT_ARCH_PPC_EPAPR' );
+    is( $CLIENT_ARCH_POWER_OPAL_V3,          14, 'CLIENT_ARCH_POWER_OPAL_V3' );
+    is( $CLIENT_ARCH_X86_UEFI_HTTP,          15, 'CLIENT_ARCH_X86_UEFI_HTTP' );
+    is( $CLIENT_ARCH_X64_UEFI_HTTP,          16, 'CLIENT_ARCH_X64_UEFI_HTTP' );
+    is( $CLIENT_ARCH_EBC_HTTP,               17, 'CLIENT_ARCH_EBC_HTTP' );
+    is( $CLIENT_ARCH_ARM_32_UEFI_HTTP,       18, 'CLIENT_ARCH_ARM_32_UEFI_HTTP' );
+    is( $CLIENT_ARCH_ARM_64_UEFI_HTTP,       19, 'CLIENT_ARCH_ARM_64_UEFI_HTTP' );
+    is( $CLIENT_ARCH_PC_AT_BIOS_HTTP,        20, 'CLIENT_ARCH_PC_AT_BIOS_HTTP' );
+    is( $CLIENT_ARCH_ARM_32_UBOOT,           21, 'CLIENT_ARCH_ARM_32_UBOOT' );
+    is( $CLIENT_ARCH_ARM_64_UBOOT,           22, 'CLIENT_ARCH_ARM_64_UBOOT' );
+    is( $CLIENT_ARCH_ARM_UBOOT_32_HTTP,      23, 'CLIENT_ARCH_ARM_UBOOT_32_HTTP' );
+    is( $CLIENT_ARCH_ARM_UBOOT_64_HTTP,      24, 'CLIENT_ARCH_ARM_UBOOT_64_HTTP' );
+    is( $CLIENT_ARCH_RISCV_32_UEFI,          25, 'CLIENT_ARCH_RISCV_32_UEFI' );
+    is( $CLIENT_ARCH_RISCV_32_UEFI_HTTP,     26, 'CLIENT_ARCH_RISCV_32_UEFI_HTTP' );
+    is( $CLIENT_ARCH_RISCV_64_UEFI,          27, 'CLIENT_ARCH_RISCV_64_UEFI' );
+    is( $CLIENT_ARCH_RISCV_64_UEFI_HTTP,     28, 'CLIENT_ARCH_RISCV_64_UEFI_HTTP' );
+    is( $CLIENT_ARCH_RISCV_128_UEFI,         29, 'CLIENT_ARCH_RISCV_128_UEFI' );
+    is( $CLIENT_ARCH_RISCV_128_UEFI_HTTP,    30, 'CLIENT_ARCH_RISCV_128_UEFI_HTTP' );
+    is( $CLIENT_ARCH_S390_BASIC,             31, 'CLIENT_ARCH_S390_BASIC' );
+    is( $CLIENT_ARCH_S390_EXTENDED,          32, 'CLIENT_ARCH_S390_EXTENDED' );
+    is( $CLIENT_ARCH_MIPS_32_UEFI,           33, 'CLIENT_ARCH_MIPS_32_UEFI' );
+    is( $CLIENT_ARCH_MIPS_64_UEFI,           34, 'CLIENT_ARCH_MIPS_64_UEFI' );
+    is( $CLIENT_ARCH_SUNWAY_32_UEFI,         35, 'CLIENT_ARCH_SUNWAY_32_UEFI' );
+    is( $CLIENT_ARCH_SUNWAY_64_UEFI,         36, 'CLIENT_ARCH_SUNWAY_64_UEFI' );
+    is( $CLIENT_ARCH_LOONGARCH_32_UEFI,      37, 'CLIENT_ARCH_LOONGARCH_32_UEFI' );
+    is( $CLIENT_ARCH_LOONGARCH_32_UEFI_HTTP, 38, 'CLIENT_ARCH_LOONGARCH_32_UEFI_HTTP' );
+    is( $CLIENT_ARCH_LOONGARCH_64_UEFI,      39, 'CLIENT_ARCH_LOONGARCH_64_UEFI' );
+    is( $CLIENT_ARCH_LOONGARCH_64_UEFI_HTTP, 40, 'CLIENT_ARCH_LOONGARCH_64_UEFI_HTTP' );
+    is( $CLIENT_ARCH_ARM_RPIBOOT,            41, 'CLIENT_ARCH_ARM_RPIBOOT' );
+
+    is( Net::DHCPv6::Constants::arch_name( 0 ),  'X86_BIOS',    'REV_CLIENT_ARCH 0' );
+    is( Net::DHCPv6::Constants::arch_name( 41 ), 'ARM_RPIBOOT', 'REV_CLIENT_ARCH 41' );
+    ok( !defined Net::DHCPv6::Constants::arch_name( 99 ), 'REV_CLIENT_ARCH 99 undef' );
+};
+
+# -------------------------------------------------------------------
 # Option class registration coverage — every code in REV_OPTION_CODE
 # should have either a dedicated class or be noted as Generic-fallback
 # -------------------------------------------------------------------

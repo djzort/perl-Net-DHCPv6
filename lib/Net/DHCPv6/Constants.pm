@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: DHCPv6 numeric constants (message types, option codes, status codes, DUID types)
+# ABSTRACT: DHCPv6 numeric constants (message types, option codes, status codes, DUID types, client architecture types)
 # PODNAME: Net::DHCPv6::Constants
 package Net::DHCPv6::Constants;
 
@@ -86,17 +86,114 @@ const our $DUID_EN   => 2;
 const our $DUID_LL   => 3;
 const our $DUID_UUID => 4;
 
+# Client architecture types (IANA Processor Architecture Types, RFC 5970)
+const our $CLIENT_ARCH_X86_BIOS               => 0;
+const our $CLIENT_ARCH_NEC_PC98               => 1;    # DEPRECATED
+const our $CLIENT_ARCH_ITANIUM                => 2;
+const our $CLIENT_ARCH_DEC_ALPHA              => 3;    # DEPRECATED
+const our $CLIENT_ARCH_ARC_X86                => 4;    # DEPRECATED
+const our $CLIENT_ARCH_INTEL_LEAN_CLIENT      => 5;    # DEPRECATED
+const our $CLIENT_ARCH_X86_UEFI               => 6;
+const our $CLIENT_ARCH_X64_UEFI               => 7;
+const our $CLIENT_ARCH_EFI_XSCALE             => 8;    # DEPRECATED
+const our $CLIENT_ARCH_EBC                    => 9;
+const our $CLIENT_ARCH_ARM_32_UEFI            => 10;
+const our $CLIENT_ARCH_ARM_64_UEFI            => 11;
+const our $CLIENT_ARCH_PPC_OPEN_FIRMWARE      => 12;
+const our $CLIENT_ARCH_PPC_EPAPR              => 13;
+const our $CLIENT_ARCH_POWER_OPAL_V3          => 14;
+const our $CLIENT_ARCH_X86_UEFI_HTTP          => 15;
+const our $CLIENT_ARCH_X64_UEFI_HTTP          => 16;
+const our $CLIENT_ARCH_EBC_HTTP               => 17;
+const our $CLIENT_ARCH_ARM_32_UEFI_HTTP       => 18;
+const our $CLIENT_ARCH_ARM_64_UEFI_HTTP       => 19;
+const our $CLIENT_ARCH_PC_AT_BIOS_HTTP        => 20;
+const our $CLIENT_ARCH_ARM_32_UBOOT           => 21;
+const our $CLIENT_ARCH_ARM_64_UBOOT           => 22;
+const our $CLIENT_ARCH_ARM_UBOOT_32_HTTP      => 23;
+const our $CLIENT_ARCH_ARM_UBOOT_64_HTTP      => 24;
+const our $CLIENT_ARCH_RISCV_32_UEFI          => 25;
+const our $CLIENT_ARCH_RISCV_32_UEFI_HTTP     => 26;
+const our $CLIENT_ARCH_RISCV_64_UEFI          => 27;
+const our $CLIENT_ARCH_RISCV_64_UEFI_HTTP     => 28;
+const our $CLIENT_ARCH_RISCV_128_UEFI         => 29;
+const our $CLIENT_ARCH_RISCV_128_UEFI_HTTP    => 30;
+const our $CLIENT_ARCH_S390_BASIC             => 31;
+const our $CLIENT_ARCH_S390_EXTENDED          => 32;
+const our $CLIENT_ARCH_MIPS_32_UEFI           => 33;
+const our $CLIENT_ARCH_MIPS_64_UEFI           => 34;
+const our $CLIENT_ARCH_SUNWAY_32_UEFI         => 35;
+const our $CLIENT_ARCH_SUNWAY_64_UEFI         => 36;
+const our $CLIENT_ARCH_LOONGARCH_32_UEFI      => 37;
+const our $CLIENT_ARCH_LOONGARCH_32_UEFI_HTTP => 38;
+const our $CLIENT_ARCH_LOONGARCH_64_UEFI      => 39;
+const our $CLIENT_ARCH_LOONGARCH_64_UEFI_HTTP => 40;
+const our $CLIENT_ARCH_ARM_RPIBOOT            => 41;
+
 # Reverse lookup hashes
+our %REV_CLIENT_ARCH;
+our %REV_DUID_TYPE;
 our %REV_MESSAGE_TYPE;
 our %REV_OPTION_CODE;
 our %REV_STATUS_CODE;
-our %REV_DUID_TYPE;
 
 # placed after const declarations so const remains available during compile-time declarations;
 # Const::Fast::Exporter installs `import` at use-time, so it must survive namespace::clean
 use namespace::clean -except => ['import'];
 
 BEGIN {
+    %REV_CLIENT_ARCH = (
+        0  => 'X86_BIOS',
+        1  => 'NEC_PC98',
+        2  => 'ITANIUM',
+        3  => 'DEC_ALPHA',
+        4  => 'ARC_X86',
+        5  => 'INTEL_LEAN_CLIENT',
+        6  => 'X86_UEFI',
+        7  => 'X64_UEFI',
+        8  => 'EFI_XSCALE',
+        9  => 'EBC',
+        10 => 'ARM_32_UEFI',
+        11 => 'ARM_64_UEFI',
+        12 => 'PPC_OPEN_FIRMWARE',
+        13 => 'PPC_EPAPR',
+        14 => 'POWER_OPAL_V3',
+        15 => 'X86_UEFI_HTTP',
+        16 => 'X64_UEFI_HTTP',
+        17 => 'EBC_HTTP',
+        18 => 'ARM_32_UEFI_HTTP',
+        19 => 'ARM_64_UEFI_HTTP',
+        20 => 'PC_AT_BIOS_HTTP',
+        21 => 'ARM_32_UBOOT',
+        22 => 'ARM_64_UBOOT',
+        23 => 'ARM_UBOOT_32_HTTP',
+        24 => 'ARM_UBOOT_64_HTTP',
+        25 => 'RISCV_32_UEFI',
+        26 => 'RISCV_32_UEFI_HTTP',
+        27 => 'RISCV_64_UEFI',
+        28 => 'RISCV_64_UEFI_HTTP',
+        29 => 'RISCV_128_UEFI',
+        30 => 'RISCV_128_UEFI_HTTP',
+        31 => 'S390_BASIC',
+        32 => 'S390_EXTENDED',
+        33 => 'MIPS_32_UEFI',
+        34 => 'MIPS_64_UEFI',
+        35 => 'SUNWAY_32_UEFI',
+        36 => 'SUNWAY_64_UEFI',
+        37 => 'LOONGARCH_32_UEFI',
+        38 => 'LOONGARCH_32_UEFI_HTTP',
+        39 => 'LOONGARCH_64_UEFI',
+        40 => 'LOONGARCH_64_UEFI_HTTP',
+        41 => 'ARM_RPIBOOT',
+    );
+
+    %REV_DUID_TYPE = (
+        1 => 'DUID_LLT',
+        2 => 'DUID_EN',
+        3 => 'DUID_LL',
+        4 => 'DUID_UUID',
+    );
+
     %REV_MESSAGE_TYPE = (
         1  => 'SOLICIT',
         2  => 'ADVERTISE',
@@ -173,13 +270,6 @@ BEGIN {
         5 => 'USE_MULTICAST',
         6 => 'NO_PREFIX_AVAIL',
     );
-
-    %REV_DUID_TYPE = (
-        1 => 'DUID_LLT',
-        2 => 'DUID_EN',
-        3 => 'DUID_LL',
-        4 => 'DUID_UUID',
-    );
 }
 
 sub message_type_name {
@@ -202,6 +292,11 @@ sub is_valid_message_type {
     return exists $REV_MESSAGE_TYPE{$code};
 }
 
+sub arch_name {
+    my ( $code ) = @_;
+    return $REV_CLIENT_ARCH{$code};
+}
+
 1;
 
 __END__
@@ -213,20 +308,23 @@ __END__
 
   use Net::DHCPv6::Constants;
 
+  print $CLIENT_ARCH_X86_UEFI;    # 6
+  print $DUID_LLT;                # 1
   print $SOLICIT;                 # 1
   print $OPTION_CLIENTID;         # 1
   print $STATUS_SUCCESS;          # 0
-  print $DUID_LLT;                # 1
 
+  print arch_name(6);             # X86_UEFI
+  print is_valid_message_type(1); # 1
   print message_type_name(1);     # SOLICIT
   print option_name(23);          # DNS_SERVERS
   print status_name(0);           # SUCCESS
-  print is_valid_message_type(1); # 1
 
 =head1 DESCRIPTION
 
 Defines all DHCPv6 numeric constants as read-only package variables:
-message types, option codes, status codes, and DUID types per RFC 8415.
+message types, option codes, status codes, DUID types, and client
+architecture types per RFC 8415 and RFC 5970.
 All constants are exported by default via L<Const::Fast::Exporter>.
 
 =head1 CONSTANTS
@@ -407,6 +505,96 @@ request.
 
 =back
 
+=head2 Client Architecture Types (RFC 5970)
+
+=over
+
+=item C<$CLIENT_ARCH_X86_BIOS> (0)
+
+=item C<$CLIENT_ARCH_NEC_PC98> (1) — DEPRECATED
+
+=item C<$CLIENT_ARCH_ITANIUM> (2)
+
+=item C<$CLIENT_ARCH_DEC_ALPHA> (3) — DEPRECATED
+
+=item C<$CLIENT_ARCH_ARC_X86> (4) — DEPRECATED
+
+=item C<$CLIENT_ARCH_INTEL_LEAN_CLIENT> (5) — DEPRECATED
+
+=item C<$CLIENT_ARCH_X86_UEFI> (6)
+
+=item C<$CLIENT_ARCH_X64_UEFI> (7)
+
+=item C<$CLIENT_ARCH_EFI_XSCALE> (8) — DEPRECATED
+
+=item C<$CLIENT_ARCH_EBC> (9)
+
+=item C<$CLIENT_ARCH_ARM_32_UEFI> (10)
+
+=item C<$CLIENT_ARCH_ARM_64_UEFI> (11)
+
+=item C<$CLIENT_ARCH_PPC_OPEN_FIRMWARE> (12)
+
+=item C<$CLIENT_ARCH_PPC_EPAPR> (13)
+
+=item C<$CLIENT_ARCH_POWER_OPAL_V3> (14)
+
+=item C<$CLIENT_ARCH_X86_UEFI_HTTP> (15)
+
+=item C<$CLIENT_ARCH_X64_UEFI_HTTP> (16)
+
+=item C<$CLIENT_ARCH_EBC_HTTP> (17)
+
+=item C<$CLIENT_ARCH_ARM_32_UEFI_HTTP> (18)
+
+=item C<$CLIENT_ARCH_ARM_64_UEFI_HTTP> (19)
+
+=item C<$CLIENT_ARCH_PC_AT_BIOS_HTTP> (20)
+
+=item C<$CLIENT_ARCH_ARM_32_UBOOT> (21)
+
+=item C<$CLIENT_ARCH_ARM_64_UBOOT> (22)
+
+=item C<$CLIENT_ARCH_ARM_UBOOT_32_HTTP> (23)
+
+=item C<$CLIENT_ARCH_ARM_UBOOT_64_HTTP> (24)
+
+=item C<$CLIENT_ARCH_RISCV_32_UEFI> (25)
+
+=item C<$CLIENT_ARCH_RISCV_32_UEFI_HTTP> (26)
+
+=item C<$CLIENT_ARCH_RISCV_64_UEFI> (27)
+
+=item C<$CLIENT_ARCH_RISCV_64_UEFI_HTTP> (28)
+
+=item C<$CLIENT_ARCH_RISCV_128_UEFI> (29)
+
+=item C<$CLIENT_ARCH_RISCV_128_UEFI_HTTP> (30)
+
+=item C<$CLIENT_ARCH_S390_BASIC> (31)
+
+=item C<$CLIENT_ARCH_S390_EXTENDED> (32)
+
+=item C<$CLIENT_ARCH_MIPS_32_UEFI> (33)
+
+=item C<$CLIENT_ARCH_MIPS_64_UEFI> (34)
+
+=item C<$CLIENT_ARCH_SUNWAY_32_UEFI> (35)
+
+=item C<$CLIENT_ARCH_SUNWAY_64_UEFI> (36)
+
+=item C<$CLIENT_ARCH_LOONGARCH_32_UEFI> (37)
+
+=item C<$CLIENT_ARCH_LOONGARCH_32_UEFI_HTTP> (38)
+
+=item C<$CLIENT_ARCH_LOONGARCH_64_UEFI> (39)
+
+=item C<$CLIENT_ARCH_LOONGARCH_64_UEFI_HTTP> (40)
+
+=item C<$CLIENT_ARCH_ARM_RPIBOOT> (41)
+
+=back
+
 =head1 LOOKUP HELPERS
 
 =over
@@ -430,6 +618,11 @@ or C<undef> if unknown.
 
 Returns true if the numeric code corresponds to a known message type.
 
+=item B<arch_name>($code)
+
+Returns the client architecture type name string (e.g. C<X86_UEFI>) for a numeric code,
+or C<undef> if unknown.
+
 =back
 
 =head1 REVERSE HASHES
@@ -445,6 +638,8 @@ The following package hashes are available for direct lookup:
 =item C<%REV_STATUS_CODE>
 
 =item C<%REV_DUID_TYPE>
+
+=item C<%REV_CLIENT_ARCH>
 
 =back
 
