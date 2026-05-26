@@ -41,7 +41,11 @@ __END__
 =head1 SYNOPSIS
 
   use Net::DHCPv6::Option::ReconfMsg;
-  my $opt = Net::DHCPv6::Option::ReconfMsg->new(msg_type => 1);
+  use Net::DHCPv6::Constants qw($RENEW);
+
+  my $opt = Net::DHCPv6::Option::ReconfMsg->new(
+      msg_type => $RENEW,
+  );
 
 =head1 DESCRIPTION
 
