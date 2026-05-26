@@ -47,12 +47,13 @@ __END__
 
 =head1 SYNOPSIS
 
-  my $pref = Net::DHCPv6::Option::Preference->new(value => 255);
+  my $pref = Net::DHCPv6::Option::Preference->new(value => 255);  # 0-255, higher = more preferred
 
 =head1 DESCRIPTION
 
 Implements the Preference option (OPTION_PREFERENCE, code 7) per
-RFC 8415 §21.8. An 8-bit unsigned integer indicating server preference.
+RFC 8415 §21.8. An 8-bit unsigned integer (0–255) where a higher
+value indicates the server is more preferred by the client.
 
 =head1 METHODS
 

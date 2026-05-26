@@ -45,9 +45,10 @@ __END__
 
 =head1 SYNOPSIS
 
+  use Socket qw(inet_pton AF_INET6);
   use Net::DHCPv6::Option::DnsServers;
   my $opt = Net::DHCPv6::Option::DnsServers->new(
-      servers => [ "\x20\x01\x06\x70\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01" ],
+      servers => [ inet_pton( AF_INET6, '2001:db8::1' ) ],
   );
 
 =head1 DESCRIPTION

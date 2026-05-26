@@ -80,8 +80,9 @@ __END__
 
 =head1 SYNOPSIS
 
+  use Socket qw(inet_pton AF_INET6);
   my $iaaddr = Net::DHCPv6::Option::IAAddr->new(
-      address            => "\x20\x01\x0d\xb8\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01",
+      address            => inet_pton( AF_INET6, '2001:db8::1' ),
       preferred_lifetime => 7_200,
       valid_lifetime     => 86_400,
   );

@@ -89,9 +89,9 @@ __END__
 
 =head1 SYNOPSIS
 
-  my $prefix = "\x20\x01\x0d\xb8\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00";
+  use Socket qw(inet_pton AF_INET6);
   my $iaprefix = Net::DHCPv6::Option::IAPrefix->new(
-      address            => $prefix,
+      address            => inet_pton( AF_INET6, '2001:db8::' ),
       preferred_lifetime => 7_200,
       valid_lifetime     => 86_400,
       prefix_length      => 64,

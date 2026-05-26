@@ -44,9 +44,10 @@ __END__
 
 =head1 SYNOPSIS
 
+  use Socket qw(inet_pton AF_INET6);
   use Net::DHCPv6::Option::NispServers;
   my $opt = Net::DHCPv6::Option::NispServers->new(
-      servers => [ $ipv6_bytes ],
+      servers => [ inet_pton( AF_INET6, '2001:db8::1' ) ],
   );
 
 =head1 DESCRIPTION
