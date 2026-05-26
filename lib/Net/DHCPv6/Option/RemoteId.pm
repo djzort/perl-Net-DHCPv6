@@ -45,14 +45,16 @@ __END__
 
   use Net::DHCPv6::Option::RemoteId;
   my $opt = Net::DHCPv6::Option::RemoteId->new(
-      enterprise_number => 9,
+      enterprise_number => 9,        # Cisco (IANA PEN)
       remote_data       => "\x00\x01\x02\x03",
   );
 
 =head1 DESCRIPTION
 
 Carries a relay agent's remote identification, consisting of an IANA
-enterprise number and opaque data.  See RFC 4649.
+Private Enterprise Number (PEN, see
+L<https://www.iana.org/assignments/enterprise-numbers>)
+and opaque data.  See RFC 4649.
 
 =head1 METHODS
 

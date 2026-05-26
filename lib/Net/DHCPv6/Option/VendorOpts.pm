@@ -45,14 +45,15 @@ __END__
 
   use Net::DHCPv6::Option::VendorOpts;
   my $opt = Net::DHCPv6::Option::VendorOpts->new(
-      enterprise_number => 9,
+      enterprise_number => 9,        # Cisco (IANA PEN)
       sub_options       => [ $subopt1, $subopt2 ],
   );
 
 =head1 DESCRIPTION
 
-Carries vendor-specific sub-options scoped by an IANA enterprise
-number.  See RFC 8415 §21.17.
+Carries vendor-specific sub-options scoped by an IANA Private
+Enterprise Number (PEN, see L<https://www.iana.org/assignments/enterprise-numbers>).
+See RFC 8415 §21.17.
 
 =head1 METHODS
 
