@@ -61,14 +61,15 @@ __END__
 
   use Net::DHCPv6::Option::VendorClass;
   my $opt = Net::DHCPv6::Option::VendorClass->new(
-      enterprise_number => 9,
+      enterprise_number => 9,        # Cisco (IANA PEN)
       vendor_data       => [ 'foo', 'bar' ],
   );
 
 =head1 DESCRIPTION
 
-Conveys vendor-class information consisting of an IANA enterprise
-number and one or more opaque data items.  See RFC 8415 §21.16.
+Conveys vendor-class information consisting of an IANA Private
+Enterprise Number (PEN, see L<https://www.iana.org/assignments/enterprise-numbers>)
+and one or more opaque data items.  See RFC 8415 §21.16.
 
 =head1 METHODS
 
