@@ -82,8 +82,8 @@ __END__
 
   my $iaaddr = Net::DHCPv6::Option::IAAddr->new(
       address            => "\x20\x01\x0d\xb8\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01",
-      preferred_lifetime => 7200,
-      valid_lifetime     => 86400,
+      preferred_lifetime => 7_200,
+      valid_lifetime     => 86_400,
   );
 
 =head1 DESCRIPTION

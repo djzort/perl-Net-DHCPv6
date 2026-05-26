@@ -46,7 +46,7 @@ __END__
 =head1 SYNOPSIS
 
   use Net::DHCPv6::Option::InfMaxRt;
-  my $opt = Net::DHCPv6::Option::InfMaxRt->new(value => 3600);
+   my $opt = Net::DHCPv6::Option::InfMaxRt->new(value => 3_600);
 
 =head1 DESCRIPTION
 

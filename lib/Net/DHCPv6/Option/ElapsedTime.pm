@@ -47,7 +47,7 @@ __END__
 
 =head1 SYNOPSIS
 
-  my $et = Net::DHCPv6::Option::ElapsedTime->new(centiseconds => 1000);
+   my $et = Net::DHCPv6::Option::ElapsedTime->new(centiseconds => 1_000);
 
 =head1 DESCRIPTION
 
@@ -61,7 +61,7 @@ a second elapsed since the client began the transaction.
 
 =item B<new>(centiseconds => $num)
 
-Constructor. Requires a 16-bit value in centiseconds (0-65535).
+Constructor. Requires a 16-bit value in centiseconds (0-65_535).
 
 =item B<centiseconds>
 

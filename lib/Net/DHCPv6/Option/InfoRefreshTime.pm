@@ -46,7 +46,7 @@ __END__
 =head1 SYNOPSIS
 
   use Net::DHCPv6::Option::InfoRefreshTime;
-  my $opt = Net::DHCPv6::Option::InfoRefreshTime->new(value => 86400);
+   my $opt = Net::DHCPv6::Option::InfoRefreshTime->new(value => 86_400);
 
 =head1 DESCRIPTION
 

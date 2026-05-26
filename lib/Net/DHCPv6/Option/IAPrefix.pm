@@ -92,8 +92,8 @@ __END__
   my $prefix = "\x20\x01\x0d\xb8\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00";
   my $iaprefix = Net::DHCPv6::Option::IAPrefix->new(
       address            => $prefix,
-      preferred_lifetime => 7200,
-      valid_lifetime     => 86400,
+      preferred_lifetime => 7_200,
+      valid_lifetime     => 86_400,
       prefix_length      => 64,
   );
 

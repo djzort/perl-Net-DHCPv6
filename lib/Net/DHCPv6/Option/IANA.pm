@@ -70,7 +70,7 @@ __END__
 
 =head1 SYNOPSIS
 
-  my $iana = Net::DHCPv6::Option::IANA->new(iaid => 42, t1 => 3600, t2 => 5400);
+   my $iana = Net::DHCPv6::Option::IANA->new(iaid => 42, t1 => 3_600, t2 => 5_400);
   $iana->add_option($iaaddr);
 
   print $iana->iaid;
