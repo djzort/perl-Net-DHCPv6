@@ -1,0 +1,42 @@
+#!/usr/bin/false
+# ABSTRACT: Rebind message (type 6)
+# PODNAME: Net::DHCPv6::Message::Rebind
+package Net::DHCPv6::Message::Rebind;
+
+use strictures 2;
+use Net::DHCPv6::Constants;
+use parent 'Net::DHCPv6::Packet';
+use namespace::clean;
+
+sub new {
+    my ($class, %args) = @_;
+    $args{msg_type} = $REBIND;
+    $class->SUPER::new(%args);
+}
+
+$Net::DHCPv6::Packet::MESSAGE_CLASS{$REBIND} = __PACKAGE__;
+
+1;
+
+__END__
+
+=encoding utf-8
+
+
+=head1 SYNOPSIS
+
+    use Net::DHCPv6;
+
+    my ($msg, $err) = Net::DHCPv6->decode_with_error($bytes);
+
+=head1 DESCRIPTION
+
+DHCPv6 Rebind message (type 6). Clients send Rebind when a Renew
+to the original server receives no response. See L<Net::DHCPv6::Packet>
+for available methods.
+
+=for Pod::Coverage new
+
+=head1 SEE ALSO
+
+L<Net::DHCPv6::Packet>, RFC 8415 §18.6

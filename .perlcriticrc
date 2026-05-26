@@ -1,0 +1,13 @@
+severity = 4
+
+# Accessor methods use implicit return — explicit 'return' on every sub
+# would add noise without value.
+[-Subroutines::RequireFinalReturn]
+
+# 'time' and 'length' are valid method names in a DHCPv6 context (duid type
+# fields, packet length), not homonyms for builtins.
+[-Subroutines::ProhibitBuiltinHomonyms]
+
+# Test helper exports its helpers by default — that's the intended design.
+[TestingAndDebugging::RequireUseStrict]
+equivalent_modules = strictures

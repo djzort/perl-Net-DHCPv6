@@ -1,0 +1,42 @@
+#!/usr/bin/false
+# ABSTRACT: Confirm message (type 4)
+# PODNAME: Net::DHCPv6::Message::Confirm
+package Net::DHCPv6::Message::Confirm;
+
+use strictures 2;
+use Net::DHCPv6::Constants;
+use parent 'Net::DHCPv6::Packet';
+use namespace::clean;
+
+sub new {
+    my ($class, %args) = @_;
+    $args{msg_type} = $CONFIRM;
+    $class->SUPER::new(%args);
+}
+
+$Net::DHCPv6::Packet::MESSAGE_CLASS{$CONFIRM} = __PACKAGE__;
+
+1;
+
+__END__
+
+=encoding utf-8
+
+
+=head1 SYNOPSIS
+
+    use Net::DHCPv6;
+
+    my ($msg, $err) = Net::DHCPv6->decode_with_error($bytes);
+
+=head1 DESCRIPTION
+
+DHCPv6 Confirm message (type 4). Clients send Confirm to verify
+address validity after a link change. See L<Net::DHCPv6::Packet>
+for available methods.
+
+=for Pod::Coverage new
+
+=head1 SEE ALSO
+
+L<Net::DHCPv6::Packet>, RFC 8415 §18.4
