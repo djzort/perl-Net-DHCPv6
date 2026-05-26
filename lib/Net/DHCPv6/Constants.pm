@@ -71,6 +71,11 @@ const our $OPTION_INF_MAX_RT               => 83;
 const our $OPTION_CAPTIVE_PORTAL           => 103;
 const our $OPTION_MUD_URL                  => 112;
 
+# Client FQDN flags (RFC 4704 §4)
+const our $CLIENT_FQDN_S => 0x01;    # Server should NOT update DNS
+const our $CLIENT_FQDN_O => 0x02;    # Server override
+const our $CLIENT_FQDN_N => 0x04;    # Server should update DNS
+
 # Status codes (RFC 8415 §18.3)
 const our $STATUS_SUCCESS         => 0;
 const our $STATUS_UNSPEC_FAIL     => 1;
@@ -312,6 +317,7 @@ __END__
   print $DUID_LLT;                # 1
   print $SOLICIT;                 # 1
   print $OPTION_CLIENTID;         # 1
+  print $CLIENT_FQDN_S;           # 1
   print $STATUS_SUCCESS;          # 0
 
   print arch_name(6);             # X86_UEFI
@@ -592,6 +598,18 @@ request.
 =item C<$CLIENT_ARCH_LOONGARCH_64_UEFI_HTTP> (40)
 
 =item C<$CLIENT_ARCH_ARM_RPIBOOT> (41)
+
+=back
+
+=head2 Client FQDN Flags (RFC 4704 §4)
+
+=over
+
+=item C<$CLIENT_FQDN_S> (0x01) — Server should NOT update DNS
+
+=item C<$CLIENT_FQDN_O> (0x02) — Server override
+
+=item C<$CLIENT_FQDN_N> (0x04) — Server should update DNS
 
 =back
 

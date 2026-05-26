@@ -239,6 +239,15 @@ subtest 'Client architecture types' => sub {
 };
 
 # -------------------------------------------------------------------
+# Client FQDN flags (RFC 4704 §4)
+# -------------------------------------------------------------------
+subtest 'Client FQDN flags' => sub {
+    is( $CLIENT_FQDN_S, 0x01, 'CLIENT_FQDN_S' );
+    is( $CLIENT_FQDN_O, 0x02, 'CLIENT_FQDN_O' );
+    is( $CLIENT_FQDN_N, 0x04, 'CLIENT_FQDN_N' );
+};
+
+# -------------------------------------------------------------------
 # Option class registration coverage — every code in REV_OPTION_CODE
 # should have either a dedicated class or be noted as Generic-fallback
 # -------------------------------------------------------------------

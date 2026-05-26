@@ -96,8 +96,10 @@ __END__
 =head1 SYNOPSIS
 
   use Net::DHCPv6::Option::ClientFqdn;
+  use Net::DHCPv6::Constants qw($CLIENT_FQDN_S);
+
   my $opt = Net::DHCPv6::Option::ClientFqdn->new(
-      flags       => 0x01,
+      flags       => $CLIENT_FQDN_S,
       domain_name => 'client.example.com',
   );
 

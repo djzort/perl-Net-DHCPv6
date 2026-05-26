@@ -368,17 +368,17 @@ use Test::Net::DHCPv6;
 # ----------------------------------------------------------------
 {
     my $cf = Net::DHCPv6::Option::ClientFqdn->new(
-        flags       => 1,
+        flags       => $CLIENT_FQDN_S,
         domain_name => "client.example.com",
     );
     is( $cf->code,        $OPTION_CLIENT_FQDN,  'ClientFqdn code' );
-    is( $cf->flags,       1,                    'ClientFqdn flags' );
+    is( $cf->flags,       $CLIENT_FQDN_S,       'ClientFqdn flags' );
     is( $cf->domain_name, "client.example.com", 'ClientFqdn domain name' );
 
     my $bytes = $cf->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::ClientFqdn' ), 'ClientFqdn parsed class' );
-    is( $parsed->flags,       1,                    'ClientFqdn parsed flags' );
+    is( $parsed->flags,       $CLIENT_FQDN_S,       'ClientFqdn parsed flags' );
     is( $parsed->domain_name, "client.example.com", 'ClientFqdn parsed name' );
 
     ok( dies { Net::DHCPv6::Option::ClientFqdn->new( domain_name => "x" ) }, 'ClientFqdn dies without flags' );
