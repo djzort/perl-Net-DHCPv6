@@ -6,8 +6,6 @@ package Net::DHCPv6::Constants;
 use strictures 2;
 use Const::Fast::Exporter;
 
-# namespace::clean omitted intentionally — Const::Fast::Exporter needs `const` for imports
-
 # Message types (RFC 8415 §14)
 const our $SOLICIT             => 1;
 const our $ADVERTISE           => 2;
@@ -93,6 +91,10 @@ our %REV_MESSAGE_TYPE;
 our %REV_OPTION_CODE;
 our %REV_STATUS_CODE;
 our %REV_DUID_TYPE;
+
+# placed after const declarations so const remains available during compile-time declarations;
+# Const::Fast::Exporter installs `import` at use-time, so it must survive namespace::clean
+use namespace::clean -except => ['import'];
 
 BEGIN {
     %REV_MESSAGE_TYPE = (
