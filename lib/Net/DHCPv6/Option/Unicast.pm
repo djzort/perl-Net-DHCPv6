@@ -12,23 +12,28 @@ use namespace::clean;
 
 sub new {
     my ( $class, %args ) = @_;
+    my $addr = $class->_pick_addr( \%args, 'address' );
     croak 'Unicast requires address'
-        unless $args{address}
-        && CORE::length( $args{address} ) == 16;
+        unless $addr && CORE::length( $addr ) == 16;
     $args{code} = $OPTION_UNICAST;
-    $args{data} = $args{address};
+    $args{data} = $addr;
     my $self = $class->SUPER::new( %args );
-    $self->{address} = $args{address};
+    $self->{address} = $addr;
     bless $self, $class;
 }
 
-sub address { shift->{address} }
+sub address_raw { shift->{address} }
+
+sub address {
+    my $self = shift;
+    return $self->_format_ipv6( $self->{address} );
+}
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated Unicast option' )
         if CORE::length( $data ) < 16;
-    return $class->new( address => substr( $data, 0, 16 ) );
+    return $class->new( address_raw => substr( $data, 0, 16 ) );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_UNICAST} = __PACKAGE__;
@@ -42,8 +47,16 @@ __END__
 =head1 SYNOPSIS
 
   use Socket qw(inet_pton AF_INET6);
-  use Net::DHCPv6::Option::Unicast;
-  my $opt = Net::DHCPv6::Option::Unicast->new(address => inet_pton( AF_INET6, '2001:db8::1' ));
+
+  # Text form (auto-resolved to wire bytes)
+  my $opt = Net::DHCPv6::Option::Unicast->new(address => '2001:db8::1');
+  print $opt->address;        # '2001:db8::1'
+  print $opt->address_raw;    # 16-byte wire-format bytes
+
+  # Raw bytes from text
+  my $opt2 = Net::DHCPv6::Option::Unicast->new(
+      address_raw => inet_pton(AF_INET6, '2001:db8::1'),
+  );
 
 =head1 DESCRIPTION
 
@@ -54,11 +67,15 @@ messages unicast.  See RFC 8415 §21.12.
 
 =head2 new
 
-Constructor.  Requires C<address>, a 16-byte IPv6 address.
+Constructor.  Requires either C<address> (text) or C<address_raw> (bytes).
 
 =head2 address
 
-Returns the 16-byte IPv6 address.
+Returns the IPv6 address as a text string.
+
+=head2 address_raw
+
+Returns the 16-byte wire-format address.
 
 =head1 SEE ALSO
 
