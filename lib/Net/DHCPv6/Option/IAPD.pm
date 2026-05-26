@@ -70,7 +70,11 @@ __END__
 
 =head1 SYNOPSIS
 
-   my $iapd = Net::DHCPv6::Option::IAPD->new(iaid => 1, t1 => 3_600, t2 => 5_400);
+  my $iapd = Net::DHCPv6::Option::IAPD->new(
+      iaid => 1,
+      t1   => 3_600,
+      t2   => 5_400,
+  );
   $iapd->add_option($iaprefix);
 
 =head1 DESCRIPTION

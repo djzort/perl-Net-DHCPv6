@@ -59,7 +59,11 @@ __END__
 
 =head1 SYNOPSIS
 
-  my $opt = Net::DHCPv6::Option->new(code => 99, data => "\x01\x02");
+  my $opt = Net::DHCPv6::Option->new(
+      code => 99,
+      data => "\x01\x02",
+  );
+
   print $opt->code;       # 99
   print $opt->data;       # raw bytes
   print $opt->as_bytes;   # TLV-encoded wire bytes
