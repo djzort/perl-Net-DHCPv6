@@ -238,7 +238,7 @@ __END__
 
   use Net::DHCPv6::DUID;
 
-  my $duid = Net::DHCPv6::DUID->new_llt(1, time, "\x00\x11\x22\x33\x44\x55");
+  my $duid = Net::DHCPv6::DUID->new_llt($LINK_TYPE_ETHERNET, time, "\x00\x11\x22\x33\x44\x55");
   my $bytes = $duid->as_bytes;
 
   my $parsed = Net::DHCPv6::DUID->from_bytes($bytes);

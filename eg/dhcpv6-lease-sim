@@ -12,6 +12,7 @@ use Net::DHCPv6::Constants qw(
     $DUID_LL
     $DUID_LLT
     $DUID_UUID
+    $LINK_TYPE_ETHERNET
     $OPTION_CLIENTID
     $OPTION_DNS_SERVERS
     $OPTION_DOMAIN_LIST
@@ -147,7 +148,7 @@ package DHCPv6Client {
         bless {
             transaction_id => int( rand( 0xffffff ) ),
             client_mac     => $mac,
-            client_duid    => Net::DHCPv6::DUID->new_llt( 1, $time, pack( 'H*', $mac ) ),
+            client_duid    => Net::DHCPv6::DUID->new_llt( $LINK_TYPE_ETHERNET, $time, pack( 'H*', $mac ) ),
             iaid           => $args{iaid}    // 42,
             verbose        => $args{verbose} // 1,
             server_id      => undef,

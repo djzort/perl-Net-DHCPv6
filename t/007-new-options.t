@@ -855,20 +855,20 @@ use Test::Net::DHCPv6;
 # ----------------------------------------------------------------
 {
     my $clla = Net::DHCPv6::Option::ClientLinkLayerAddr->new(
-        link_layer_type => 1,
+        link_layer_type => $LINK_TYPE_ETHERNET,
         link_layer_addr => "\x00\x11\x22\x33\x44\x55",
     );
     is( $clla->code,            $OPTION_CLIENT_LINKLAYER_ADDR, 'ClientLinkLayerAddr code' );
-    is( $clla->link_layer_type, 1,                             'ClientLinkLayerAddr type' );
+    is( $clla->link_layer_type, $LINK_TYPE_ETHERNET,           'ClientLinkLayerAddr type' );
     is( $clla->link_layer_addr, "\x00\x11\x22\x33\x44\x55",    'ClientLinkLayerAddr addr' );
 
     my $bytes = $clla->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::ClientLinkLayerAddr' ), 'ClientLinkLayerAddr parsed class' );
-    is( $parsed->link_layer_type, 1,                          'ClientLinkLayerAddr parsed type' );
+    is( $parsed->link_layer_type, $LINK_TYPE_ETHERNET,        'ClientLinkLayerAddr parsed type' );
     is( $parsed->link_layer_addr, "\x00\x11\x22\x33\x44\x55", 'ClientLinkLayerAddr parsed addr' );
 
-    ok( dies { Net::DHCPv6::Option::ClientLinkLayerAddr->new( link_layer_type => 1 ) },
+    ok( dies { Net::DHCPv6::Option::ClientLinkLayerAddr->new( link_layer_type => $LINK_TYPE_ETHERNET ) },
         'ClientLinkLayerAddr dies without link_layer_addr' );
     ok(
         dies {
