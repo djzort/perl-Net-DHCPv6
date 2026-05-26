@@ -53,10 +53,11 @@ __END__
 
 =head1 SYNOPSIS
 
+  use Socket qw(inet_pton AF_INET6);
   use Net::DHCPv6::Option::PdExclude;
   my $opt = Net::DHCPv6::Option::PdExclude->new(
       prefix_length => 48,
-      address       => "\x20\x01\x0d\xb8\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",
+      address       => inet_pton( AF_INET6, '2001:db8::' ),
   );
 
 =head1 DESCRIPTION
