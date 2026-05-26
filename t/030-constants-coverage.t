@@ -248,6 +248,60 @@ subtest 'Client FQDN flags' => sub {
 };
 
 # -------------------------------------------------------------------
+# Link-layer types (IANA ARP Hardware Type registry)
+# -------------------------------------------------------------------
+subtest 'Link-layer types' => sub {
+    is( $LINK_TYPE_RESERVED,        0,      'LINK_TYPE_RESERVED' );
+    is( $LINK_TYPE_ETHERNET,        1,      'LINK_TYPE_ETHERNET' );
+    is( $LINK_TYPE_EXP_ETHERNET,    2,      'LINK_TYPE_EXP_ETHERNET' );
+    is( $LINK_TYPE_AX25,            3,      'LINK_TYPE_AX25' );
+    is( $LINK_TYPE_PRONET,          4,      'LINK_TYPE_PRONET' );
+    is( $LINK_TYPE_CHAOS,           5,      'LINK_TYPE_CHAOS' );
+    is( $LINK_TYPE_IEEE802,         6,      'LINK_TYPE_IEEE802' );
+    is( $LINK_TYPE_ARCNET,          7,      'LINK_TYPE_ARCNET' );
+    is( $LINK_TYPE_HYPERCHANNEL,    8,      'LINK_TYPE_HYPERCHANNEL' );
+    is( $LINK_TYPE_LANSTAR,         9,      'LINK_TYPE_LANSTAR' );
+    is( $LINK_TYPE_AUTONET,         10,     'LINK_TYPE_AUTONET' );
+    is( $LINK_TYPE_LOCALTALK,       11,     'LINK_TYPE_LOCALTALK' );
+    is( $LINK_TYPE_LOCALNET,        12,     'LINK_TYPE_LOCALNET' );
+    is( $LINK_TYPE_ULTRA,           13,     'LINK_TYPE_ULTRA' );
+    is( $LINK_TYPE_SMDS,            14,     'LINK_TYPE_SMDS' );
+    is( $LINK_TYPE_FRAME_RELAY,     15,     'LINK_TYPE_FRAME_RELAY' );
+    is( $LINK_TYPE_ATM,             16,     'LINK_TYPE_ATM' );
+    is( $LINK_TYPE_HDLC,            17,     'LINK_TYPE_HDLC' );
+    is( $LINK_TYPE_FIBRE_CHANNEL,   18,     'LINK_TYPE_FIBRE_CHANNEL' );
+    is( $LINK_TYPE_ATM_RFC2225,     19,     'LINK_TYPE_ATM_RFC2225' );
+    is( $LINK_TYPE_SERIAL,          20,     'LINK_TYPE_SERIAL' );
+    is( $LINK_TYPE_ATM_ALT,         21,     'LINK_TYPE_ATM_ALT' );
+    is( $LINK_TYPE_MIL_STD_188_220, 22,     'LINK_TYPE_MIL_STD_188_220' );
+    is( $LINK_TYPE_METRICOM,        23,     'LINK_TYPE_METRICOM' );
+    is( $LINK_TYPE_IEEE1394,        24,     'LINK_TYPE_IEEE1394' );
+    is( $LINK_TYPE_MAPOS,           25,     'LINK_TYPE_MAPOS' );
+    is( $LINK_TYPE_TWINAXIAL,       26,     'LINK_TYPE_TWINAXIAL' );
+    is( $LINK_TYPE_EUI64,           27,     'LINK_TYPE_EUI64' );
+    is( $LINK_TYPE_HIPARP,          28,     'LINK_TYPE_HIPARP' );
+    is( $LINK_TYPE_ISO7816,         29,     'LINK_TYPE_ISO7816' );
+    is( $LINK_TYPE_ARP_SEC,         30,     'LINK_TYPE_ARP_SEC' );
+    is( $LINK_TYPE_IPSEC_TUNNEL,    31,     'LINK_TYPE_IPSEC_TUNNEL' );
+    is( $LINK_TYPE_INFINIBAND,      32,     'LINK_TYPE_INFINIBAND' );
+    is( $LINK_TYPE_TIA_102,         33,     'LINK_TYPE_TIA_102' );
+    is( $LINK_TYPE_WIEGAND,         34,     'LINK_TYPE_WIEGAND' );
+    is( $LINK_TYPE_PURE_IP,         35,     'LINK_TYPE_PURE_IP' );
+    is( $LINK_TYPE_HW_EXP1,         36,     'LINK_TYPE_HW_EXP1' );
+    is( $LINK_TYPE_HFI,             37,     'LINK_TYPE_HFI' );
+    is( $LINK_TYPE_UNIFIED_BUS,     38,     'LINK_TYPE_UNIFIED_BUS' );
+    is( $LINK_TYPE_HW_EXP2,         256,    'LINK_TYPE_HW_EXP2' );
+    is( $LINK_TYPE_AETHERNET,       257,    'LINK_TYPE_AETHERNET' );
+    is( $LINK_TYPE_RESERVED_HIGH,   65_535, 'LINK_TYPE_RESERVED_HIGH' );
+
+    is( Net::DHCPv6::Constants::link_type_name( 1 ),      'ETHERNET',      'REV_LINK_TYPE 1' );
+    is( Net::DHCPv6::Constants::link_type_name( 38 ),     'UNIFIED_BUS',   'REV_LINK_TYPE 38' );
+    is( Net::DHCPv6::Constants::link_type_name( 256 ),    'HW_EXP2',       'REV_LINK_TYPE 256' );
+    is( Net::DHCPv6::Constants::link_type_name( 65_535 ), 'RESERVED_HIGH', 'REV_LINK_TYPE 65535' );
+    ok( !defined Net::DHCPv6::Constants::link_type_name( 99 ), 'REV_LINK_TYPE 99 undef' );
+};
+
+# -------------------------------------------------------------------
 # Option class registration coverage — every code in REV_OPTION_CODE
 # should have either a dedicated class or be noted as Generic-fallback
 # -------------------------------------------------------------------

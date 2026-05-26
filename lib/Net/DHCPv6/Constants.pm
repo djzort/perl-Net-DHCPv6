@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: DHCPv6 numeric constants (message types, option codes, status codes, DUID types, client architecture types)
+# ABSTRACT: DHCPv6 numeric constants (message types, option codes, status codes, DUID types, client architecture types, link-layer types)
 # PODNAME: Net::DHCPv6::Constants
 package Net::DHCPv6::Constants;
 
@@ -135,9 +135,54 @@ const our $CLIENT_ARCH_LOONGARCH_64_UEFI      => 39;
 const our $CLIENT_ARCH_LOONGARCH_64_UEFI_HTTP => 40;
 const our $CLIENT_ARCH_ARM_RPIBOOT            => 41;
 
+# Link-layer types (IANA ARP Hardware Type registry)
+const our $LINK_TYPE_RESERVED        => 0;
+const our $LINK_TYPE_ETHERNET        => 1;
+const our $LINK_TYPE_EXP_ETHERNET    => 2;
+const our $LINK_TYPE_AX25            => 3;
+const our $LINK_TYPE_PRONET          => 4;
+const our $LINK_TYPE_CHAOS           => 5;
+const our $LINK_TYPE_IEEE802         => 6;
+const our $LINK_TYPE_ARCNET          => 7;
+const our $LINK_TYPE_HYPERCHANNEL    => 8;
+const our $LINK_TYPE_LANSTAR         => 9;
+const our $LINK_TYPE_AUTONET         => 10;
+const our $LINK_TYPE_LOCALTALK       => 11;
+const our $LINK_TYPE_LOCALNET        => 12;
+const our $LINK_TYPE_ULTRA           => 13;
+const our $LINK_TYPE_SMDS            => 14;
+const our $LINK_TYPE_FRAME_RELAY     => 15;
+const our $LINK_TYPE_ATM             => 16;
+const our $LINK_TYPE_HDLC            => 17;
+const our $LINK_TYPE_FIBRE_CHANNEL   => 18;
+const our $LINK_TYPE_ATM_RFC2225     => 19;
+const our $LINK_TYPE_SERIAL          => 20;
+const our $LINK_TYPE_ATM_ALT         => 21;
+const our $LINK_TYPE_MIL_STD_188_220 => 22;
+const our $LINK_TYPE_METRICOM        => 23;
+const our $LINK_TYPE_IEEE1394        => 24;
+const our $LINK_TYPE_MAPOS           => 25;
+const our $LINK_TYPE_TWINAXIAL       => 26;
+const our $LINK_TYPE_EUI64           => 27;
+const our $LINK_TYPE_HIPARP          => 28;
+const our $LINK_TYPE_ISO7816         => 29;
+const our $LINK_TYPE_ARP_SEC         => 30;
+const our $LINK_TYPE_IPSEC_TUNNEL    => 31;
+const our $LINK_TYPE_INFINIBAND      => 32;
+const our $LINK_TYPE_TIA_102         => 33;
+const our $LINK_TYPE_WIEGAND         => 34;
+const our $LINK_TYPE_PURE_IP         => 35;
+const our $LINK_TYPE_HW_EXP1         => 36;
+const our $LINK_TYPE_HFI             => 37;
+const our $LINK_TYPE_UNIFIED_BUS     => 38;
+const our $LINK_TYPE_HW_EXP2         => 256;
+const our $LINK_TYPE_AETHERNET       => 257;
+const our $LINK_TYPE_RESERVED_HIGH   => 65_535;
+
 # Reverse lookup hashes
 our %REV_CLIENT_ARCH;
 our %REV_DUID_TYPE;
+our %REV_LINK_TYPE;
 our %REV_MESSAGE_TYPE;
 our %REV_OPTION_CODE;
 our %REV_STATUS_CODE;
@@ -190,6 +235,51 @@ BEGIN {
         39 => 'LOONGARCH_64_UEFI',
         40 => 'LOONGARCH_64_UEFI_HTTP',
         41 => 'ARM_RPIBOOT',
+    );
+
+    %REV_LINK_TYPE = (
+        0      => 'RESERVED',
+        1      => 'ETHERNET',
+        2      => 'EXP_ETHERNET',
+        3      => 'AX25',
+        4      => 'PRONET',
+        5      => 'CHAOS',
+        6      => 'IEEE802',
+        7      => 'ARCNET',
+        8      => 'HYPERCHANNEL',
+        9      => 'LANSTAR',
+        10     => 'AUTONET',
+        11     => 'LOCALTALK',
+        12     => 'LOCALNET',
+        13     => 'ULTRA',
+        14     => 'SMDS',
+        15     => 'FRAME_RELAY',
+        16     => 'ATM',
+        17     => 'HDLC',
+        18     => 'FIBRE_CHANNEL',
+        19     => 'ATM_RFC2225',
+        20     => 'SERIAL',
+        21     => 'ATM_ALT',
+        22     => 'MIL_STD_188_220',
+        23     => 'METRICOM',
+        24     => 'IEEE1394',
+        25     => 'MAPOS',
+        26     => 'TWINAXIAL',
+        27     => 'EUI64',
+        28     => 'HIPARP',
+        29     => 'ISO7816',
+        30     => 'ARP_SEC',
+        31     => 'IPSEC_TUNNEL',
+        32     => 'INFINIBAND',
+        33     => 'TIA_102',
+        34     => 'WIEGAND',
+        35     => 'PURE_IP',
+        36     => 'HW_EXP1',
+        37     => 'HFI',
+        38     => 'UNIFIED_BUS',
+        256    => 'HW_EXP2',
+        257    => 'AETHERNET',
+        65_535 => 'RESERVED_HIGH',
     );
 
     %REV_DUID_TYPE = (
@@ -302,6 +392,11 @@ sub arch_name {
     return $REV_CLIENT_ARCH{$code};
 }
 
+sub link_type_name {
+    my ( $code ) = @_;
+    return $REV_LINK_TYPE{$code};
+}
+
 1;
 
 __END__
@@ -315,6 +410,7 @@ __END__
 
   print $CLIENT_ARCH_X86_UEFI;    # 6
   print $DUID_LLT;                # 1
+  print $LINK_TYPE_ETHERNET;      # 1
   print $SOLICIT;                 # 1
   print $OPTION_CLIENTID;         # 1
   print $CLIENT_FQDN_S;           # 1
@@ -322,6 +418,7 @@ __END__
 
   print arch_name(6);             # X86_UEFI
   print is_valid_message_type(1); # 1
+  print link_type_name(1);        # ETHERNET
   print message_type_name(1);     # SOLICIT
   print option_name(23);          # DNS_SERVERS
   print status_name(0);           # SUCCESS
@@ -329,8 +426,9 @@ __END__
 =head1 DESCRIPTION
 
 Defines all DHCPv6 numeric constants as read-only package variables:
-message types, option codes, status codes, DUID types, and client
-architecture types per RFC 8415 and RFC 5970.
+message types, option codes, status codes, DUID types, client
+architecture types per RFC 8415 and RFC 5970, and link-layer types
+from the IANA ARP Hardware Type registry.
 All constants are exported by default via L<Const::Fast::Exporter>.
 
 =head1 CONSTANTS
@@ -601,6 +699,96 @@ request.
 
 =back
 
+=head2 Link-layer Types (IANA ARP Hardware Type registry)
+
+=over
+
+=item C<$LINK_TYPE_RESERVED> (0)
+
+=item C<$LINK_TYPE_ETHERNET> (1)
+
+=item C<$LINK_TYPE_EXP_ETHERNET> (2)
+
+=item C<$LINK_TYPE_AX25> (3)
+
+=item C<$LINK_TYPE_PRONET> (4)
+
+=item C<$LINK_TYPE_CHAOS> (5)
+
+=item C<$LINK_TYPE_IEEE802> (6)
+
+=item C<$LINK_TYPE_ARCNET> (7)
+
+=item C<$LINK_TYPE_HYPERCHANNEL> (8)
+
+=item C<$LINK_TYPE_LANSTAR> (9)
+
+=item C<$LINK_TYPE_AUTONET> (10)
+
+=item C<$LINK_TYPE_LOCALTALK> (11)
+
+=item C<$LINK_TYPE_LOCALNET> (12)
+
+=item C<$LINK_TYPE_ULTRA> (13)
+
+=item C<$LINK_TYPE_SMDS> (14)
+
+=item C<$LINK_TYPE_FRAME_RELAY> (15)
+
+=item C<$LINK_TYPE_ATM> (16)
+
+=item C<$LINK_TYPE_HDLC> (17)
+
+=item C<$LINK_TYPE_FIBRE_CHANNEL> (18)
+
+=item C<$LINK_TYPE_ATM_RFC2225> (19)
+
+=item C<$LINK_TYPE_SERIAL> (20)
+
+=item C<$LINK_TYPE_ATM_ALT> (21)
+
+=item C<$LINK_TYPE_MIL_STD_188_220> (22)
+
+=item C<$LINK_TYPE_METRICOM> (23)
+
+=item C<$LINK_TYPE_IEEE1394> (24)
+
+=item C<$LINK_TYPE_MAPOS> (25)
+
+=item C<$LINK_TYPE_TWINAXIAL> (26)
+
+=item C<$LINK_TYPE_EUI64> (27)
+
+=item C<$LINK_TYPE_HIPARP> (28)
+
+=item C<$LINK_TYPE_ISO7816> (29)
+
+=item C<$LINK_TYPE_ARP_SEC> (30)
+
+=item C<$LINK_TYPE_IPSEC_TUNNEL> (31)
+
+=item C<$LINK_TYPE_INFINIBAND> (32)
+
+=item C<$LINK_TYPE_TIA_102> (33)
+
+=item C<$LINK_TYPE_WIEGAND> (34)
+
+=item C<$LINK_TYPE_PURE_IP> (35)
+
+=item C<$LINK_TYPE_HW_EXP1> (36)
+
+=item C<$LINK_TYPE_HFI> (37)
+
+=item C<$LINK_TYPE_UNIFIED_BUS> (38)
+
+=item C<$LINK_TYPE_HW_EXP2> (256)
+
+=item C<$LINK_TYPE_AETHERNET> (257)
+
+=item C<$LINK_TYPE_RESERVED_HIGH> (65_535)
+
+=back
+
 =head2 Client FQDN Flags (RFC 4704 §4)
 
 =over
@@ -641,6 +829,11 @@ Returns true if the numeric code corresponds to a known message type.
 Returns the client architecture type name string (e.g. C<X86_UEFI>) for a numeric code,
 or C<undef> if unknown.
 
+=item B<link_type_name>($code)
+
+Returns the link-layer type name string (e.g. C<ETHERNET>) for a numeric code,
+or C<undef> if unknown.
+
 =back
 
 =head1 REVERSE HASHES
@@ -656,6 +849,8 @@ The following package hashes are available for direct lookup:
 =item C<%REV_STATUS_CODE>
 
 =item C<%REV_DUID_TYPE>
+
+=item C<%REV_LINK_TYPE>
 
 =item C<%REV_CLIENT_ARCH>
 

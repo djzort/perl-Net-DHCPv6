@@ -45,7 +45,7 @@ __END__
 
   use Net::DHCPv6::Option::ClientLinkLayerAddr;
   my $opt = Net::DHCPv6::Option::ClientLinkLayerAddr->new(
-      link_layer_type => 1,
+      link_layer_type => $LINK_TYPE_ETHERNET,
       link_layer_addr => "\x00\x11\x22\x33\x44\x55",
   );
 
@@ -63,7 +63,7 @@ Constructor.  Requires C<link_layer_type> and C<link_layer_addr>.
 
 =head2 link_layer_type
 
-Returns the 16-bit link-layer type (e.g. 1 for Ethernet).
+Returns the 16-bit link-layer type (e.g. C<$LINK_TYPE_ETHERNET> for Ethernet).
 
 =head2 link_layer_addr
 
