@@ -83,17 +83,19 @@ use Test::Net::DHCPv6;
 # Unicast (12) — 16-byte IPv6 address
 # ----------------------------------------------------------------
 {
-    my $addr = pack( 'H*', '20010db8000000000000000000000001' );
-    my $uc   = Net::DHCPv6::Option::Unicast->new( address => $addr );
-    is( $uc->code,    $OPTION_UNICAST, 'Unicast code' );
-    is( $uc->address, $addr,           'Unicast address' );
+    my $raw = pack( 'H*', '20010db8000000000000000000000001' );
+    my $uc  = Net::DHCPv6::Option::Unicast->new( address => '2001:db8::1' );
+    is( $uc->code,        $OPTION_UNICAST,    'Unicast code' );
+    is( $uc->address,     '2001:db8::1',      'Unicast address text' );
+    is( $uc->address_raw, $raw,               'Unicast address_raw bytes' );
 
     my $bytes = $uc->as_bytes;
     is( bytes2hex( $bytes ), '000c001020010db8000000000000000000000001', 'Unicast wire' );
 
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::Unicast' ), 'Unicast parsed class' );
-    is( $parsed->address, $addr, 'Unicast parsed address' );
+    is( $parsed->address,     '2001:db8::1', 'Unicast parsed address text' );
+    is( $parsed->address_raw, $raw,          'Unicast parsed address_raw' );
 
     ok( dies { Net::DHCPv6::Option::Unicast->new },                          'Unicast dies without address' );
     ok( dies { Net::DHCPv6::Option::Unicast->new( address => "\x01" x 4 ) }, 'Unicast dies with short address' );
@@ -886,7 +888,7 @@ use Test::Net::DHCPv6;
     my $ol = Net::DHCPv6::OptionList->new;
     $ol->add_option(
         Net::DHCPv6::Option::Unicast->new(
-            address => pack( 'H*', '20010db8000000000000000000000001' )
+            address => '2001:db8::1'
         )
     );
     $ol->add_option(
