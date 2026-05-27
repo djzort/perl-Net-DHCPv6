@@ -48,7 +48,8 @@ is($iana->t2,   5400, 'IANA t2');
 
 my $iaaddr = $iana->get_option(5);
 ok($iaaddr->isa('Net::DHCPv6::Option::IAAddr'), 'IANA has IAAddr');
-is($iaaddr->address, pack('H*', '20010db8000000000000000000000001'), 'IAAddr address');
+is($iaaddr->address, '2001:db8::1', 'IAAddr address');
+is($iaaddr->address_raw, pack('H*', '20010db8000000000000000000000001'), 'IAAddr address_raw');
 is($iaaddr->preferred_lifetime, 7200, 'IAAddr preferred');
 is($iaaddr->valid_lifetime, 86400, 'IAAddr valid');
 

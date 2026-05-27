@@ -100,33 +100,37 @@ is( $inf->msg_type, 11,                    'InformationRequest msg_type' );
 is( $inf->type,     'INFORMATION_REQUEST', 'InformationRequest type()' );
 
 # RelayForw
-my $link_addr  = pack( 'H*', 'fe800000000000000000000000000001' );
-my $peer_addr  = pack( 'H*', 'fe800000000000000000000000000002' );
-my $relay_forw = Net::DHCPv6::Message::RelayForw->new(
+my $link_addr_raw = pack( 'H*', '20010db8000000000000000000000001' );
+my $peer_addr_raw = pack( 'H*', '20010db8000000000000000000000002' );
+my $relay_forw    = Net::DHCPv6::Message::RelayForw->new(
     hop_count    => 0,
-    link_address => $link_addr,
-    peer_address => $peer_addr,
+    link_address => '2001:db8::1',
+    peer_address => '2001:db8::2',
 );
 $relay_forw->add_option( $cid );
-is( $relay_forw->msg_type,     12,           'RelayForw msg_type' );
-is( $relay_forw->type,         'RELAY_FORW', 'RelayForw type()' );
-is( $relay_forw->hop_count,    0,            'RelayForw hop_count' );
-is( $relay_forw->link_address, $link_addr,   'RelayForw link_address' );
-is( $relay_forw->peer_address, $peer_addr,   'RelayForw peer_address' );
+is( $relay_forw->msg_type,         12,             'RelayForw msg_type' );
+is( $relay_forw->type,             'RELAY_FORW',   'RelayForw type()' );
+is( $relay_forw->hop_count,        0,              'RelayForw hop_count' );
+is( $relay_forw->link_address,     '2001:db8::1',  'RelayForw link_address' );
+is( $relay_forw->link_address_raw, $link_addr_raw, 'RelayForw link_address_raw' );
+is( $relay_forw->peer_address,     '2001:db8::2',  'RelayForw peer_address' );
+is( $relay_forw->peer_address_raw, $peer_addr_raw, 'RelayForw peer_address_raw' );
 ok( $relay_forw->get_option( 1 )->isa( 'Net::DHCPv6::Option::ClientId' ), 'RelayForw has ClientId' );
 
 # RelayReply
 my $relay_reply = Net::DHCPv6::Message::RelayReply->new(
     hop_count    => 1,
-    link_address => $peer_addr,
-    peer_address => $link_addr,
+    link_address => '2001:db8::2',
+    peer_address => '2001:db8::1',
 );
 $relay_reply->add_option( $sid );
-is( $relay_reply->msg_type,     13,            'RelayReply msg_type' );
-is( $relay_reply->type,         'RELAY_REPLY', 'RelayReply type()' );
-is( $relay_reply->hop_count,    1,             'RelayReply hop_count' );
-is( $relay_reply->link_address, $peer_addr,    'RelayReply link_address' );
-is( $relay_reply->peer_address, $link_addr,    'RelayReply peer_address' );
+is( $relay_reply->msg_type,         13,             'RelayReply msg_type' );
+is( $relay_reply->type,             'RELAY_REPLY',  'RelayReply type()' );
+is( $relay_reply->hop_count,        1,              'RelayReply hop_count' );
+is( $relay_reply->link_address,     '2001:db8::2',  'RelayReply link_address' );
+is( $relay_reply->link_address_raw, $peer_addr_raw, 'RelayReply link_address_raw' );
+is( $relay_reply->peer_address,     '2001:db8::1',  'RelayReply peer_address' );
+is( $relay_reply->peer_address_raw, $link_addr_raw, 'RelayReply peer_address_raw' );
 
 # Round-trip: Solicit
 my $bytes   = $solicit->as_bytes;
@@ -154,8 +158,9 @@ ok( $decoded->isa( 'Net::DHCPv6::Message::Reply' ), 'Reply class preserved' );
 my $d_iana = $decoded->get_option( 3 );
 is( $d_iana->iaid, 42, 'Reply IA_NA iaid round-trip' );
 my $d_iaaddr = $d_iana->get_option( 5 );
-is( $d_iaaddr->address,            $addr, 'Reply IAAddr address round-trip' );
-is( $d_iaaddr->preferred_lifetime, 7200,  'Reply IAAddr preferred round-trip' );
+is( $d_iaaddr->address,            '2001:db8::1', 'Reply IAAddr address round-trip' );
+is( $d_iaaddr->address_raw,        $addr,         'Reply IAAddr address_raw round-trip' );
+is( $d_iaaddr->preferred_lifetime, 7200,          'Reply IAAddr preferred round-trip' );
 
 # Confirm round-trip
 $bytes   = $con->as_bytes;
@@ -191,9 +196,11 @@ is( $decoded->transaction_id, 777777, 'InformationRequest tid round-trip' );
 $bytes   = $relay_forw->as_bytes;
 $decoded = Net::DHCPv6::Packet->from_bytes( $bytes );
 ok( $decoded->isa( 'Net::DHCPv6::Message::RelayForw' ), 'RelayForw class preserved' );
-is( $decoded->hop_count,    0,          'RelayForw hop_count round-trip' );
-is( $decoded->link_address, $link_addr, 'RelayForw link_address round-trip' );
-is( $decoded->peer_address, $peer_addr, 'RelayForw peer_address round-trip' );
+is( $decoded->hop_count,        0,              'RelayForw hop_count round-trip' );
+is( $decoded->link_address,     '2001:db8::1',  'RelayForw link_address round-trip' );
+is( $decoded->link_address_raw, $link_addr_raw, 'RelayForw link_address_raw round-trip' );
+is( $decoded->peer_address,     '2001:db8::2',  'RelayForw peer_address round-trip' );
+is( $decoded->peer_address_raw, $peer_addr_raw, 'RelayForw peer_address_raw round-trip' );
 ok( $decoded->get_option( 1 )->isa( 'Net::DHCPv6::Option::ClientId' ), 'RelayForw ClientId round-trip' );
 ok( !defined( $decoded->transaction_id ),                              'RelayForw has no transaction_id' );
 
@@ -201,9 +208,11 @@ ok( !defined( $decoded->transaction_id ),                              'RelayFor
 $bytes   = $relay_reply->as_bytes;
 $decoded = Net::DHCPv6::Packet->from_bytes( $bytes );
 ok( $decoded->isa( 'Net::DHCPv6::Message::RelayReply' ), 'RelayReply class preserved' );
-is( $decoded->hop_count,    1,          'RelayReply hop_count round-trip' );
-is( $decoded->link_address, $peer_addr, 'RelayReply link_address round-trip' );
-is( $decoded->peer_address, $link_addr, 'RelayReply peer_address round-trip' );
+is( $decoded->hop_count,        1,              'RelayReply hop_count round-trip' );
+is( $decoded->link_address,     '2001:db8::2',  'RelayReply link_address round-trip' );
+is( $decoded->link_address_raw, $peer_addr_raw, 'RelayReply link_address_raw round-trip' );
+is( $decoded->peer_address,     '2001:db8::1',  'RelayReply peer_address round-trip' );
+is( $decoded->peer_address_raw, $link_addr_raw, 'RelayReply peer_address_raw round-trip' );
 ok( $decoded->get_option( 2 )->isa( 'Net::DHCPv6::Option::ServerId' ), 'RelayReply ServerId round-trip' );
 
 # Unknown message type defaults to Packet

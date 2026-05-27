@@ -14,16 +14,20 @@ use namespace::clean;
 sub new {
     my ( $class, %args ) = @_;
     croak 'PdExclude requires prefix_length' unless defined $args{prefix_length};
-    croak 'PdExclude requires address'       unless $args{address};
+    my $addr = $class->_pick_addr( \%args, 'address' );
+    croak 'PdExclude requires address' unless $addr;
+    my $addr_len = ( $args{prefix_length} + 7 ) >> 3;
+    $addr       = substr( $addr, 0, $addr_len );
     $args{code} = $OPTION_PD_EXCLUDE;
-    $args{data} = pack( 'C', $args{prefix_length} ) . $args{address};
+    $args{data} = pack( 'C', $args{prefix_length} ) . $addr;
     my $self = $class->SUPER::new( %args );
     $self->{prefix_length} = $args{prefix_length};
-    $self->{address}       = $args{address};
+    $self->{address}       = $addr;
     bless $self, $class;
 }
 
 sub prefix_length { shift->{prefix_length} }
+sub address_raw   { shift->{address} }
 sub address       { shift->{address} }
 
 sub from_bytes_inner {
@@ -35,7 +39,7 @@ sub from_bytes_inner {
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated PdExclude address' )
         if 1 + $addr_len > CORE::length( $data );
     my $addr = substr( $data, 1, $addr_len );
-    return $class->new( prefix_length => $plen, address => $addr );
+    return $class->new( prefix_length => $plen, address_raw => $addr );
 }
 
 sub as_bytes {
@@ -53,11 +57,17 @@ __END__
 
 =head1 SYNOPSIS
 
-  use Socket qw(inet_pton AF_INET6);
-  use Net::DHCPv6::Option::PdExclude;
+  # Text form (auto-resolved, truncated to prefix length)
   my $opt = Net::DHCPv6::Option::PdExclude->new(
       prefix_length => 48,
-      address       => inet_pton( AF_INET6, '2001:db8::' ),
+      address       => '2001:db8::',
+  );
+
+  # Raw bytes (already truncated to prefix length)
+  use Socket qw(inet_pton AF_INET6);
+  my $opt2 = Net::DHCPv6::Option::PdExclude->new(
+      prefix_length => 48,
+      address_raw   => inet_pton( AF_INET6, '2001:db8::' ),
   );
 
 =head1 DESCRIPTION
@@ -69,16 +79,17 @@ delegated prefix set.  See RFC 6603.
 
 =head2 new
 
-Constructor.  Requires C<prefix_length> and C<address> (the prefix
-address bytes, with length derived from prefix_length).
-
-=head2 prefix_length
-
-Returns the prefix length in bits.
+Constructor.  Requires C<prefix_length> and either C<address> (IPv6 text)
+or C<address_raw> (prefix bytes).  Text addresses are truncated to
+ceil(prefix_length/8) bytes.
 
 =head2 address
 
-Returns the prefix address bytes.
+Returns the prefix address bytes (variable-length, not full 16 bytes).
+
+=head2 address_raw
+
+Returns the prefix address bytes (same as C<address>).
 
 =head1 SEE ALSO
 

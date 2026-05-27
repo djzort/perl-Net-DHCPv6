@@ -7,7 +7,7 @@ use strictures 2;
 use Carp qw(croak);
 use Net::DHCPv6::DUID;
 
-# Option classes — loaded so they register in the dispatch tables
+# Option classes - loaded so they register in the dispatch tables
 use Net::DHCPv6::Option::AftrName;
 use Net::DHCPv6::Option::Auth;
 use Net::DHCPv6::Option::BootfileParam;

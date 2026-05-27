@@ -104,7 +104,8 @@ subtest 'advertise options' => sub {
 
     my $addr = $ia->get_option( 5 );
     ok( $addr, 'IAADDR present' );
-    is( $addr->address,            pack( 'H*', '20010dba010000000000000000000030' ), 'IAADDR = 2001:dba:100::30' );
+    is( $addr->address,            '2001:dba:100::30',                              'IAADDR = 2001:dba:100::30' );
+    is( $addr->address_raw,        pack( 'H*', '20010dba010000000000000000000030' ), 'IAADDR address_raw' );
     is( $addr->preferred_lifetime, 375,                                              'IAADDR preferred' );
     is( $addr->valid_lifetime,     600,                                              'IAADDR valid' );
 
@@ -120,9 +121,8 @@ subtest 'advertise options' => sub {
 
     my $dns = $ol->get_option( 23 );
     ok( $dns, 'DNS_SERVERS present' );
-    my @dns_addrs = @{ $dns->servers };
-    is( scalar @dns_addrs,             1,                                  'One DNS server' );
-    is( unpack( 'H*', $dns_addrs[0] ), '20010dba010000000000000000000001', 'DNS server address hex' );
+    is( $dns->servers->[0],      '2001:dba:100::1',                        'DNS server address' );
+    is( unpack( 'H*', $dns->servers_raw->[0] ), '20010dba010000000000000000000001', 'DNS server address hex' );
 
     my $dl = $ol->get_option( 24 );
     ok( $dl, 'DOMAIN_LIST present' );
@@ -144,7 +144,8 @@ subtest 'request options' => sub {
 
     my $addr = $ia->get_option( 5 );
     ok( $addr, 'IAADDR present' );
-    is( $addr->address,            pack( 'H*', '20010dba010000000000000000000030' ), 'IAADDR address' );
+    is( $addr->address,            '2001:dba:100::30',                              'IAADDR address' );
+    is( $addr->address_raw,        pack( 'H*', '20010dba010000000000000000000030' ), 'IAADDR address_raw' );
     is( $addr->preferred_lifetime, 7200,                                             'IAADDR preferred' );
     is( $addr->valid_lifetime,     7500,                                             'IAADDR valid' );
 };

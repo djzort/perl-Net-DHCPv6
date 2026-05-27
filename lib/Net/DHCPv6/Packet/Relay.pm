@@ -7,31 +7,43 @@ use strictures 2;
 use Carp qw(croak);
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::X::BadMessage;
-use parent 'Net::DHCPv6::Packet';
+use parent 'Net::DHCPv6::Helpers', 'Net::DHCPv6::Packet';
 use namespace::clean;
 
 sub new {
     my ( $class, %args ) = @_;
-    croak 'Relay->new: hop_count is required'         unless defined $args{hop_count};
-    croak 'Relay->new: link_address is required'      unless defined $args{link_address};
-    croak 'Relay->new: peer_address is required'      unless defined $args{peer_address};
-    croak 'Relay->new: link_address must be 16 bytes' unless CORE::length( $args{link_address} ) == 16;
-    croak 'Relay->new: peer_address must be 16 bytes' unless CORE::length( $args{peer_address} ) == 16;
+    croak 'Relay->new: hop_count is required' unless defined $args{hop_count};
+    my $link_addr = $class->_pick_addr( \%args, 'link_address' );
+    croak 'Relay->new: link_address is required'      unless defined $link_addr;
+    croak 'Relay->new: link_address must be 16 bytes' unless CORE::length( $link_addr ) == 16;
+    my $peer_addr = $class->_pick_addr( \%args, 'peer_address' );
+    croak 'Relay->new: peer_address is required'      unless defined $peer_addr;
+    croak 'Relay->new: peer_address must be 16 bytes' unless CORE::length( $peer_addr ) == 16;
 
     $args{options} = $args{options} // Net::DHCPv6::OptionList->new;
 
     return bless {
         msg_type     => $args{msg_type},
         hop_count    => $args{hop_count},
-        link_address => $args{link_address},
-        peer_address => $args{peer_address},
+        link_address => $link_addr,
+        peer_address => $peer_addr,
         options      => $args{options},
     }, $class;
 }
 
-sub hop_count    { shift->{hop_count} }
-sub link_address { shift->{link_address} }
-sub peer_address { shift->{peer_address} }
+sub hop_count { shift->{hop_count} }
+
+sub link_address {
+    my $self = shift;
+    return $self->_format_ipv6( $self->{link_address} );
+}
+sub link_address_raw { shift->{link_address} }
+
+sub peer_address {
+    my $self = shift;
+    return $self->_format_ipv6( $self->{peer_address} );
+}
+sub peer_address_raw { shift->{peer_address} }
 
 sub from_bytes {
     my ( $class, $bytes ) = @_;
@@ -71,15 +83,26 @@ __END__
 
 =head1 SYNOPSIS
 
+  # Text form (auto-resolved to wire bytes)
   my $relay = Net::DHCPv6::Packet::Relay->new(
       msg_type     => $RELAY_FORW,
       hop_count    => 0,
-      link_address => "\xfe\x80" . "\x00" x 14,
-      peer_address => "\xfe\x80" . "\x00" x 14,
+      link_address => '2001:db8::1',
+      peer_address => '2001:db8::2',
   );
-  print $relay->hop_count;     # 0
-  print $relay->link_address;  # 16 bytes
-  print $relay->peer_address;  # 16 bytes
+  print $relay->hop_count;        # 0
+  print $relay->link_address;     # '2001:db8::1'
+  print $relay->link_address_raw; # 16 bytes
+  print $relay->peer_address;     # '2001:db8::2'
+
+  # Raw bytes
+  use Socket qw(inet_pton AF_INET6);
+  my $relay2 = Net::DHCPv6::Packet::Relay->new(
+      msg_type          => $RELAY_FORW,
+      hop_count         => 0,
+      link_address_raw  => inet_pton( AF_INET6, '2001:db8::1' ),
+      peer_address_raw  => inet_pton( AF_INET6, '2001:db8::2' ),
+  );
 
 =head1 DESCRIPTION
 
@@ -94,8 +117,10 @@ then options. No transaction_id field.
 
 =item B<new>(%args)
 
-Constructs a relay message. Required: C<hop_count>, C<link_address>,
-C<peer_address>. Optional: C<options> (OptionList).
+Constructs a relay message. Required: C<hop_count>, and either
+C<link_address> (IPv6 text) or C<link_address_raw> (16 raw bytes), and
+either C<peer_address> or C<peer_address_raw>. Optional: C<options>
+(OptionList).
 
 =item B<from_bytes>($bytes)
 
@@ -112,7 +137,19 @@ Class method. Parses relay wire format: msg_type(1) + hop_count(1)
 
 =item B<link_address>
 
+Returns the link address as a text string.
+
+=item B<link_address_raw>
+
+Returns the link address as 16 raw bytes.
+
 =item B<peer_address>
+
+Returns the peer address as a text string.
+
+=item B<peer_address_raw>
+
+Returns the peer address as 16 raw bytes.
 
 =item B<as_bytes>
 

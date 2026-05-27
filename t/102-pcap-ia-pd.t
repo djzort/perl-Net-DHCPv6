@@ -98,7 +98,8 @@ subtest 'advertise options' => sub {
     is( $pfx->preferred_lifetime, 4500,                                             'IAPREFIX preferred' );
     is( $pfx->valid_lifetime,     7200,                                             'IAPREFIX valid' );
     is( $pfx->prefix_length,      56,                                               'IAPREFIX prefix_len=56' );
-    is( $pfx->address,            pack( 'H*', '2a000001000101000000000000000000' ), 'IAPREFIX address' );
+    is( $pfx->address_raw,        pack( 'H*', '2a000001000101000000000000000000' ), 'IAPREFIX address_raw' );
+    is( $pfx->address,            '2a00:1:1:100::',                                  'IAPREFIX address' );
 
     my $cid = $ol->get_option( 1 );
     ok( $cid, 'CLIENTID present' );
