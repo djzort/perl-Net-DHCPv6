@@ -52,8 +52,10 @@ is( $parsed->duid->time, 123456, 'parsed ClientId DUID time' );
 is( $remain,             '',     'no trailing data' );
 
 ok( dies { Net::DHCPv6::Option::ClientId->new }, 'ClientId dies without duid' );
-ok( dies { Net::DHCPv6::Option::ClientId::from_bytes_inner( undef, 1, "\x00\x01" ) },
-    'ClientId dies on truncated DUID data' );
+ok(
+    dies { Net::DHCPv6::Option::ClientId::from_bytes_inner( undef, 1, "\x00\x01" ) },    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    'ClientId dies on truncated DUID data'
+);
 
 # ServerId
 my $sid = Net::DHCPv6::Option::ServerId->new( duid => $duid );
@@ -66,8 +68,10 @@ ok( $sid_parsed->isa( 'Net::DHCPv6::Option::ServerId' ), 'ServerId parsed class'
 is( $sid_parsed->duid->time, 123456, 'ServerId parsed DUID time' );
 
 ok( dies { Net::DHCPv6::Option::ServerId->new }, 'ServerId dies without duid' );
-ok( dies { Net::DHCPv6::Option::ServerId::from_bytes_inner( undef, 2, "\x00\x01" ) },
-    'ServerId dies on truncated DUID data' );
+ok(
+    dies { Net::DHCPv6::Option::ServerId::from_bytes_inner( undef, 2, "\x00\x01" ) },    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    'ServerId dies on truncated DUID data'
+);
 
 # ORO
 my $oro = Net::DHCPv6::Option::ORO->new( requested_options => [ 23, 24 ] );
@@ -80,7 +84,7 @@ my ( $oro_parsed ) = Net::DHCPv6::Option->from_bytes( $oro_bytes );
 ok( $oro_parsed->isa( 'Net::DHCPv6::Option::ORO' ), 'ORO parsed class' );
 is( $oro_parsed->requested_options, [ 23, 24 ], 'ORO parsed options' );
 
-ok( dies { Net::DHCPv6::Option::ORO::from_bytes_inner( undef, 6, "\x01" ) }, 'ORO dies on odd-length data' );
+ok( dies { Net::DHCPv6::Option::ORO::from_bytes_inner( undef, 6, "\x01" ) }, 'ORO dies on odd-length data' );    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
 
 # Preference
 my $pref = Net::DHCPv6::Option::Preference->new( value => 255 );
@@ -93,8 +97,10 @@ ok( $pref_parsed->isa( 'Net::DHCPv6::Option::Preference' ), 'Preference parsed c
 is( $pref_parsed->value, 255, 'Preference parsed value' );
 
 ok( dies { Net::DHCPv6::Option::Preference->new }, 'Preference dies without value' );
-ok( dies { Net::DHCPv6::Option::Preference::from_bytes_inner( undef, 7, "\x01\x02" ) },
-    'Preference dies on data != 1 byte' );
+ok(
+    dies { Net::DHCPv6::Option::Preference::from_bytes_inner( undef, 7, "\x01\x02" ) },    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    'Preference dies on data != 1 byte'
+);
 
 # ElapsedTime
 my $elapsed = Net::DHCPv6::Option::ElapsedTime->new( centiseconds => 1000 );
@@ -107,8 +113,10 @@ ok( $elapsed_parsed->isa( 'Net::DHCPv6::Option::ElapsedTime' ), 'ElapsedTime par
 is( $elapsed_parsed->centiseconds, 1000, 'ElapsedTime parsed centiseconds' );
 
 ok( dies { Net::DHCPv6::Option::ElapsedTime->new }, 'ElapsedTime dies without centiseconds' );
-ok( dies { Net::DHCPv6::Option::ElapsedTime::from_bytes_inner( undef, 8, "\x01" ) },
-    'ElapsedTime dies on data != 2 bytes' );
+ok(
+    dies { Net::DHCPv6::Option::ElapsedTime::from_bytes_inner( undef, 8, "\x01" ) },    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    'ElapsedTime dies on data != 2 bytes'
+);
 
 # StatusCode
 my $sc = Net::DHCPv6::Option::StatusCode->new( status_code => 0, message => 'Success' );
@@ -123,8 +131,10 @@ is( $sc_parsed->status_code, 0,         'StatusCode parsed code' );
 is( $sc_parsed->message,     'Success', 'StatusCode parsed message' );
 
 ok( dies { Net::DHCPv6::Option::StatusCode->new }, 'StatusCode dies without status_code' );
-ok( dies { Net::DHCPv6::Option::StatusCode::from_bytes_inner( undef, 13, "\x00" ) },
-    'StatusCode dies on data < 2 bytes' );
+ok(
+    dies { Net::DHCPv6::Option::StatusCode::from_bytes_inner( undef, 13, "\x00" ) },    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    'StatusCode dies on data < 2 bytes'
+);
 
 # RapidCommit
 my $rc = Net::DHCPv6::Option::RapidCommit->new;
@@ -137,8 +147,10 @@ my ( $rc_parsed ) = Net::DHCPv6::Option->from_bytes( $rc_bytes );
 ok( $rc_parsed->isa( 'Net::DHCPv6::Option::RapidCommit' ), 'RapidCommit parsed class' );
 is( $rc_parsed->data, '', 'RapidCommit parsed empty data' );
 
-ok( dies { Net::DHCPv6::Option::RapidCommit::from_bytes_inner( undef, 14, "\x01" ) },
-    'RapidCommit dies on non-empty data' );
+ok(
+    dies { Net::DHCPv6::Option::RapidCommit::from_bytes_inner( undef, 14, "\x01" ) },    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    'RapidCommit dies on non-empty data'
+);
 
 # OptionList
 my $ol = Net::DHCPv6::OptionList->new;
@@ -201,7 +213,7 @@ is( $iana2->iaid,                          42,   'parse IANA iaid' );
 is( $iana2->get_option( 8 )->centiseconds, 1000, 'parse IANA sub-option' );
 
 ok( dies { Net::DHCPv6::Option::IANA->new },                                       'IANA dies without iaid' );
-ok( dies { Net::DHCPv6::Option::IANA::from_bytes_inner( undef, 3, "\x01" x 11 ) }, 'IANA dies on data < 12 bytes' );
+ok( dies { Net::DHCPv6::Option::IANA::from_bytes_inner( undef, 3, "\x01" x 11 ) }, 'IANA dies on data < 12 bytes' );   ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
 
 # IAAddr option
 my $addr   = pack( 'H*', '20010db8000000000000000000000001' );
@@ -224,8 +236,10 @@ is( $iaaddr_parsed->address_raw,        $addr,         'IAAddr parsed address_ra
 is( $iaaddr_parsed->preferred_lifetime, 7200,          'IAAddr parsed preferred' );
 is( $iaaddr_parsed->valid_lifetime,     86400,         'IAAddr parsed valid' );
 
-ok( dies { Net::DHCPv6::Option::IAAddr->new },                                       'IAAddr dies without address' );
+ok( dies { Net::DHCPv6::Option::IAAddr->new }, 'IAAddr dies without address' );
+## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
 ok( dies { Net::DHCPv6::Option::IAAddr::from_bytes_inner( undef, 5, "\x01" x 23 ) }, 'IAAddr dies on data < 24 bytes' );
+## use critic
 
 # IATA option
 my $iata = Net::DHCPv6::Option::IATA->new( iaid => 99 );
@@ -243,7 +257,7 @@ is( $iata2->iaid,                          99,   'parse IATA iaid' );
 is( $iata2->get_option( 8 )->centiseconds, 1000, 'parse IATA sub-option' );
 
 ok( dies { Net::DHCPv6::Option::IATA->new },                              'IATA dies without iaid' );
-ok( dies { Net::DHCPv6::Option::IATA::from_bytes_inner( undef, 4, '' ) }, 'IATA dies on data < 4 bytes' );
+ok( dies { Net::DHCPv6::Option::IATA::from_bytes_inner( undef, 4, '' ) }, 'IATA dies on data < 4 bytes' );    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
 
 # IAPD option (prefix delegation)
 my $iapd = Net::DHCPv6::Option::IAPD->new( iaid => 7, t1 => 3600, t2 => 5400 );
@@ -289,6 +303,6 @@ is( $iaprefix2->valid_lifetime,     86400,        'parse IAPrefix valid' );
 is( $iaprefix2->prefix_length,      64,           'parse IAPrefix prefix_len' );
 
 ok( dies { Net::DHCPv6::Option::IAPD->new },                                        'IAPD dies without iaid' );
-ok( dies { Net::DHCPv6::Option::IAPD::from_bytes_inner( undef, 25, "\x01" x 11 ) }, 'IAPD dies on data < 12 bytes' );
+ok( dies { Net::DHCPv6::Option::IAPD::from_bytes_inner( undef, 25, "\x01" x 11 ) }, 'IAPD dies on data < 12 bytes' );  ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
 
 done_testing;
