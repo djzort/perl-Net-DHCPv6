@@ -4,7 +4,6 @@
 package Net::DHCPv6::Option::SubscriberId;
 
 use strictures 2;
-use Carp qw(croak);
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean;

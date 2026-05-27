@@ -4,7 +4,6 @@
 package Net::DHCPv6::Option::DomainList;
 
 use strictures 2;
-use Carp qw(croak);
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use Net::DHCPv6::X::BadOption;
