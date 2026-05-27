@@ -13,11 +13,7 @@ use Net::DHCPv6::OptionList;
 # Helper: check that $OPTION_XXX constant exists, matches expected
 # value, is registered in REV_OPTION_CODE, and has an option class.
 # -------------------------------------------------------------------
-my %OPTION_CLASS_CODES;
-{
-    no strict 'refs';
-    %OPTION_CLASS_CODES = %Net::DHCPv6::OptionList::OPTION_CLASS;
-}
+my %OPTION_CLASS_CODES = %Net::DHCPv6::OptionList::OPTION_CLASS;
 
 sub check_option_constant {
     my ( $name, $expected, $desc ) = @_;
