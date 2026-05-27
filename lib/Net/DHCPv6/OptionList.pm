@@ -30,7 +30,7 @@ sub add_option {
 sub get_option {
     my ( $self, $code ) = @_;
     my $list = $self->{options_by_code}{$code};
-    return unless $list && @$list;
+    return unless $list && @{$list};
     return $list->[0];
 }
 
@@ -46,7 +46,7 @@ sub options {
     my @opts;
     for my $code ( @{ $self->{options_order} } ) {
         my $list = $self->{options_by_code}{$code};
-        push @opts, @$list if $list;
+        push @opts, @{$list} if $list;
     }
     return \@opts;
 }
@@ -54,7 +54,7 @@ sub options {
 sub as_bytes {
     my $self = shift;
     my $opts = $self->options or return '';
-    return join( '', map { $_->as_bytes } @$opts );
+    return join( '', map { $_->as_bytes } @{$opts} );
 }
 
 sub try_from_bytes {

@@ -21,20 +21,20 @@ sub _encode_domain {
 sub _read_labels_at {
     my ( $data, $offset_ref, $len ) = @_;
     my @labels;
-    while ( $$offset_ref < $len ) {
-        my $llen = unpack( 'C', substr( $data, $$offset_ref, 1 ) );
+    while ( ${$offset_ref} < $len ) {
+        my $llen = unpack( 'C', substr( $data, ${$offset_ref}, 1 ) );
         if ( $llen == 0 ) {
-            ++$$offset_ref;
+            ++${$offset_ref};
             last;
         }
         if ( ( $llen & 0xC0 ) == 0xC0 ) {
             if ( $Net::DHCPv6::Option::FOLLOW_COMPRESSION ) {
                 Net::DHCPv6::X::Truncated->throw( message => 'Truncated compression pointer' )
-                    if $$offset_ref + 2 > $len;
-                my $ptr = ( ( $llen & 0x3F ) << 8 ) | unpack( 'C', substr( $data, $$offset_ref + 1, 1 ) );
+                    if ${$offset_ref} + 2 > $len;
+                my $ptr = ( ( $llen & 0x3F ) << 8 ) | unpack( 'C', substr( $data, ${$offset_ref} + 1, 1 ) );
                 Net::DHCPv6::X::BadOption->throw( message => 'Compression pointer out of range' )
                     if $ptr >= $len;
-                $$offset_ref += 2;
+                ${$offset_ref} += 2;
                 my $ptr_ref = \$ptr;
                 push @labels, _read_labels_at( $data, $ptr_ref, $len );
                 last;
@@ -42,11 +42,11 @@ sub _read_labels_at {
             Net::DHCPv6::X::BadOption->throw( message => 'Compression pointer in domain name' );
         }
         Net::DHCPv6::X::BadOption->throw( message => 'Invalid domain label length' ) if $llen > 63;
-        ++$$offset_ref;
+        ++${$offset_ref};
         Net::DHCPv6::X::Truncated->throw( message => 'Truncated domain label' )
-            if $$offset_ref + $llen > $len;
-        push @labels, substr( $data, $$offset_ref, $llen );
-        $$offset_ref += $llen;
+            if ${$offset_ref} + $llen > $len;
+        push @labels, substr( $data, ${$offset_ref}, $llen );
+        ${$offset_ref} += $llen;
     }
     return @labels;
 }
