@@ -79,13 +79,13 @@ use namespace::clean;
 # Packet-level decoders
 sub decode_or_croak {
     my ( $class, $bytes ) = @_;
-    croak 'No data provided' unless defined $bytes && CORE::length( $bytes ) >= 4;
+    croak 'No data provided' if !defined $bytes || CORE::length( $bytes ) < 4;
     return Net::DHCPv6::Packet->from_bytes( $bytes );
 }
 
 sub decode_or_null {
     my ( $class, $bytes ) = @_;
-    return unless defined $bytes && CORE::length( $bytes ) >= 4;
+    return if !defined $bytes || CORE::length( $bytes ) < 4;
     my $packet;
     eval { $packet = Net::DHCPv6::Packet->from_bytes( $bytes ); };
     return $packet;

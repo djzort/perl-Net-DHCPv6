@@ -55,7 +55,7 @@ sub as_bytes {
 sub from_bytes {
     my ( $class, $bytes ) = @_;
     Net::DHCPv6::X::BadMessage->throw( message => 'Empty packet data' )
-        unless defined $bytes && CORE::length( $bytes ) >= 4;
+        if !defined $bytes || CORE::length( $bytes ) < 4;
     my $msg_type = unpack( 'C', substr( $bytes, 0, 1 ) );
 
     if ( $msg_type == $RELAY_FORW || $msg_type == $RELAY_REPLY ) {

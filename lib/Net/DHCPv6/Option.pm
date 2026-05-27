@@ -37,7 +37,7 @@ sub as_bytes {
 sub from_bytes {
     my ( $class, $bytes ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Option->from_bytes: need at least 4 bytes for TLV header' )
-        unless defined $bytes && CORE::length( $bytes ) >= 4;
+        if !defined $bytes || CORE::length( $bytes ) < 4;
     my $code   = unpack( 'n', substr( $bytes, 0, 2 ) );
     my $optlen = unpack( 'n', substr( $bytes, 2, 2 ) );
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated option TLV payload' )

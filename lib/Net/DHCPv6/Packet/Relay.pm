@@ -48,7 +48,7 @@ sub peer_address_raw { shift->{peer_address} }
 sub from_bytes {
     my ( $class, $bytes ) = @_;
     Net::DHCPv6::X::BadMessage->throw( message => 'Empty relay data' )
-        unless defined $bytes && CORE::length( $bytes ) >= 34;
+        if !defined $bytes || CORE::length( $bytes ) < 34;
 
     my $msg_type   = unpack( 'C', substr( $bytes, 0, 1 ) );
     my $hop_count  = unpack( 'C', substr( $bytes, 1, 1 ) );
