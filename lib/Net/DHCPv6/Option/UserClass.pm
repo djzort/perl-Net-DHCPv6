@@ -15,7 +15,7 @@ sub new {
     $args{code} = $OPTION_USER_CLASS;
     my $data_list = $args{user_class_data} // [];
     $data_list = [$data_list] unless is_plain_arrayref( $data_list );
-    $args{data} = join( '', map { pack( 'n', CORE::length ) . $_ } @$data_list );
+    $args{data} = join( '', map { pack( 'n', CORE::length ) . $_ } @{$data_list} );
     my $self = $class->SUPER::new( %args );
     $self->{user_class_data} = $data_list;
     bless $self, $class;

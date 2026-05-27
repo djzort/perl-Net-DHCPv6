@@ -15,11 +15,11 @@ sub new {
     my $addrs = $class->_pick_addrs( \%args, 'servers' );
     if ( !defined $addrs && $args{addresses} ) {
         my $list = is_plain_arrayref( $args{addresses} ) ? $args{addresses} : [ $args{addresses} ];
-        $addrs = [ map { $class->_resolve_ipv6( $_ ) } @$list ];
+        $addrs = [ map { $class->_resolve_ipv6( $_ ) } @{$list} ];
     }
     $addrs //= [];
     $args{code} = $OPTION_NIS_SERVERS;
-    $args{data} = join( '', @$addrs );
+    $args{data} = join( '', @{$addrs} );
     my $self = $class->SUPER::new( %args );
     $self->{servers} = $addrs;
     bless $self, $class;

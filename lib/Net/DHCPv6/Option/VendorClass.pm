@@ -18,7 +18,7 @@ sub new {
     my $data_list = $args{vendor_data} // $args{data} // [];
     $data_list = [$data_list] unless is_plain_arrayref( $data_list );
     my $encoded =
-        pack( 'N', $args{enterprise_number} ) . join( '', map { pack( 'n', CORE::length ) . $_ } @$data_list );
+        pack( 'N', $args{enterprise_number} ) . join( '', map { pack( 'n', CORE::length ) . $_ } @{$data_list} );
     $args{data} = $encoded;
     my $self = $class->SUPER::new( %args );
     $self->{enterprise_number} = $args{enterprise_number};
