@@ -18,15 +18,15 @@ use Net::DHCPv6::Option::SipServerD;
 # Carp::carp-based deprecation warnings work with both approaches
 # because carp calls CORE::warn() without triggering a fatal category.
 
-sub _warns (&) {
-    my $code = shift;
+sub _warns (&) {    ## no critic (Subroutines::ProhibitSubroutinePrototypes)
+    my $code  = shift;
     my $count = 0;
     local $SIG{__WARN__} = sub { $count++ };
     eval { $code->() };
     return $count;
 }
 
-sub _warnings (&) {
+sub _warnings (&) {    ## no critic (Subroutines::ProhibitSubroutinePrototypes)
     my $code = shift;
     my @warnings;
     local $SIG{__WARN__} = sub { push @warnings, @_ };
@@ -34,8 +34,8 @@ sub _warnings (&) {
     return \@warnings;
 }
 
-sub _no_warnings (&) {
-    my $code = shift;
+sub _no_warnings (&) {    ## no critic (Subroutines::ProhibitSubroutinePrototypes)
+    my $code  = shift;
     my $count = 0;
     local $SIG{__WARN__} = sub { $count++ };
     eval { $code->() };
@@ -45,21 +45,24 @@ sub _no_warnings (&) {
 # ---- Tests ----
 
 subtest 'clean code produces no warnings' => sub {
-    ok(_no_warnings {
-        my $sd = Net::DHCPv6::Option::SipServerD->new;
-        is($sd->domains, [], 'SipServerD defaults to empty list');
-    }, 'no warnings during SipServerD default construction');
+    ok(
+        _no_warnings {
+            my $sd = Net::DHCPv6::Option::SipServerD->new;
+            is( $sd->domains, [], 'SipServerD defaults to empty list' );
+        },
+        'no warnings during SipServerD default construction'
+    );
 };
 
 subtest '_warns counts carp warnings' => sub {
-    my $cnt = _warns { require Carp; Carp::carp('test warning') };
-    ok($cnt, 'carp produced a warning');
+    my $cnt = _warns { require Carp; Carp::carp( 'test warning' ) };
+    ok( $cnt, 'carp produced a warning' );
 };
 
 subtest '_warnings returns warning strings' => sub {
-    my $w = _warnings { require Carp; Carp::carp('test warning') };
-    ok(@$w, 'returned at least one warning');
-    like($w->[0], qr/test warning/, 'warning matches expected string');
+    my $w = _warnings { require Carp; Carp::carp( 'test warning' ) };
+    ok( @$w, 'returned at least one warning' );
+    like( $w->[0], qr/test warning/, 'warning matches expected string' );
 };
 
 done_testing;
