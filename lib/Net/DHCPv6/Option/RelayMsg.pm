@@ -14,10 +14,10 @@ sub new {
     $args{data} = $args{data} // ( $args{message} // '' );
     my $self = $class->SUPER::new( %args );
     $self->{message} = $args{data};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub message { shift->{message} }
+sub message { return shift->{message} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

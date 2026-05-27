@@ -15,7 +15,7 @@ sub new {
     return $class->SUPER::new( %args );
 }
 
-sub option_data { shift->{data} }
+sub option_data { return shift->{data} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

@@ -24,7 +24,7 @@ sub add_option {
     push @{ $self->{options_order} }, $code
         unless exists $self->{options_by_code}{$code};
     $self->{options_by_code}{$code} //= [];
-    push @{ $self->{options_by_code}{$code} }, $option;
+    return push @{ $self->{options_by_code}{$code} }, $option;
 }
 
 sub get_option {
@@ -37,7 +37,7 @@ sub get_option {
 sub remove_option {
     my ( $self, $code ) = @_;
     delete $self->{options_by_code}{$code};
-    @{ $self->{options_order} } = grep { $_ != $code } @{ $self->{options_order} };
+    return @{ $self->{options_order} } = grep { $_ != $code } @{ $self->{options_order} };
 }
 
 sub options {

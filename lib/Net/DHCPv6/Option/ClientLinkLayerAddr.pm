@@ -19,11 +19,11 @@ sub new {
     my $self = $class->SUPER::new( %args );
     $self->{link_layer_type} = $args{link_layer_type};
     $self->{link_layer_addr} = $args{link_layer_addr};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub link_layer_type { shift->{link_layer_type} }
-sub link_layer_addr { shift->{link_layer_addr} }
+sub link_layer_type { return shift->{link_layer_type} }
+sub link_layer_addr { return shift->{link_layer_addr} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

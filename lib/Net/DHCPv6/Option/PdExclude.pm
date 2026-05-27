@@ -23,12 +23,12 @@ sub new {
     my $self = $class->SUPER::new( %args );
     $self->{prefix_length} = $args{prefix_length};
     $self->{address}       = $addr;
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub prefix_length { shift->{prefix_length} }
-sub address_raw   { shift->{address} }
-sub address       { shift->{address} }
+sub prefix_length { return shift->{prefix_length} }
+sub address_raw   { return shift->{address} }
+sub address       { return shift->{address} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

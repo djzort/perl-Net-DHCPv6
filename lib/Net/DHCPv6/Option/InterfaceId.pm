@@ -15,7 +15,7 @@ sub new {
     return $class->SUPER::new( %args );
 }
 
-sub interface_id { shift->{data} }
+sub interface_id { return shift->{data} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

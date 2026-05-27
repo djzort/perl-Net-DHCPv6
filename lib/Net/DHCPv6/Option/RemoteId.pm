@@ -19,11 +19,11 @@ sub new {
     my $self = $class->SUPER::new( %args );
     $self->{enterprise_number} = $args{enterprise_number};
     $self->{remote_data}       = $args{remote_data};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub enterprise_number { shift->{enterprise_number} }
-sub remote_data       { shift->{remote_data} }
+sub enterprise_number { return shift->{enterprise_number} }
+sub remote_data       { return shift->{remote_data} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

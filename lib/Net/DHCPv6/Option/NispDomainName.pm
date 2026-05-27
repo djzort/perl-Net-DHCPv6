@@ -16,10 +16,10 @@ sub new {
     $args{data} = $args{domain_name};
     my $self = $class->SUPER::new( %args );
     $self->{domain_name} = $args{domain_name};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub domain_name { shift->{domain_name} }
+sub domain_name { return shift->{domain_name} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

@@ -49,14 +49,14 @@ sub new {
         $self->{identifier} = $args{identifier} // '';
     }
 
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub duid_type         { shift->{duid_type} }
-sub link_layer_type   { shift->{link_layer_type} }
-sub time              { shift->{time} }
-sub enterprise_number { shift->{enterprise_number} }
-sub identifier        { shift->{identifier} }
+sub duid_type         { return shift->{duid_type} }
+sub link_layer_type   { return shift->{link_layer_type} }
+sub time              { return shift->{time} }
+sub enterprise_number { return shift->{enterprise_number} }
+sub identifier        { return shift->{identifier} }
 
 sub length {
     my $self = shift;

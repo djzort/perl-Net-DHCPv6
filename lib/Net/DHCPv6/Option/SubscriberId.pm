@@ -15,10 +15,10 @@ sub new {
     $args{data} = $subscriber_id;
     my $self = $class->SUPER::new( %args );
     $self->{subscriber_id} = $subscriber_id;
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub subscriber_id { shift->{subscriber_id} }
+sub subscriber_id { return shift->{subscriber_id} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

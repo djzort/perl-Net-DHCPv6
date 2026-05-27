@@ -22,10 +22,10 @@ sub new {
     $args{data} = join( '', @{$addrs} );
     my $self = $class->SUPER::new( %args );
     $self->{servers} = $addrs;
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub servers_raw { shift->{servers} }
+sub servers_raw { return shift->{servers} }
 
 sub servers {
     my $self = shift;

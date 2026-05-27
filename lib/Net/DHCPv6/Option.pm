@@ -17,11 +17,11 @@ sub new {
     my ( $class, %args ) = @_;
     croak 'Option->new: code is required' unless defined $args{code};
     my $self = { code => $args{code}, data => $args{data} // '' };
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub code { shift->{code} }
-sub data { shift->{data} }
+sub code { return shift->{code} }
+sub data { return shift->{data} }
 
 sub type {
     my $self = shift;

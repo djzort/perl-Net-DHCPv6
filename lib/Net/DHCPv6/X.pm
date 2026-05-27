@@ -13,7 +13,7 @@ sub throw {
     croak $self;
 }
 
-sub message { shift->{message} }
+sub message { return shift->{message} }
 
 1;
 
