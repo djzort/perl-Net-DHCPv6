@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: UNICAST option (code 12) — server IPv6 address
+# ABSTRACT: UNICAST option (code 12) -- server IPv6 address
 # PODNAME: Net::DHCPv6::Option::Unicast
 package Net::DHCPv6::Option::Unicast;
 
@@ -41,8 +41,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_UNICAST} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -61,7 +59,7 @@ __END__
 =head1 DESCRIPTION
 
 Carries the IPv6 address of a server to which the client should send
-messages unicast.  See RFC 8415 §21.12.
+messages unicast.  See RFC 8415 E<167>21.12.
 
 =head1 METHODS
 

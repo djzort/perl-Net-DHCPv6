@@ -43,8 +43,6 @@ sub _pick_addrs {
 
 __END__
 
-=encoding utf-8
-
 
 =head1 DESCRIPTION
 

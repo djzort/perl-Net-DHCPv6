@@ -231,26 +231,24 @@ sub new_uuid {
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
   use Net::DHCPv6::DUID;
   use Net::DHCPv6::Constants;
 
-  # DUID-LLT (type 1) — link-layer type + time + MAC
+  # DUID-LLT (type 1) -- link-layer type + time + MAC
   my $llt = Net::DHCPv6::DUID->new_llt($LINK_TYPE_ETHERNET, 0x2a3b4c5d,
       "\x00\x11\x22\x33\x44\x55");
 
-  # DUID-EN (type 2) — enterprise number + identifier
+  # DUID-EN (type 2) -- enterprise number + identifier
   my $en = Net::DHCPv6::DUID->new_en(9, "\x00\x01\x02\x03\x04\x05");
 
-  # DUID-LL (type 3) — link-layer type + MAC
+  # DUID-LL (type 3) -- link-layer type + MAC
   my $ll = Net::DHCPv6::DUID->new_ll($LINK_TYPE_ETHERNET,
       "\x00\x11\x22\x33\x44\x55");
 
-  # DUID-UUID (type 4) — 16-byte UUID
+  # DUID-UUID (type 4) -- 16-byte UUID
   my $uuid = Net::DHCPv6::DUID->new_uuid(
       pack('H*', 'f81d4fae7dec11d0a76500a0c91e6bf6') );
 
@@ -260,7 +258,7 @@ __END__
 =head1 DESCRIPTION
 
 Parses, constructs, and serializes DHCPv6 Unique Identifiers (DUIDs)
-as defined in RFC 8415 §11. Supports DUID-LLT, DUID-EN, DUID-LL, and
+as defined in RFC 8415 E<167>11. Supports DUID-LLT, DUID-EN, DUID-LL, and
 DUID-UUID types. Unknown DUID types are stored opaquely.
 
 =head1 CONSTRUCTORS
@@ -349,4 +347,4 @@ Byte length of the wire-format representation.
 
 =head1 SEE ALSO
 
-L<Net::DHCPv6>, RFC 8415 §11, RFC 6355
+L<Net::DHCPv6>, RFC 8415 E<167>11, RFC 6355

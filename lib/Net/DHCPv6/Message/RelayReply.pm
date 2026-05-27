@@ -9,9 +9,9 @@ use parent 'Net::DHCPv6::Packet::Relay';
 use namespace::clean;
 
 sub new {
-    my ($class, %args) = @_;
+    my ( $class, %args ) = @_;
     $args{msg_type} = $RELAY_REPLY;
-    $class->SUPER::new(%args);
+    $class->SUPER::new( %args );
 }
 
 $Net::DHCPv6::Packet::MESSAGE_CLASS{$RELAY_REPLY} = __PACKAGE__;
@@ -19,8 +19,6 @@ $Net::DHCPv6::Packet::MESSAGE_CLASS{$RELAY_REPLY} = __PACKAGE__;
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS
@@ -42,4 +40,4 @@ L<Net::DHCPv6::Packet::Relay> for available methods.
 =head1 SEE ALSO
 
 L<Net::DHCPv6::Packet::Relay>, L<Net::DHCPv6::Message::RelayForw>,
-RFC 8415 §14, §20
+RFC 8415 E<167>14, E<167>20

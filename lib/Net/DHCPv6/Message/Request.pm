@@ -9,9 +9,9 @@ use parent 'Net::DHCPv6::Packet';
 use namespace::clean;
 
 sub new {
-    my ($class, %args) = @_;
+    my ( $class, %args ) = @_;
     $args{msg_type} = $REQUEST;
-    $class->SUPER::new(%args);
+    $class->SUPER::new( %args );
 }
 
 $Net::DHCPv6::Packet::MESSAGE_CLASS{$REQUEST} = __PACKAGE__;
@@ -19,8 +19,6 @@ $Net::DHCPv6::Packet::MESSAGE_CLASS{$REQUEST} = __PACKAGE__;
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS

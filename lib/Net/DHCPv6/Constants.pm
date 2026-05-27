@@ -6,7 +6,7 @@ package Net::DHCPv6::Constants;
 use strictures 2;
 use Const::Fast::Exporter;
 
-# Message types (RFC 8415 §14)
+# Message types (RFC 8415 Section 14)
 const our $SOLICIT             => 1;
 const our $ADVERTISE           => 2;
 const our $REQUEST             => 3;
@@ -21,7 +21,7 @@ const our $INFORMATION_REQUEST => 11;
 const our $RELAY_FORW          => 12;
 const our $RELAY_REPLY         => 13;
 
-# Option codes (RFC 8415 §21)
+# Option codes (RFC 8415 Section 21)
 const our $OPTION_CLIENTID                 => 1;
 const our $OPTION_SERVERID                 => 2;
 const our $OPTION_IA_NA                    => 3;
@@ -71,12 +71,12 @@ const our $OPTION_INF_MAX_RT               => 83;
 const our $OPTION_CAPTIVE_PORTAL           => 103;
 const our $OPTION_MUD_URL                  => 112;
 
-# Client FQDN flags (RFC 4704 §4)
+# Client FQDN flags (RFC 4704 Section 4)
 const our $CLIENT_FQDN_S => 0x01;    # Server should NOT update DNS
 const our $CLIENT_FQDN_O => 0x02;    # Server override
 const our $CLIENT_FQDN_N => 0x04;    # Server should update DNS
 
-# Status codes (RFC 8415 §18.3)
+# Status codes (RFC 8415 Section 18.3)
 const our $STATUS_SUCCESS         => 0;
 const our $STATUS_UNSPEC_FAIL     => 1;
 const our $STATUS_NO_ADDRS_AVAIL  => 2;
@@ -85,7 +85,7 @@ const our $STATUS_NOT_ON_LINK     => 4;
 const our $STATUS_USE_MULTICAST   => 5;
 const our $STATUS_NO_PREFIX_AVAIL => 6;
 
-# DUID types (RFC 8415 §11)
+# DUID types (RFC 8415 Section 11)
 const our $DUID_LLT  => 1;
 const our $DUID_EN   => 2;
 const our $DUID_LL   => 3;
@@ -401,8 +401,6 @@ sub link_type_name {
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -433,7 +431,7 @@ All constants are exported by default via L<Const::Fast::Exporter>.
 
 =head1 CONSTANTS
 
-=head2 Message Types (RFC 8415 §14)
+=head2 Message Types (RFC 8415 E<167>14)
 
 =over
 
@@ -465,7 +463,7 @@ All constants are exported by default via L<Const::Fast::Exporter>.
 
 =back
 
-=head2 Option Codes (RFC 8415 §21)
+=head2 Option Codes (RFC 8415 E<167>21)
 
 =over
 
@@ -568,14 +566,14 @@ All constants are exported by default via L<Const::Fast::Exporter>.
 =back
 
 B<NOTE>: The constants above cover the most commonly used DHCPv6
-option codes from RFC 8415 §21 and related RFCs.  Approximately 85
+option codes from RFC 8415 E<167>21 and related RFCs.  Approximately 85
 additional option codes are registered with IANA (leasequery, MIP6,
 S46, ANI, KRB, bulk leasequery, and others).  If you need a constant
 or subclass for one of those codes, either add it to your own code
 following the pattern in this module's source or file a feature
 request.
 
-=head2 Status Codes (RFC 8415 §18.3)
+=head2 Status Codes (RFC 8415 E<167>18.3)
 
 =over
 
@@ -595,7 +593,7 @@ request.
 
 =back
 
-=head2 DUID Types (RFC 8415 §11)
+=head2 DUID Types (RFC 8415 E<167>11)
 
 =over
 
@@ -615,21 +613,21 @@ request.
 
 =item C<$CLIENT_ARCH_X86_BIOS> (0)
 
-=item C<$CLIENT_ARCH_NEC_PC98> (1) — DEPRECATED
+=item C<$CLIENT_ARCH_NEC_PC98> (1) -- DEPRECATED
 
 =item C<$CLIENT_ARCH_ITANIUM> (2)
 
-=item C<$CLIENT_ARCH_DEC_ALPHA> (3) — DEPRECATED
+=item C<$CLIENT_ARCH_DEC_ALPHA> (3) -- DEPRECATED
 
-=item C<$CLIENT_ARCH_ARC_X86> (4) — DEPRECATED
+=item C<$CLIENT_ARCH_ARC_X86> (4) -- DEPRECATED
 
-=item C<$CLIENT_ARCH_INTEL_LEAN_CLIENT> (5) — DEPRECATED
+=item C<$CLIENT_ARCH_INTEL_LEAN_CLIENT> (5) -- DEPRECATED
 
 =item C<$CLIENT_ARCH_X86_UEFI> (6)
 
 =item C<$CLIENT_ARCH_X64_UEFI> (7)
 
-=item C<$CLIENT_ARCH_EFI_XSCALE> (8) — DEPRECATED
+=item C<$CLIENT_ARCH_EFI_XSCALE> (8) -- DEPRECATED
 
 =item C<$CLIENT_ARCH_EBC> (9)
 
@@ -789,15 +787,15 @@ request.
 
 =back
 
-=head2 Client FQDN Flags (RFC 4704 §4)
+=head2 Client FQDN Flags (RFC 4704 E<167>4)
 
 =over
 
-=item C<$CLIENT_FQDN_S> (0x01) — Server should NOT update DNS
+=item C<$CLIENT_FQDN_S> (0x01) -- Server should NOT update DNS
 
-=item C<$CLIENT_FQDN_O> (0x02) — Server override
+=item C<$CLIENT_FQDN_O> (0x02) -- Server override
 
-=item C<$CLIENT_FQDN_N> (0x04) — Server should update DNS
+=item C<$CLIENT_FQDN_N> (0x04) -- Server should update DNS
 
 =back
 

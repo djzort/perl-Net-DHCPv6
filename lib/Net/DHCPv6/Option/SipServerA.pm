@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: SIP Server A option (code 22) — list of IPv6 addresses
+# ABSTRACT: SIP Server A option (code 22) -- list of IPv6 addresses
 # PODNAME: Net::DHCPv6::Option::SipServerA
 package Net::DHCPv6::Option::SipServerA;
 
@@ -49,7 +49,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_SIP_SERVER_A} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
 
 =head1 SYNOPSIS
 

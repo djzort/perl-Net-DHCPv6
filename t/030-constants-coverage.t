@@ -29,7 +29,7 @@ sub check_option_constant {
 }
 
 # -------------------------------------------------------------------
-# Message types (RFC 8415 §14)
+# Message types (RFC 8415 Section 14)
 # -------------------------------------------------------------------
 subtest 'Message types' => sub {
     is( $SOLICIT,             1,  'SOLICIT' );
@@ -57,7 +57,7 @@ subtest 'Message types' => sub {
 };
 
 # -------------------------------------------------------------------
-# Option codes (RFC 8415 §21)
+# Option codes (RFC 8415 Section 21)
 # -------------------------------------------------------------------
 subtest 'Option codes' => sub {
     is( $OPTION_CLIENTID,                 1,   'OPTION_CLIENTID' );
@@ -160,7 +160,7 @@ subtest 'Option codes' => sub {
 };
 
 # -------------------------------------------------------------------
-# Status codes (RFC 8415 §18.3)
+# Status codes (RFC 8415 Section 18.3)
 # -------------------------------------------------------------------
 subtest 'Status codes' => sub {
     is( $STATUS_SUCCESS,         0, 'STATUS_SUCCESS' );
@@ -177,7 +177,7 @@ subtest 'Status codes' => sub {
 };
 
 # -------------------------------------------------------------------
-# DUID types (RFC 8415 §11)
+# DUID types (RFC 8415 Section 11)
 # -------------------------------------------------------------------
 subtest 'DUID types' => sub {
     is( $DUID_LLT,  1, 'DUID_LLT' );
@@ -239,7 +239,7 @@ subtest 'Client architecture types' => sub {
 };
 
 # -------------------------------------------------------------------
-# Client FQDN flags (RFC 4704 §4)
+# Client FQDN flags (RFC 4704 Section 4)
 # -------------------------------------------------------------------
 subtest 'Client FQDN flags' => sub {
     is( $CLIENT_FQDN_S, 0x01, 'CLIENT_FQDN_S' );
@@ -302,7 +302,7 @@ subtest 'Link-layer types' => sub {
 };
 
 # -------------------------------------------------------------------
-# Option class registration coverage — every code in REV_OPTION_CODE
+# Option class registration coverage -- every code in REV_OPTION_CODE
 # should have either a dedicated class or be noted as Generic-fallback
 # -------------------------------------------------------------------
 subtest 'Option class registration' => sub {

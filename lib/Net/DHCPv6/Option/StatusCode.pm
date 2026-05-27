@@ -46,8 +46,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_STATUS_CODE} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -59,7 +57,7 @@ __END__
 =head1 DESCRIPTION
 
 Implements the Status Code option (OPTION_STATUS_CODE, code 13) per
-RFC 8415 §21.13. Contains a 16-bit status code and an optional
+RFC 8415 E<167>21.13. Contains a 16-bit status code and an optional
 human-readable message string.
 
 =head1 METHODS

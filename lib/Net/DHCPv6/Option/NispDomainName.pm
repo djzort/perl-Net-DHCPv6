@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: NIS+ Domain Name option (code 30) — NIS+ domain name string
+# ABSTRACT: NIS+ Domain Name option (code 30) -- NIS+ domain name string
 # PODNAME: Net::DHCPv6::Option::NispDomainName
 package Net::DHCPv6::Option::NispDomainName;
 
@@ -31,7 +31,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_NISP_DOMAIN_NAME} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
 
 =head1 SYNOPSIS
 

@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Boot File URL option (code 59) — URL for network boot
+# ABSTRACT: Boot File URL option (code 59) -- URL for network boot
 # PODNAME: Net::DHCPv6::Option::BootfileUrl
 package Net::DHCPv6::Option::BootfileUrl;
 
@@ -34,7 +34,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_BOOTFILE_URL} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
 
 =head1 SYNOPSIS
 

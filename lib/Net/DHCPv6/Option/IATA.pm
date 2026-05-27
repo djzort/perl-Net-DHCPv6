@@ -59,8 +59,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_IA_TA} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -69,7 +67,7 @@ __END__
 
 =head1 DESCRIPTION
 
-Implements the IA_TA option (OPTION_IA_TA, code 4) per RFC 8415 §21.5.
+Implements the IA_TA option (OPTION_IA_TA, code 4) per RFC 8415 E<167>21.5.
 Contains an IAID and sub-options. Unlike IA_NA, there are no T1/T2
 timers for temporary addresses.
 

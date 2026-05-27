@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: IA Address option (code 5) — address + lifetimes + sub-options
+# ABSTRACT: IA Address option (code 5) -- address + lifetimes + sub-options
 # PODNAME: Net::DHCPv6::Option::IAAddr
 package Net::DHCPv6::Option::IAAddr;
 
@@ -81,8 +81,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_IAADDR} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -105,7 +103,7 @@ __END__
 
 =head1 DESCRIPTION
 
-Implements the IAADDR option (OPTION_IAADDR, code 5) per RFC 8415 §21.6.
+Implements the IAADDR option (OPTION_IAADDR, code 5) per RFC 8415 E<167>21.6.
 Contains a 16-byte IPv6 address, preferred lifetime, valid lifetime,
 and sub-options.
 

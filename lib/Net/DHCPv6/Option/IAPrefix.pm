@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: IA Prefix option (code 26) — prefix delegation sub-option
+# ABSTRACT: IA Prefix option (code 26) -- prefix delegation sub-option
 # PODNAME: Net::DHCPv6::Option::IAPrefix
 package Net::DHCPv6::Option::IAPrefix;
 
@@ -90,8 +90,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_IAPREFIX} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -117,7 +115,7 @@ __END__
 =head1 DESCRIPTION
 
 Implements the IAPREFIX option (OPTION_IAPREFIX, code 26) per
-RFC 8415 §21.23. A sub-option of IA_PD containing an IPv6 prefix,
+RFC 8415 E<167>21.23. A sub-option of IA_PD containing an IPv6 prefix,
 preferred lifetime, valid lifetime, prefix length, and sub-options.
 
 =head1 METHODS

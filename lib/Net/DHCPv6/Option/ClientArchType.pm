@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Client System Architecture Type option (code 61) — 16-bit architecture type
+# ABSTRACT: Client System Architecture Type option (code 61) -- 16-bit architecture type
 # PODNAME: Net::DHCPv6::Option::ClientArchType
 package Net::DHCPv6::Option::ClientArchType;
 
@@ -41,7 +41,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_CLIENT_ARCH_TYPE} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
 
 =head1 SYNOPSIS
 
@@ -60,11 +59,11 @@ Common types include:
 
 =over
 
-=item C<$CLIENT_ARCH_X86_BIOS> (0) — x86 BIOS
+=item C<$CLIENT_ARCH_X86_BIOS> (0) -- x86 BIOS
 
-=item C<$CLIENT_ARCH_X86_UEFI> (6) — x86 UEFI
+=item C<$CLIENT_ARCH_X86_UEFI> (6) -- x86 UEFI
 
-=item C<$CLIENT_ARCH_ARM_64_UEFI> (11) — ARM 64-bit UEFI
+=item C<$CLIENT_ARCH_ARM_64_UEFI> (11) -- ARM 64-bit UEFI
 
 =back
 

@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Fallback option for unknown codes — stores raw code+data
+# ABSTRACT: Fallback option for unknown codes -- stores raw code+data
 # PODNAME: Net::DHCPv6::Option::Generic
 package Net::DHCPv6::Option::Generic;
 
@@ -8,15 +8,13 @@ use parent 'Net::DHCPv6::Option';
 use namespace::clean;
 
 sub from_bytes_inner {
-    my ($class, $code, $data) = @_;
-    return $class->new(code => $code, data => $data);
+    my ( $class, $code, $data ) = @_;
+    return $class->new( code => $code, data => $data );
 }
 
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS

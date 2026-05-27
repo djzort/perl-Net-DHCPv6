@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: SOL_MAX_RT option (code 10) — maximum solicit retransmission duration (32-bit)
+# ABSTRACT: SOL_MAX_RT option (code 10) -- maximum solicit retransmission duration (32-bit)
 # PODNAME: Net::DHCPv6::Option::SolMaxRt
 package Net::DHCPv6::Option::SolMaxRt;
 
@@ -41,8 +41,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_SOL_MAX_RT} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -52,7 +50,7 @@ __END__
 =head1 DESCRIPTION
 
 Carries the maximum retransmission duration (in seconds) for Solicit
-messages.  See RFC 8415 §21.10.
+messages.  See RFC 8415 E<167>21.10.
 
 =head1 METHODS
 

@@ -42,8 +42,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_ORO} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -55,7 +53,7 @@ __END__
 
 =head1 DESCRIPTION
 
-Implements the ORO option (OPTION_ORO, code 6) per RFC 8415 §21.7.
+Implements the ORO option (OPTION_ORO, code 6) per RFC 8415 E<167>21.7.
 Lists option codes the client requests the server to include in
 the reply.
 

@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Vendor-specific Information option (code 17) — enterprise + sub-options
+# ABSTRACT: Vendor-specific Information option (code 17) -- enterprise + sub-options
 # PODNAME: Net::DHCPv6::Option::VendorOpts
 package Net::DHCPv6::Option::VendorOpts;
 
@@ -38,8 +38,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_VENDOR_OPTS} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -53,7 +51,7 @@ __END__
 
 Carries vendor-specific sub-options scoped by an IANA Private
 Enterprise Number (PEN, see L<https://www.iana.org/assignments/enterprise-numbers>).
-See RFC 8415 §21.17.
+See RFC 8415 E<167>21.17.
 
 =head1 METHODS
 

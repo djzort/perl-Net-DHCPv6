@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Client FQDN option (code 39) — flags + domain name
+# ABSTRACT: Client FQDN option (code 39) -- flags + domain name
 # PODNAME: Net::DHCPv6::Option::ClientFqdn
 package Net::DHCPv6::Option::ClientFqdn;
 
@@ -89,8 +89,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_CLIENT_FQDN} = __PACKAGE__;
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS

@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Preference option (code 7) — 8-bit server preference value
+# ABSTRACT: Preference option (code 7) -- 8-bit server preference value
 # PODNAME: Net::DHCPv6::Option::Preference
 package Net::DHCPv6::Option::Preference;
 
@@ -42,8 +42,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_PREFERENCE} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -52,7 +50,7 @@ __END__
 =head1 DESCRIPTION
 
 Implements the Preference option (OPTION_PREFERENCE, code 7) per
-RFC 8415 §21.8. An 8-bit unsigned integer (0–255) where a higher
+RFC 8415 E<167>21.8. An 8-bit unsigned integer (0-255) where a higher
 value indicates the server is more preferred by the client.
 
 =head1 METHODS

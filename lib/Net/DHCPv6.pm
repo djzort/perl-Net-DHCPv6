@@ -147,8 +147,6 @@ sub decode_options_or_croak {
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -228,7 +226,7 @@ Returns a L<Net::DHCPv6::DUID> on success, croaks on any truncation.
 =head1 OPTION-LIST STREAMING HELPERS
 
 These methods parse raw option TLV chains without requiring a packet
-wrapper — useful for relay messages or extracting options from
+wrapper -- useful for relay messages or extracting options from
 sub-option payloads.
 
 =over

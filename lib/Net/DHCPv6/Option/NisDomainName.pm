@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: NIS Domain Name option (code 29) — RFC 1035 domain name
+# ABSTRACT: NIS Domain Name option (code 29) -- RFC 1035 domain name
 # PODNAME: Net::DHCPv6::Option::NisDomainName
 package Net::DHCPv6::Option::NisDomainName;
 
@@ -81,8 +81,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_NIS_DOMAIN_NAME} = __PACKAGE__;
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS

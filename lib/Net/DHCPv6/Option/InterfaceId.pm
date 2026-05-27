@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Interface-ID option (code 18) — opaque interface identifier
+# ABSTRACT: Interface-ID option (code 18) -- opaque interface identifier
 # PODNAME: Net::DHCPv6::Option::InterfaceId
 package Net::DHCPv6::Option::InterfaceId;
 
@@ -9,25 +9,23 @@ use parent 'Net::DHCPv6::Option';
 use namespace::clean;
 
 sub new {
-    my ($class, %args) = @_;
+    my ( $class, %args ) = @_;
     $args{code} = $OPTION_INTERFACE_ID;
-    $args{data} = $args{data} // ($args{interface_id} // '');
-    return $class->SUPER::new(%args);
+    $args{data} = $args{data} // ( $args{interface_id} // '' );
+    return $class->SUPER::new( %args );
 }
 
 sub interface_id { shift->{data} }
 
 sub from_bytes_inner {
-    my ($class, $code, $data) = @_;
-    return $class->new(interface_id => $data);
+    my ( $class, $code, $data ) = @_;
+    return $class->new( interface_id => $data );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_INTERFACE_ID} = __PACKAGE__;
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS
@@ -38,7 +36,7 @@ __END__
 =head1 DESCRIPTION
 
 Opaque identifier used by relay agents to identify the interface on
-which the client message was received.  See RFC 8415 §21.18.
+which the client message was received.  See RFC 8415 E<167>21.18.
 
 =head1 METHODS
 
