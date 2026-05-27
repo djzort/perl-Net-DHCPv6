@@ -18,10 +18,10 @@ sub new {
     $args{data} = join( '', map { pack( 'n', CORE::length ) . $_ } @{$data_list} );
     my $self = $class->SUPER::new( %args );
     $self->{user_class_data} = $data_list;
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub user_class_data { shift->{user_class_data} }
+sub user_class_data { return shift->{user_class_data} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

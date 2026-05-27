@@ -13,7 +13,7 @@ sub new {
     my ( $class, %args ) = @_;
     $args{code} = $OPTION_RAPID_COMMIT;
     my $self = $class->SUPER::new( code => $args{code} );
-    bless $self, $class;
+    return bless $self, $class;
 }
 
 sub from_bytes_inner {

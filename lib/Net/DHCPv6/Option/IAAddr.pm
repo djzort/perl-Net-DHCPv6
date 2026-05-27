@@ -27,22 +27,22 @@ sub new {
     $self->{preferred_lifetime} = $args{preferred_lifetime};
     $self->{valid_lifetime}     = $args{valid_lifetime};
     $self->{options}            = $args{options};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub address_raw { shift->{address} }
+sub address_raw { return shift->{address} }
 
 sub address {
     my $self = shift;
     return $self->_format_ipv6( $self->{address} );
 }
-sub preferred_lifetime { shift->{preferred_lifetime} }
-sub valid_lifetime     { shift->{valid_lifetime} }
-sub options            { shift->{options} }
+sub preferred_lifetime { return shift->{preferred_lifetime} }
+sub valid_lifetime     { return shift->{valid_lifetime} }
+sub options            { return shift->{options} }
 
 sub add_option {
     my ( $self, $option ) = @_;
-    $self->{options}->add_option( $option );
+    return $self->{options}->add_option( $option );
 }
 
 sub get_option {

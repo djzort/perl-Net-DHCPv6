@@ -16,10 +16,10 @@ sub new {
     $args{data} = $args{tz_name};
     my $self = $class->SUPER::new( %args );
     $self->{tz_name} = $args{tz_name};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub tz_name { shift->{tz_name} }
+sub tz_name { return shift->{tz_name} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

@@ -16,10 +16,10 @@ sub new {
     $args{data} = $args{duid}->as_bytes;
     my $self = $class->SUPER::new( %args );
     $self->{duid} = $args{duid};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub duid { shift->{duid} }
+sub duid { return shift->{duid} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

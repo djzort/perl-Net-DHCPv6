@@ -17,10 +17,10 @@ sub new {
     $args{data} = pack( 'n', $args{type} );
     my $self = $class->SUPER::new( %args );
     $self->{type} = $args{type};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub type { shift->{type} }
+sub type { return shift->{type} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

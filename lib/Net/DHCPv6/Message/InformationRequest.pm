@@ -11,7 +11,7 @@ use namespace::clean;
 sub new {
     my ( $class, %args ) = @_;
     $args{msg_type} = $INFORMATION_REQUEST;
-    $class->SUPER::new( %args );
+    return $class->SUPER::new( %args );
 }
 
 $Net::DHCPv6::Packet::MESSAGE_CLASS{$INFORMATION_REQUEST} = __PACKAGE__;

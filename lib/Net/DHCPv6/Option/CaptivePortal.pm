@@ -17,10 +17,10 @@ sub new {
     $args{data} = $args{uri};
     my $self = $class->SUPER::new( %args );
     $self->{uri} = $args{uri};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub uri { shift->{uri} }
+sub uri { return shift->{uri} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

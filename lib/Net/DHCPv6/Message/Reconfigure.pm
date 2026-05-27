@@ -11,7 +11,7 @@ use namespace::clean;
 sub new {
     my ( $class, %args ) = @_;
     $args{msg_type} = $RECONFIGURE;
-    $class->SUPER::new( %args );
+    return $class->SUPER::new( %args );
 }
 
 $Net::DHCPv6::Packet::MESSAGE_CLASS{$RECONFIGURE} = __PACKAGE__;

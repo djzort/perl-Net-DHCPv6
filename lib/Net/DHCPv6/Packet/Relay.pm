@@ -31,19 +31,19 @@ sub new {
     }, $class;
 }
 
-sub hop_count { shift->{hop_count} }
+sub hop_count { return shift->{hop_count} }
 
 sub link_address {
     my $self = shift;
     return $self->_format_ipv6( $self->{link_address} );
 }
-sub link_address_raw { shift->{link_address} }
+sub link_address_raw { return shift->{link_address} }
 
 sub peer_address {
     my $self = shift;
     return $self->_format_ipv6( $self->{peer_address} );
 }
-sub peer_address_raw { shift->{peer_address} }
+sub peer_address_raw { return shift->{peer_address} }
 
 sub from_bytes {
     my ( $class, $bytes ) = @_;

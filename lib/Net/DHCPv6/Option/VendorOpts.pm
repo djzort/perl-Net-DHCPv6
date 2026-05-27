@@ -20,10 +20,10 @@ sub new {
     $args{data} = pack( 'N', $args{enterprise_number} ) . $sub_data;
     my $self = $class->SUPER::new( %args );
     $self->{enterprise_number} = $args{enterprise_number};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub enterprise_number { shift->{enterprise_number} }
+sub enterprise_number { return shift->{enterprise_number} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

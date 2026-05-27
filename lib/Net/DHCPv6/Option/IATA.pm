@@ -21,15 +21,15 @@ sub new {
     my $self = $class->SUPER::new( %args );
     $self->{iaid}    = $args{iaid};
     $self->{options} = $args{options};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub iaid    { shift->{iaid} }
-sub options { shift->{options} }
+sub iaid    { return shift->{iaid} }
+sub options { return shift->{options} }
 
 sub add_option {
     my ( $self, $option ) = @_;
-    $self->{options}->add_option( $option );
+    return $self->{options}->add_option( $option );
 }
 
 sub get_option {

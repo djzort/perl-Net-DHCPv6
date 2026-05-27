@@ -19,10 +19,10 @@ sub new {
     $args{data} = $addr;
     my $self = $class->SUPER::new( %args );
     $self->{address} = $addr;
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub address_raw { shift->{address} }
+sub address_raw { return shift->{address} }
 
 sub address {
     my $self = shift;

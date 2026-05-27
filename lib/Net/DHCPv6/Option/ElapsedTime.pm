@@ -17,10 +17,10 @@ sub new {
     $args{data} = pack( 'n', $args{centiseconds} );
     my $self = $class->SUPER::new( %args );
     $self->{centiseconds} = $args{centiseconds};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub centiseconds { shift->{centiseconds} }
+sub centiseconds { return shift->{centiseconds} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

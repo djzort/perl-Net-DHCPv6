@@ -17,10 +17,10 @@ sub new {
     $args{data} = pack( 'n*', @{ $args{requested_options} } );
     my $self = $class->SUPER::new( %args );
     $self->{requested_options} = $args{requested_options};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub requested_options { shift->{requested_options} }
+sub requested_options { return shift->{requested_options} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

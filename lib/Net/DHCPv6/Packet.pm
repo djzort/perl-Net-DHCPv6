@@ -28,16 +28,16 @@ sub new {
         transaction_id => $args{transaction_id},
         options        => $args{options},
     };
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub msg_type       { shift->{msg_type} }
-sub transaction_id { shift->{transaction_id} }
-sub options        { shift->{options} }
+sub msg_type       { return shift->{msg_type} }
+sub transaction_id { return shift->{transaction_id} }
+sub options        { return shift->{options} }
 
 sub add_option {
     my ( $self, $option ) = @_;
-    $self->{options}->add_option( $option );
+    return $self->{options}->add_option( $option );
 }
 
 sub get_option {
@@ -80,7 +80,7 @@ sub type {
     return $Net::DHCPv6::Constants::REV_MESSAGE_TYPE{ $self->{msg_type} };
 }
 
-sub msg_type_name { shift->type }
+sub msg_type_name { return shift->type }
 
 our %MESSAGE_CLASS;
 

@@ -17,10 +17,10 @@ sub new {
     $args{data} = pack( 'C', $args{value} );
     my $self = $class->SUPER::new( %args );
     $self->{value} = $args{value};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub value { shift->{value} }
+sub value { return shift->{value} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

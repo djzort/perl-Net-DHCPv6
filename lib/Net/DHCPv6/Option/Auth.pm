@@ -26,14 +26,14 @@ sub new {
     $self->{rdm}       = $args{rdm};
     $self->{replay}    = $args{replay};
     $self->{auth_info} = $args{auth_info} // '';
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub protocol  { shift->{protocol} }
-sub algorithm { shift->{algorithm} }
-sub rdm       { shift->{rdm} }
-sub replay    { shift->{replay} }
-sub auth_info { shift->{auth_info} }
+sub protocol  { return shift->{protocol} }
+sub algorithm { return shift->{algorithm} }
+sub rdm       { return shift->{rdm} }
+sub replay    { return shift->{replay} }
+sub auth_info { return shift->{auth_info} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;

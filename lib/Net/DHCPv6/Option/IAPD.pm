@@ -25,17 +25,17 @@ sub new {
     $self->{t1}      = $args{t1};
     $self->{t2}      = $args{t2};
     $self->{options} = $args{options};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub iaid    { shift->{iaid} }
-sub t1      { shift->{t1} }
-sub t2      { shift->{t2} }
-sub options { shift->{options} }
+sub iaid    { return shift->{iaid} }
+sub t1      { return shift->{t1} }
+sub t2      { return shift->{t2} }
+sub options { return shift->{options} }
 
 sub add_option {
     my ( $self, $option ) = @_;
-    $self->{options}->add_option( $option );
+    return $self->{options}->add_option( $option );
 }
 
 sub get_option {

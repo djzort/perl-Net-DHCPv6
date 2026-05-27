@@ -15,7 +15,7 @@ sub _encode_domain {
     my ( $domain ) = @_;
     return "\x00" unless defined $domain && CORE::length( $domain );
     my @labels = split m/\./, $domain;
-    join( '', map { pack( 'C', CORE::length ) . $_ } @labels ) . "\x00";
+    return join( '', map { pack( 'C', CORE::length ) . $_ } @labels ) . "\x00";
 }
 
 sub _read_labels_at {
@@ -66,10 +66,10 @@ sub new {
     $args{data} = _encode_domain( $args{domain_name} );
     my $self = $class->SUPER::new( %args );
     $self->{domain_name} = $args{domain_name};
-    bless $self, $class;
+    return bless $self, $class;
 }
 
-sub domain_name { shift->{domain_name} }
+sub domain_name { return shift->{domain_name} }
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;
