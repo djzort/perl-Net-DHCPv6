@@ -27,11 +27,11 @@ sub _read_labels_at {
             ++${$offset_ref};
             last;
         }
-        if ( ( $llen & 0xC0 ) == 0xC0 ) {
+        if ( ( $llen & 0xC0 ) == 0xC0 ) {  ## no critic (Bangs::ProhibitBitwiseOperators)
             if ( $Net::DHCPv6::Option::FOLLOW_COMPRESSION ) {
                 Net::DHCPv6::X::Truncated->throw( message => 'Truncated compression pointer' )
                     if ${$offset_ref} + 2 > $len;
-                my $ptr = ( ( $llen & 0x3F ) << 8 ) | unpack( 'C', substr( $data, ${$offset_ref} + 1, 1 ) );
+                my $ptr = ( ( $llen & 0x3F ) << 8 ) | unpack( 'C', substr( $data, ${$offset_ref} + 1, 1 ) );  ## no critic (Bangs::ProhibitBitwiseOperators)
                 Net::DHCPv6::X::BadOption->throw( message => 'Compression pointer out of range' )
                     if $ptr >= $len;
                 ${$offset_ref} += 2;
