@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: INF_MAX_RT option (code 83) — maximum Information-Request retransmission duration
+# ABSTRACT: INF_MAX_RT option (code 83) -- maximum Information-Request retransmission duration
 # PODNAME: Net::DHCPv6::Option::InfMaxRt
 package Net::DHCPv6::Option::InfMaxRt;
 
@@ -41,7 +41,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_INF_MAX_RT} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
 
 =head1 SYNOPSIS
 
@@ -51,7 +50,7 @@ __END__
 =head1 DESCRIPTION
 
 Carries the maximum retransmission duration (in seconds) for
-Information-Request messages.  See RFC 8415 §21.10.
+Information-Request messages.  See RFC 8415 E<167>21.10.
 
 =head1 METHODS
 

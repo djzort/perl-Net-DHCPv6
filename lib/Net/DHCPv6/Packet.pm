@@ -88,8 +88,6 @@ our %MESSAGE_CLASS;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 

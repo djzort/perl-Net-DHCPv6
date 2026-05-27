@@ -9,9 +9,9 @@ use parent 'Net::DHCPv6::Packet';
 use namespace::clean;
 
 sub new {
-    my ($class, %args) = @_;
+    my ( $class, %args ) = @_;
     $args{msg_type} = $RECONFIGURE;
-    $class->SUPER::new(%args);
+    $class->SUPER::new( %args );
 }
 
 $Net::DHCPv6::Packet::MESSAGE_CLASS{$RECONFIGURE} = __PACKAGE__;
@@ -19,8 +19,6 @@ $Net::DHCPv6::Packet::MESSAGE_CLASS{$RECONFIGURE} = __PACKAGE__;
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS
@@ -39,4 +37,4 @@ L<Net::DHCPv6::Packet> for available methods.
 
 =head1 SEE ALSO
 
-L<Net::DHCPv6::Packet>, RFC 8415 §18.12
+L<Net::DHCPv6::Packet>, RFC 8415 E<167>18.12

@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Authentication option (code 11) — protocol/algorithm/rdm/replay/auth-info
+# ABSTRACT: Authentication option (code 11) -- protocol/algorithm/rdm/replay/auth-info
 # PODNAME: Net::DHCPv6::Option::Auth
 package Net::DHCPv6::Option::Auth;
 
@@ -54,8 +54,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_AUTH} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -72,7 +70,7 @@ __END__
 
 Carries authentication information for DHCPv6 messages, including
 protocol, algorithm, replay detection method, replay counter, and
-authentication data.  See RFC 8415 §21.11.
+authentication data.  See RFC 8415 E<167>21.11.
 
 =head1 METHODS
 

@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Information Refresh Time option (code 32) — 32-bit refresh duration
+# ABSTRACT: Information Refresh Time option (code 32) -- 32-bit refresh duration
 # PODNAME: Net::DHCPv6::Option::InfoRefreshTime
 package Net::DHCPv6::Option::InfoRefreshTime;
 
@@ -41,7 +41,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_INFORMATION_REFRESH_TIME} = __PAC
 
 __END__
 
-=encoding utf-8
 
 =head1 SYNOPSIS
 
@@ -52,7 +51,7 @@ __END__
 
 Carries the minimum time (in seconds) that a client should wait before
 refreshing information received from the server.  Required for
-Information-Request messages.  See RFC 8415 §21.24.
+Information-Request messages.  See RFC 8415 E<167>21.24.
 
 =head1 METHODS
 

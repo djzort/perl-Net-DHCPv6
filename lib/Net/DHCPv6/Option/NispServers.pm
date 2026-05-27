@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: NIS+ Server option (code 28) — list of IPv6 addresses
+# ABSTRACT: NIS+ Server option (code 28) -- list of IPv6 addresses
 # PODNAME: Net::DHCPv6::Option::NispServers
 package Net::DHCPv6::Option::NispServers;
 
@@ -49,7 +49,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_NISP_SERVERS} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
 
 =head1 SYNOPSIS
 

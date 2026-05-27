@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: NEW_TZDB_TIMEZONE option (code 42) — IANA timezone DB name
+# ABSTRACT: NEW_TZDB_TIMEZONE option (code 42) -- IANA timezone DB name
 # PODNAME: Net::DHCPv6::Option::NewTzdbTimezone
 package Net::DHCPv6::Option::NewTzdbTimezone;
 
@@ -31,7 +31,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_NEW_TZDB_TIMEZONE} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
 
 =head1 SYNOPSIS
 

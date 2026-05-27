@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: AFTR Name option (code 88) — RFC 6334 domain name
+# ABSTRACT: AFTR Name option (code 88) -- RFC 6334 domain name
 # PODNAME: Net::DHCPv6::Option::AftrName
 package Net::DHCPv6::Option::AftrName;
 
@@ -81,8 +81,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_AFTR_NAME} = __PACKAGE__;
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS

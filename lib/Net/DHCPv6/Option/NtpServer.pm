@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: SNTP Servers option (code 31) — list of IPv6 addresses
+# ABSTRACT: SNTP Servers option (code 31) -- list of IPv6 addresses
 # PODNAME: Net::DHCPv6::Option::NtpServer
 package Net::DHCPv6::Option::NtpServer;
 
@@ -48,8 +48,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_SNTP_SERVERS} = __PACKAGE__;
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS

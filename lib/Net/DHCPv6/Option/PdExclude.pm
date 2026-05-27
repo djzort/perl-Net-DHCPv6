@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: PD Exclude option (code 67) — prefix to exclude from IA_PD
+# ABSTRACT: PD Exclude option (code 67) -- prefix to exclude from IA_PD
 # PODNAME: Net::DHCPv6::Option::PdExclude
 package Net::DHCPv6::Option::PdExclude;
 
@@ -53,7 +53,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_PD_EXCLUDE} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
 
 =head1 SYNOPSIS
 

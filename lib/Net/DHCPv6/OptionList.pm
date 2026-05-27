@@ -4,7 +4,7 @@
 package Net::DHCPv6::OptionList;
 
 use strictures 2;
-use Carp qw(croak);
+use Carp      qw(croak);
 use Ref::Util qw(is_ref);
 use namespace::clean;
 
@@ -19,7 +19,7 @@ sub new {
 }
 
 sub add_option {
-    my ($self, $option) = @_;
+    my ( $self, $option ) = @_;
     my $code = $option->code;
     push @{ $self->{options_order} }, $code
         unless exists $self->{options_by_code}{$code};
@@ -28,14 +28,14 @@ sub add_option {
 }
 
 sub get_option {
-    my ($self, $code) = @_;
+    my ( $self, $code ) = @_;
     my $list = $self->{options_by_code}{$code};
     return unless $list && @$list;
     return $list->[0];
 }
 
 sub remove_option {
-    my ($self, $code) = @_;
+    my ( $self, $code ) = @_;
     delete $self->{options_by_code}{$code};
     @{ $self->{options_order} } = grep { $_ != $code } @{ $self->{options_order} };
 }
@@ -44,7 +44,7 @@ sub options {
     my $self = shift;
     return [] unless @{ $self->{options_order} };
     my @opts;
-    for my $code (@{ $self->{options_order} }) {
+    for my $code ( @{ $self->{options_order} } ) {
         my $list = $self->{options_by_code}{$code};
         push @opts, @$list if $list;
     }
@@ -54,53 +54,55 @@ sub options {
 sub as_bytes {
     my $self = shift;
     my $opts = $self->options or return '';
-    return join('', map { $_->as_bytes } @$opts);
+    return join( '', map { $_->as_bytes } @$opts );
 }
 
 sub try_from_bytes {
-    my ($class, $bytes) = @_;
-    return ($class->new, undef) unless defined $bytes && CORE::length($bytes);
+    my ( $class, $bytes ) = @_;
+    return ( $class->new, undef ) unless defined $bytes && CORE::length( $bytes );
 
     my $list   = $class->new;
     my $offset = 0;
-    my $len    = CORE::length($bytes);
+    my $len    = CORE::length( $bytes );
     my $error;
 
-    while ($offset + 4 <= $len) {
-        my $code   = unpack('n', substr($bytes, $offset, 2));
-        my $optlen = unpack('n', substr($bytes, $offset + 2, 2));
+    while ( $offset + 4 <= $len ) {
+        my $code   = unpack( 'n', substr( $bytes, $offset,     2 ) );
+        my $optlen = unpack( 'n', substr( $bytes, $offset + 2, 2 ) );
         $offset += 4;
-        if ($offset + $optlen > $len) {
-            $error = "Truncated option $code: need $optlen bytes, have " . ($len - $offset);
+        if ( $offset + $optlen > $len ) {
+            $error = "Truncated option $code: need $optlen bytes, have " . ( $len - $offset );
             last;
         }
-        my $data = substr($bytes, $offset, $optlen);
+        my $data = substr( $bytes, $offset, $optlen );
         $offset += $optlen;
 
         my $class_name = $OPTION_CLASS{$code} || 'Net::DHCPv6::Option::Generic';
         my $option;
-        eval { $option = $class_name->from_bytes_inner($code, $data); };
-        if (my $err = $@) {
-            is_ref($err) && $err->isa('Net::DHCPv6::X') ? do {
-                $option = Net::DHCPv6::Option::Generic->new(code => $code, data => $data);
-            } : do {
+        eval { $option = $class_name->from_bytes_inner( $code, $data ); };
+        if ( my $err = $@ ) {
+            is_ref( $err ) && $err->isa( 'Net::DHCPv6::X' )
+                ? do {
+                $option = Net::DHCPv6::Option::Generic->new( code => $code, data => $data );
+                }
+                : do {
                 $error = "Option $code parse error: $err";
                 last;
-            };
+                };
         }
-        $list->add_option($option);
+        $list->add_option( $option );
     }
 
-    if (!$error && $offset != $len) {
+    if ( !$error && $offset != $len ) {
         $error = 'Trailing garbage in option data';
     }
 
-    return ($list, $error);
+    return ( $list, $error );
 }
 
 sub from_bytes {
-    my ($class, $bytes) = @_;
-    my ($list, $error) = $class->try_from_bytes($bytes);
+    my ( $class, $bytes ) = @_;
+    my ( $list,  $error ) = $class->try_from_bytes( $bytes );
     croak $error if $error;
     return $list;
 }
@@ -108,8 +110,6 @@ sub from_bytes {
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS

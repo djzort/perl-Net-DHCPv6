@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: DHCP Captive-Portal option (code 103) — captive portal API URI
+# ABSTRACT: DHCP Captive-Portal option (code 103) -- captive portal API URI
 # PODNAME: Net::DHCPv6::Option::CaptivePortal
 package Net::DHCPv6::Option::CaptivePortal;
 
@@ -34,7 +34,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_CAPTIVE_PORTAL} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
 
 =head1 SYNOPSIS
 

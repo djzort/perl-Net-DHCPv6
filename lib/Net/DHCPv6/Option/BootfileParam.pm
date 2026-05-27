@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Boot File Parameters option (code 60) — list of boot parameters
+# ABSTRACT: Boot File Parameters option (code 60) -- list of boot parameters
 # PODNAME: Net::DHCPv6::Option::BootfileParam
 package Net::DHCPv6::Option::BootfileParam;
 
@@ -45,7 +45,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_BOOTFILE_PARAM} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
 
 =head1 SYNOPSIS
 

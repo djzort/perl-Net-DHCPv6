@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Relay Message option (code 9) — encapsulated relay message
+# ABSTRACT: Relay Message option (code 9) -- encapsulated relay message
 # PODNAME: Net::DHCPv6::Option::RelayMsg
 package Net::DHCPv6::Option::RelayMsg;
 
@@ -29,8 +29,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_RELAY_MSG} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -40,7 +38,7 @@ __END__
 =head1 DESCRIPTION
 
 Carries an encapsulated DHCPv6 message between relay agents and
-servers.  See RFC 8415 §21.9.
+servers.  See RFC 8415 E<167>21.9.
 
 =head1 METHODS
 

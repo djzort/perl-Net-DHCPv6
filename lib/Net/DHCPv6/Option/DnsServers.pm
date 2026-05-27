@@ -49,8 +49,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_DNS_SERVERS} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 

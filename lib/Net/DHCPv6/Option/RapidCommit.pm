@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Rapid Commit option (code 14) — zero-length data
+# ABSTRACT: Rapid Commit option (code 14) -- zero-length data
 # PODNAME: Net::DHCPv6::Option::RapidCommit
 package Net::DHCPv6::Option::RapidCommit;
 
@@ -30,8 +30,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_RAPID_COMMIT} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -40,7 +38,7 @@ __END__
 =head1 DESCRIPTION
 
 Implements the Rapid Commit option (OPTION_RAPID_COMMIT, code 14) per
-RFC 8415 §21.14. A zero-length option that signals the server should
+RFC 8415 E<167>21.14. A zero-length option that signals the server should
 commit the assignment immediately (solicit-advertise-request-reply
 short circuit).
 

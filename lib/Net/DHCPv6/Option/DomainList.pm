@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Domain Search List option (code 24) — RFC 1035 domain names
+# ABSTRACT: Domain Search List option (code 24) -- RFC 1035 domain names
 # PODNAME: Net::DHCPv6::Option::DomainList
 package Net::DHCPv6::Option::DomainList;
 
@@ -87,8 +87,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_DOMAIN_LIST} = __PACKAGE__;
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS

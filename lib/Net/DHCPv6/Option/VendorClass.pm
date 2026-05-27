@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Vendor Class option (code 16) — enterprise-number + opaque data
+# ABSTRACT: Vendor Class option (code 16) -- enterprise-number + opaque data
 # PODNAME: Net::DHCPv6::Option::VendorClass
 package Net::DHCPv6::Option::VendorClass;
 
@@ -54,8 +54,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_VENDOR_CLASS} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -69,7 +67,7 @@ __END__
 
 Conveys vendor-class information consisting of an IANA Private
 Enterprise Number (PEN, see L<https://www.iana.org/assignments/enterprise-numbers>)
-and one or more opaque data items.  See RFC 8415 §21.16.
+and one or more opaque data items.  See RFC 8415 E<167>21.16.
 
 =head1 METHODS
 

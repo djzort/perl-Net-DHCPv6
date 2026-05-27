@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: Reconfigure Message option (code 19) — 1-byte msg-type
+# ABSTRACT: Reconfigure Message option (code 19) -- 1-byte msg-type
 # PODNAME: Net::DHCPv6::Option::ReconfMsg
 package Net::DHCPv6::Option::ReconfMsg;
 
@@ -35,8 +35,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_RECONF_MSG} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -49,7 +47,7 @@ __END__
 
 =head1 DESCRIPTION
 
-Carries the message type of a Reconfigure message.  See RFC 8415 §21.21.
+Carries the message type of a Reconfigure message.  See RFC 8415 E<167>21.21.
 
 =head1 METHODS
 

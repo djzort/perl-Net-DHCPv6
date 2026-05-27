@@ -8,8 +8,8 @@ use Carp qw(croak);
 use namespace::clean;
 
 sub throw {
-    my ($class, %args) = @_;
-    my $self = bless { %args }, $class;
+    my ( $class, %args ) = @_;
+    my $self = bless {%args}, $class;
     croak $self;
 }
 
@@ -18,8 +18,6 @@ sub message { shift->{message} }
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS

@@ -65,8 +65,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_IA_PD} = __PACKAGE__;
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -79,7 +77,7 @@ __END__
 
 =head1 DESCRIPTION
 
-Implements the IA_PD option (OPTION_IA_PD, code 25) per RFC 8415 §21.22.
+Implements the IA_PD option (OPTION_IA_PD, code 25) per RFC 8415 E<167>21.22.
 Contains an IAID, T1, T2, and sub-options (typically IAPrefix options).
 Same wire layout as IA_NA.
 

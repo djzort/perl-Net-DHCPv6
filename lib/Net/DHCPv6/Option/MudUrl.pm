@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: MUD URL option (code 112) — Manufacturer Usage Description URL
+# ABSTRACT: MUD URL option (code 112) -- Manufacturer Usage Description URL
 # PODNAME: Net::DHCPv6::Option::MudUrl
 package Net::DHCPv6::Option::MudUrl;
 
@@ -33,8 +33,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_MUD_URL} = __PACKAGE__;
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS

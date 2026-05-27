@@ -78,8 +78,6 @@ sub as_bytes {
 
 __END__
 
-=encoding utf-8
-
 
 =head1 SYNOPSIS
 
@@ -106,7 +104,7 @@ __END__
 
 =head1 DESCRIPTION
 
-Base class for RELAY-FORW and RELAY-REPLY messages (RFC 8415 §14),
+Base class for RELAY-FORW and RELAY-REPLY messages (RFC 8415 E<167>14),
 which have a different wire format than standard DHCPv6 messages:
 a 1-byte hop count, 16-byte link address, 16-byte peer address,
 then options. No transaction_id field.

@@ -1,5 +1,5 @@
 #!/usr/bin/false
-# ABSTRACT: SIP Server Domain Name option (code 21) — list of domain names
+# ABSTRACT: SIP Server Domain Name option (code 21) -- list of domain names
 # PODNAME: Net::DHCPv6::Option::SipServerD
 package Net::DHCPv6::Option::SipServerD;
 
@@ -87,8 +87,6 @@ $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_SIP_SERVER_D} = __PACKAGE__;
 1;
 
 __END__
-
-=encoding utf-8
 
 
 =head1 SYNOPSIS
