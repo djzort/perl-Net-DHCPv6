@@ -21,7 +21,6 @@ use Net::DHCPv6::Option::IAPD;
 use Net::DHCPv6::Option::IAPrefix;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
-use Test::Net::DHCPv6;
 
 # Generic option
 my $gen = Net::DHCPv6::Option::Generic->new( code => 99, data => "\x01\x02" );
@@ -212,18 +211,18 @@ my $iaaddr = Net::DHCPv6::Option::IAAddr->new(
     valid_lifetime     => 86400,
 );
 is( $iaaddr->address,            '2001:db8::1', 'IAAddr address' );
-is( $iaaddr->address_raw,        $addr,          'IAAddr address_raw' );
-is( $iaaddr->preferred_lifetime, 7200,           'IAAddr preferred' );
-is( $iaaddr->valid_lifetime,     86400,          'IAAddr valid' );
+is( $iaaddr->address_raw,        $addr,         'IAAddr address_raw' );
+is( $iaaddr->preferred_lifetime, 7200,          'IAAddr preferred' );
+is( $iaaddr->valid_lifetime,     86400,         'IAAddr valid' );
 
 # IAAddr round-trip
 my $iaaddr_bytes = $iaaddr->as_bytes;
 my ( $iaaddr_parsed ) = Net::DHCPv6::Option->from_bytes( $iaaddr_bytes );
 ok( $iaaddr_parsed->isa( 'Net::DHCPv6::Option::IAAddr' ), 'IAAddr parsed class' );
 is( $iaaddr_parsed->address,            '2001:db8::1', 'IAAddr parsed address' );
-is( $iaaddr_parsed->address_raw,        $addr,          'IAAddr parsed address_raw' );
-is( $iaaddr_parsed->preferred_lifetime, 7200,           'IAAddr parsed preferred' );
-is( $iaaddr_parsed->valid_lifetime,     86400,          'IAAddr parsed valid' );
+is( $iaaddr_parsed->address_raw,        $addr,         'IAAddr parsed address_raw' );
+is( $iaaddr_parsed->preferred_lifetime, 7200,          'IAAddr parsed preferred' );
+is( $iaaddr_parsed->valid_lifetime,     86400,         'IAAddr parsed valid' );
 
 ok( dies { Net::DHCPv6::Option::IAAddr->new },                                       'IAAddr dies without address' );
 ok( dies { Net::DHCPv6::Option::IAAddr::from_bytes_inner( undef, 5, "\x01" x 23 ) }, 'IAAddr dies on data < 24 bytes' );
@@ -284,10 +283,10 @@ is( $iapd2->t2,   5400, 'parse IAPD t2' );
 my $iaprefix2 = $iapd2->get_option( 26 );
 ok( $iaprefix2->isa( 'Net::DHCPv6::Option::IAPrefix' ), 'parse IAPD IAPrefix sub-option' );
 is( $iaprefix2->address,            '2001:db8::', 'parse IAPrefix address' );
-is( $iaprefix2->address_raw,        $prefix_addr,  'parse IAPrefix address_raw' );
-is( $iaprefix2->preferred_lifetime, 7200,          'parse IAPrefix preferred' );
-is( $iaprefix2->valid_lifetime,     86400,         'parse IAPrefix valid' );
-is( $iaprefix2->prefix_length,      64,            'parse IAPrefix prefix_len' );
+is( $iaprefix2->address_raw,        $prefix_addr, 'parse IAPrefix address_raw' );
+is( $iaprefix2->preferred_lifetime, 7200,         'parse IAPrefix preferred' );
+is( $iaprefix2->valid_lifetime,     86400,        'parse IAPrefix valid' );
+is( $iaprefix2->prefix_length,      64,           'parse IAPrefix prefix_len' );
 
 ok( dies { Net::DHCPv6::Option::IAPD->new },                                        'IAPD dies without iaid' );
 ok( dies { Net::DHCPv6::Option::IAPD::from_bytes_inner( undef, 25, "\x01" x 11 ) }, 'IAPD dies on data < 12 bytes' );

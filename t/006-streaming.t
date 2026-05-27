@@ -6,7 +6,6 @@ use lib 'lib';
 
 use Net::DHCPv6;
 use Net::DHCPv6::Constants;
-use Test::Net::DHCPv6;
 
 my $mac = pack( 'H*', '001122334455' );
 

@@ -8,7 +8,7 @@ use Carp;
 use Exporter  qw(import);
 use Ref::Util qw(is_plain_ref);
 
-our @EXPORT = qw(
+our @EXPORT_OK = qw(
     hex2bytes
     bytes2hex
     is_hexstr

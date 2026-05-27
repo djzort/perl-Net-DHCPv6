@@ -42,7 +42,7 @@ use Net::DHCPv6::Option::UserClass;
 use Net::DHCPv6::Option::VendorClass;
 use Net::DHCPv6::Option::VendorOpts;
 use Net::DHCPv6::Constants;
-use Test::Net::DHCPv6;
+use Test::Net::DHCPv6 qw(bytes2hex);
 
 # ----------------------------------------------------------------
 # ReconfAccept (20) -- zero-length

@@ -6,7 +6,6 @@ use lib 'lib';
 
 use Net::DHCPv6::DUID;
 use Net::DHCPv6::Constants;
-use Test::Net::DHCPv6;
 
 ok( dies { Net::DHCPv6::DUID->new },                           'new() without args dies' );
 ok( dies { Net::DHCPv6::DUID->new( duid_type => $DUID_LLT ) }, 'DUID-LLT without hwtype dies' );
