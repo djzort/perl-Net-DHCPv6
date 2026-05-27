@@ -25,7 +25,7 @@ use Net::DHCPv6::Option::ORO;
 use Net::DHCPv6::Option::IANA;
 use Net::DHCPv6::Option::IAAddr;
 use Net::DHCPv6::Constants;
-use Test::Net::DHCPv6;
+use Test::Net::DHCPv6 qw(hex2bytes);
 
 # Solicit construction
 my $duid    = Net::DHCPv6::DUID->new_llt( $LINK_TYPE_ETHERNET, 123456, pack( 'H*', '001122334455' ) );
