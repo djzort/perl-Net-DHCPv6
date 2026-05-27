@@ -13,8 +13,12 @@ use namespace::clean;
 
 sub new {
     my ( $class, %args ) = @_;
-    my $addrs = $args{servers} // $args{addresses} // [];
-    $addrs      = [$addrs] unless is_plain_arrayref( $addrs );
+    my $addrs = $class->_pick_addrs( \%args, 'servers' );
+    if ( !defined $addrs && $args{addresses} ) {
+        my $list = is_plain_arrayref( $args{addresses} ) ? $args{addresses} : [ $args{addresses} ];
+        $addrs = [ map { $class->_resolve_ipv6( $_ ) } @$list ];
+    }
+    $addrs //= [];
     $args{code} = $OPTION_DNS_SERVERS;
     $args{data} = join( '', @$addrs );
     my $self = $class->SUPER::new( %args );
@@ -22,7 +26,12 @@ sub new {
     bless $self, $class;
 }
 
-sub servers { shift->{servers} }
+sub servers_raw { shift->{servers} }
+
+sub servers {
+    my $self = shift;
+    return [ map { $self->_format_ipv6( $_ ) } @{ $self->{servers} } ];
+}
 
 sub from_bytes_inner {
     my ( $class, $code, $data ) = @_;
@@ -32,7 +41,7 @@ sub from_bytes_inner {
     for ( my $i = 0 ; $i < CORE::length( $data ) ; $i += 16 ) {
         push @addrs, substr( $data, $i, 16 );
     }
-    return $class->new( servers => \@addrs );
+    return $class->new( servers_raw => \@addrs );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_DNS_SERVERS} = __PACKAGE__;
@@ -45,10 +54,17 @@ __END__
 
 =head1 SYNOPSIS
 
-  use Socket qw(inet_pton AF_INET6);
-  use Net::DHCPv6::Option::DnsServers;
+  # Text form (auto-resolved to wire bytes)
   my $opt = Net::DHCPv6::Option::DnsServers->new(
-      servers => [ inet_pton( AF_INET6, '2001:db8::1' ) ],
+      servers => [ '2001:db8::1', '2001:db8::2' ],
+  );
+  print $opt->servers->[0];           # '2001:db8::1'
+  print $opt->servers_raw->[0];       # 16-byte wire-format bytes
+
+  # Raw bytes
+  use Socket qw(inet_pton AF_INET6);
+  my $opt2 = Net::DHCPv6::Option::DnsServers->new(
+      servers_raw => [ inet_pton( AF_INET6, '2001:db8::1' ) ],
   );
 
 =head1 DESCRIPTION
@@ -60,11 +76,16 @@ RFC 3646.
 
 =head2 new
 
-Constructor.  Optional C<servers> (arrayref of 16-byte IPv6 addresses).
+Constructor.  Optional C<servers> (arrayref of IPv6 text addresses) or
+C<servers_raw> (arrayref of 16-byte IPv6 addresses).
 
 =head2 servers
 
-Returns an arrayref of 16-byte IPv6 addresses.
+Returns an arrayref of IPv6 text addresses.
+
+=head2 servers_raw
+
+Returns an arrayref of 16-byte wire-format addresses.
 
 =head1 SEE ALSO
 

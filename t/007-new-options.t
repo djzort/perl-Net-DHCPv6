@@ -205,15 +205,20 @@ use Test::Net::DHCPv6;
 {
     my $addr1 = pack( 'H*', '20010db8000000000000000000000001' );
     my $addr2 = pack( 'H*', '20010db8000000000000000000000002' );
-    my $ds    = Net::DHCPv6::Option::DnsServers->new( servers => [ $addr1, $addr2 ] );
-    is( $ds->code,    $OPTION_DNS_SERVERS, 'DnsServers code' );
-    is( $ds->servers, [ $addr1, $addr2 ],  'DnsServers list' );
+    my $ds    = Net::DHCPv6::Option::DnsServers->new(
+        servers => [ '2001:db8::1', '2001:db8::2' ],
+    );
+    is( $ds->code,           $OPTION_DNS_SERVERS, 'DnsServers code' );
+    is( $ds->servers,        [ '2001:db8::1', '2001:db8::2' ], 'DnsServers list' );
+    is( $ds->servers_raw,    [ $addr1, $addr2 ],               'DnsServers raw list' );
 
     my $bytes = $ds->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::DnsServers' ), 'DnsServers parsed class' );
-    is( $parsed->servers->[0], $addr1, 'DnsServers parsed first addr' );
-    is( $parsed->servers->[1], $addr2, 'DnsServers parsed second addr' );
+    is( $parsed->servers->[0],      '2001:db8::1', 'DnsServers parsed first addr' );
+    is( $parsed->servers->[1],      '2001:db8::2', 'DnsServers parsed second addr' );
+    is( $parsed->servers_raw->[0],  $addr1,        'DnsServers parsed first raw' );
+    is( $parsed->servers_raw->[1],  $addr2,        'DnsServers parsed second raw' );
 
     ok(
         dies {
@@ -228,14 +233,18 @@ use Test::Net::DHCPv6;
 # ----------------------------------------------------------------
 {
     my $addr = pack( 'H*', '20010db8000000000000000000000001' );
-    my $ns   = Net::DHCPv6::Option::NisServers->new( servers => [$addr] );
-    is( $ns->code,         $OPTION_NIS_SERVERS, 'NisServers code' );
-    is( $ns->servers->[0], $addr,               'NisServers address' );
+    my $ns   = Net::DHCPv6::Option::NisServers->new(
+        servers => ['2001:db8::1'],
+    );
+    is( $ns->code,          $OPTION_NIS_SERVERS, 'NisServers code' );
+    is( $ns->servers->[0],  '2001:db8::1',       'NisServers address' );
+    is( $ns->servers_raw->[0], $addr,            'NisServers raw address' );
 
     my $bytes = $ns->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::NisServers' ), 'NisServers parsed class' );
-    is( $parsed->servers->[0], $addr, 'NisServers parsed address' );
+    is( $parsed->servers->[0], '2001:db8::1', 'NisServers parsed address' );
+    is( $parsed->servers_raw->[0], $addr,      'NisServers parsed raw' );
 
     ok(
         dies {
@@ -250,14 +259,18 @@ use Test::Net::DHCPv6;
 # ----------------------------------------------------------------
 {
     my $addr = pack( 'H*', '20010db8000000000000000000000001' );
-    my $ns   = Net::DHCPv6::Option::NtpServer->new( servers => [$addr] );
-    is( $ns->code,         $OPTION_SNTP_SERVERS, 'NtpServer code (SNTP_SERVERS)' );
-    is( $ns->servers->[0], $addr,                'NtpServer address' );
+    my $ns   = Net::DHCPv6::Option::NtpServer->new(
+        servers => ['2001:db8::1'],
+    );
+    is( $ns->code,          $OPTION_SNTP_SERVERS, 'NtpServer code (SNTP_SERVERS)' );
+    is( $ns->servers->[0],  '2001:db8::1',        'NtpServer address' );
+    is( $ns->servers_raw->[0], $addr,             'NtpServer raw address' );
 
     my $bytes = $ns->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::NtpServer' ), 'NtpServer parsed class' );
-    is( $parsed->servers->[0], $addr, 'NtpServer parsed address' );
+    is( $parsed->servers->[0], '2001:db8::1', 'NtpServer parsed address' );
+    is( $parsed->servers_raw->[0], $addr,      'NtpServer parsed raw' );
 
     ok(
         dies {
@@ -578,14 +591,18 @@ use Test::Net::DHCPv6;
 # ----------------------------------------------------------------
 {
     my $addr = pack( 'H*', '20010db8000000000000000000000001' );
-    my $sa   = Net::DHCPv6::Option::SipServerA->new( servers => [$addr] );
-    is( $sa->code,         $OPTION_SIP_SERVER_A, 'SipServerA code' );
-    is( $sa->servers->[0], $addr,                'SipServerA address' );
+    my $sa   = Net::DHCPv6::Option::SipServerA->new(
+        servers => ['2001:db8::1'],
+    );
+    is( $sa->code,          $OPTION_SIP_SERVER_A, 'SipServerA code' );
+    is( $sa->servers->[0],  '2001:db8::1',        'SipServerA address' );
+    is( $sa->servers_raw->[0], $addr,             'SipServerA raw address' );
 
     my $bytes = $sa->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::SipServerA' ), 'SipServerA parsed class' );
-    is( $parsed->servers->[0], $addr, 'SipServerA parsed address' );
+    is( $parsed->servers->[0], '2001:db8::1', 'SipServerA parsed address' );
+    is( $parsed->servers_raw->[0], $addr,      'SipServerA parsed raw' );
 
     ok(
         dies {
@@ -721,14 +738,18 @@ use Test::Net::DHCPv6;
 # ----------------------------------------------------------------
 {
     my $addr = pack( 'H*', '20010db8000000000000000000000001' );
-    my $ns   = Net::DHCPv6::Option::NispServers->new( servers => [$addr] );
-    is( $ns->code,         $OPTION_NISP_SERVERS, 'NispServers code' );
-    is( $ns->servers->[0], $addr,                'NispServers address' );
+    my $ns   = Net::DHCPv6::Option::NispServers->new(
+        servers => ['2001:db8::1'],
+    );
+    is( $ns->code,          $OPTION_NISP_SERVERS, 'NispServers code' );
+    is( $ns->servers->[0],  '2001:db8::1',        'NispServers address' );
+    is( $ns->servers_raw->[0], $addr,             'NispServers raw address' );
 
     my $bytes = $ns->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::NispServers' ), 'NispServers parsed class' );
-    is( $parsed->servers->[0], $addr, 'NispServers parsed address' );
+    is( $parsed->servers->[0], '2001:db8::1', 'NispServers parsed address' );
+    is( $parsed->servers_raw->[0], $addr,      'NispServers parsed raw' );
 
     ok(
         dies {
@@ -831,13 +852,16 @@ use Test::Net::DHCPv6;
 # PdExclude (67) — prefix-length + address
 # ----------------------------------------------------------------
 {
-    my $addr = "\x20\x01\x0d\xb8\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00";
-    my $pe   = Net::DHCPv6::Option::PdExclude->new(
+    my $addr    = "\x20\x01\x0d\xb8\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00";
+    my $pd_addr = substr( $addr, 0, 6 );
+    my $pe      = Net::DHCPv6::Option::PdExclude->new(
         prefix_length => 48,
-        address       => $addr,
+        address       => '2001:db8::',
     );
     is( $pe->code,          $OPTION_PD_EXCLUDE, 'PdExclude code' );
     is( $pe->prefix_length, 48,                 'PdExclude prefix_length' );
+    is( $pe->address,       $pd_addr,           'PdExclude address (truncated)' );
+    is( $pe->address_raw,   $pd_addr,           'PdExclude address_raw' );
 
     my $bytes = $pe->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
@@ -845,8 +869,8 @@ use Test::Net::DHCPv6;
     is( $parsed->prefix_length, 48, 'PdExclude parsed prefix_length' );
 
     # address is variable-length per RFC 6603; round-trip truncates to ceil(48/8)=6 bytes
-    my $pd_addr = substr( $addr, 0, 6 );
     is( $parsed->address, $pd_addr, 'PdExclude parsed address' );
+    is( $parsed->address_raw, $pd_addr, 'PdExclude parsed address_raw' );
 
     ok( dies { Net::DHCPv6::Option::PdExclude->new( prefix_length => 48 ) }, 'PdExclude dies without address' );
     ok( dies { Net::DHCPv6::Option::PdExclude->new( address => $addr ) },    'PdExclude dies without prefix_length' );
@@ -893,7 +917,7 @@ use Test::Net::DHCPv6;
     );
     $ol->add_option(
         Net::DHCPv6::Option::DnsServers->new(
-            servers => [ pack( 'H*', '20010db8000000000000000000000001' ) ]
+            servers => ['2001:db8::1']
         )
     );
     $ol->add_option(

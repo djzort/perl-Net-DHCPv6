@@ -13,7 +13,8 @@ use namespace::clean;
 
 sub new {
     my ( $class, %args ) = @_;
-    croak 'IAPrefix requires address' unless $args{address};
+    my $addr = $class->_pick_addr( \%args, 'address' );
+    croak 'IAPrefix requires address' unless $addr && CORE::length( $addr ) == 16;
     $args{code}               = $OPTION_IAPREFIX;
     $args{preferred_lifetime} = $args{preferred_lifetime} // 0;
     $args{valid_lifetime}     = $args{valid_lifetime}     // 0;
@@ -22,11 +23,11 @@ sub new {
     my $data =
           pack( 'N N', $args{preferred_lifetime}, $args{valid_lifetime} )
         . pack( 'C', $args{prefix_length} )
-        . $args{address}
+        . $addr
         . $args{options}->as_bytes;
     $args{data} = $data;
     my $self = $class->SUPER::new( %args );
-    $self->{address}            = $args{address};
+    $self->{address}            = $addr;
     $self->{preferred_lifetime} = $args{preferred_lifetime};
     $self->{valid_lifetime}     = $args{valid_lifetime};
     $self->{prefix_length}      = $args{prefix_length};
@@ -34,7 +35,12 @@ sub new {
     bless $self, $class;
 }
 
-sub address            { shift->{address} }
+sub address_raw { shift->{address} }
+
+sub address {
+    my $self = shift;
+    return $self->_format_ipv6( $self->{address} );
+}
 sub preferred_lifetime { shift->{preferred_lifetime} }
 sub valid_lifetime     { shift->{valid_lifetime} }
 sub prefix_length      { shift->{prefix_length} }
@@ -60,7 +66,7 @@ sub from_bytes_inner {
     my $opt_data = substr( $data, 25 );
     my $opts     = Net::DHCPv6::OptionList->from_bytes( $opt_data );
     return $class->new(
-        address            => $addr,
+        address_raw        => $addr,
         preferred_lifetime => $pl,
         valid_lifetime     => $vl,
         prefix_length      => $plen,
@@ -89,9 +95,20 @@ __END__
 
 =head1 SYNOPSIS
 
-  use Socket qw(inet_pton AF_INET6);
+  # Text form (auto-resolved to wire bytes)
   my $iaprefix = Net::DHCPv6::Option::IAPrefix->new(
-      address            => inet_pton( AF_INET6, '2001:db8::' ),
+      address            => '2001:db8::',
+      preferred_lifetime => 7_200,
+      valid_lifetime     => 86_400,
+      prefix_length      => 64,
+  );
+  print $iaprefix->address;             # '2001:db8::'
+  print $iaprefix->address_raw;         # 16-byte wire-format bytes
+
+  # Raw bytes
+  use Socket qw(inet_pton AF_INET6);
+  my $iaprefix2 = Net::DHCPv6::Option::IAPrefix->new(
+      address_raw        => inet_pton( AF_INET6, '2001:db8::' ),
       preferred_lifetime => 7_200,
       valid_lifetime     => 86_400,
       prefix_length      => 64,
@@ -107,14 +124,19 @@ preferred lifetime, valid lifetime, prefix length, and sub-options.
 
 =over
 
-=item B<new>(address => $bytes16, preferred_lifetime => $num, valid_lifetime => $num, prefix_length => $num, options => $optionlist)
+=item B<new>(address => $text | address_raw => $bytes16, preferred_lifetime => $num, valid_lifetime => $num, prefix_length => $num, options => $optionlist)
 
-Constructor. C<address> is required. C<prefix_length> is the number of
-significant bits in the prefix.
+Constructor. Requires either C<address> (IPv6 text) or C<address_raw>
+(16 raw bytes). C<prefix_length> is the number of significant bits in
+the prefix.
 
 =item B<address>
 
-Returns the 16-byte IPv6 prefix address.
+Returns the IPv6 prefix address as a text string.
+
+=item B<address_raw>
+
+Returns the 16-byte wire-format address.
 
 =item B<preferred_lifetime>
 

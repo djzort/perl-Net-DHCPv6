@@ -8,7 +8,7 @@ use Carp qw(croak);
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::X::Truncated;
-use Socket qw(inet_pton AF_INET6 inet_ntop);
+use parent 'Net::DHCPv6::Helpers';
 use namespace::clean;
 
 our $FOLLOW_COMPRESSION = 0;
@@ -32,37 +32,6 @@ sub as_bytes {
     my $self = shift;
     my $data = $self->{data} // '';
     return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
-}
-
-sub _resolve_ipv6 {
-    my ( $class, $arg ) = @_;
-    return undef unless defined $arg;
-    return $arg  unless $arg =~ m/:/;
-    my $bytes = inet_pton( AF_INET6, $arg );
-    croak( "Invalid IPv6 address: $arg" ) unless defined $bytes;
-    return $bytes;
-}
-
-sub _format_ipv6 {
-    my ( $self, $bytes ) = @_;
-    return undef unless defined $bytes;
-    return inet_ntop( AF_INET6, $bytes );
-}
-
-sub _pick_addr {
-    my ( $class, $args, $field ) = @_;
-    my $key = "${field}_raw";
-    return $args->{$key} if exists $args->{$key};
-    return undef unless defined $args->{$field};
-    return $class->_resolve_ipv6( $args->{$field} );
-}
-
-sub _pick_addrs {
-    my ( $class, $args, $field ) = @_;
-    my $key = "${field}_raw";
-    return $args->{$key} if exists $args->{$key};
-    return undef unless defined $args->{$field};
-    return [ map { $class->_resolve_ipv6( $_ ) } @{ $args->{$field} } ];
 }
 
 sub from_bytes {
