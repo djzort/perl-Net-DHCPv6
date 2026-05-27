@@ -18,7 +18,7 @@ my %OPTION_CLASS_CODES = %Net::DHCPv6::OptionList::OPTION_CLASS;
 sub check_option_constant {
     my ( $name, $expected, $desc ) = @_;
     ( my $short = $name ) =~ s/^OPTION_//;
-    is( Net::DHCPv6::Constants::option_name( $expected ), $short, "$desc: REV_OPTION_CODE{$expected} eq $short" );
+    is( Net::DHCPv6::Constants::option_name( $expected ), $short, "$desc: REV_OPTION_CODE{$expected} eq $short" );    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
     exists $OPTION_CLASS_CODES{$expected}
         ? pass( "$desc: option class registered for code $expected" )
         : note( "$desc: no dedicated option class for code $expected (Generic OK)" );
@@ -42,14 +42,14 @@ subtest 'Message types' => sub {
     is( $RELAY_FORW,          12, 'RELAY_FORW' );
     is( $RELAY_REPLY,         13, 'RELAY_REPLY' );
 
-    is( Net::DHCPv6::Constants::message_type_name( 1 ),  'SOLICIT',     'REV_MESSAGE_TYPE 1' );
-    is( Net::DHCPv6::Constants::message_type_name( 13 ), 'RELAY_REPLY', 'REV_MESSAGE_TYPE 13' );
-    ok( !defined Net::DHCPv6::Constants::message_type_name( 99 ), 'REV_MESSAGE_TYPE 99 is undef' );
+    is( Net::DHCPv6::Constants::message_type_name( 1 ),  'SOLICIT',     'REV_MESSAGE_TYPE 1' );        ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    is( Net::DHCPv6::Constants::message_type_name( 13 ), 'RELAY_REPLY', 'REV_MESSAGE_TYPE 13' );       ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    ok( !defined Net::DHCPv6::Constants::message_type_name( 99 ), 'REV_MESSAGE_TYPE 99 is undef' );    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
 
-    ok( Net::DHCPv6::Constants::is_valid_message_type( 1 ),   'is_valid 1' );
-    ok( Net::DHCPv6::Constants::is_valid_message_type( 13 ),  'is_valid 13' );
-    ok( !Net::DHCPv6::Constants::is_valid_message_type( 0 ),  'is_valid 0 false' );
-    ok( !Net::DHCPv6::Constants::is_valid_message_type( 99 ), 'is_valid 99 false' );
+    ok( Net::DHCPv6::Constants::is_valid_message_type( 1 ),   'is_valid 1' );                          ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    ok( Net::DHCPv6::Constants::is_valid_message_type( 13 ),  'is_valid 13' );                         ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    ok( !Net::DHCPv6::Constants::is_valid_message_type( 0 ),  'is_valid 0 false' );                    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    ok( !Net::DHCPv6::Constants::is_valid_message_type( 99 ), 'is_valid 99 false' );                   ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
 };
 
 # -------------------------------------------------------------------
@@ -167,9 +167,9 @@ subtest 'Status codes' => sub {
     is( $STATUS_USE_MULTICAST,   5, 'STATUS_USE_MULTICAST' );
     is( $STATUS_NO_PREFIX_AVAIL, 6, 'STATUS_NO_PREFIX_AVAIL' );
 
-    is( Net::DHCPv6::Constants::status_name( 0 ), 'SUCCESS',         'REV_STATUS_CODE 0' );
-    is( Net::DHCPv6::Constants::status_name( 6 ), 'NO_PREFIX_AVAIL', 'REV_STATUS_CODE 6' );
-    ok( !defined Net::DHCPv6::Constants::status_name( 99 ), 'REV_STATUS_CODE 99 undef' );
+    is( Net::DHCPv6::Constants::status_name( 0 ), 'SUCCESS',         'REV_STATUS_CODE 0' );    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    is( Net::DHCPv6::Constants::status_name( 6 ), 'NO_PREFIX_AVAIL', 'REV_STATUS_CODE 6' );    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    ok( !defined Net::DHCPv6::Constants::status_name( 99 ), 'REV_STATUS_CODE 99 undef' );      ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
 };
 
 # -------------------------------------------------------------------
@@ -229,9 +229,9 @@ subtest 'Client architecture types' => sub {
     is( $CLIENT_ARCH_LOONGARCH_64_UEFI_HTTP, 40, 'CLIENT_ARCH_LOONGARCH_64_UEFI_HTTP' );
     is( $CLIENT_ARCH_ARM_RPIBOOT,            41, 'CLIENT_ARCH_ARM_RPIBOOT' );
 
-    is( Net::DHCPv6::Constants::arch_name( 0 ),  'X86_BIOS',    'REV_CLIENT_ARCH 0' );
-    is( Net::DHCPv6::Constants::arch_name( 41 ), 'ARM_RPIBOOT', 'REV_CLIENT_ARCH 41' );
-    ok( !defined Net::DHCPv6::Constants::arch_name( 99 ), 'REV_CLIENT_ARCH 99 undef' );
+    is( Net::DHCPv6::Constants::arch_name( 0 ),  'X86_BIOS',    'REV_CLIENT_ARCH 0' );     ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    is( Net::DHCPv6::Constants::arch_name( 41 ), 'ARM_RPIBOOT', 'REV_CLIENT_ARCH 41' );    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    ok( !defined Net::DHCPv6::Constants::arch_name( 99 ), 'REV_CLIENT_ARCH 99 undef' );    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
 };
 
 # -------------------------------------------------------------------
@@ -290,11 +290,11 @@ subtest 'Link-layer types' => sub {
     is( $LINK_TYPE_AETHERNET,       257,    'LINK_TYPE_AETHERNET' );
     is( $LINK_TYPE_RESERVED_HIGH,   65_535, 'LINK_TYPE_RESERVED_HIGH' );
 
-    is( Net::DHCPv6::Constants::link_type_name( 1 ),      'ETHERNET',      'REV_LINK_TYPE 1' );
-    is( Net::DHCPv6::Constants::link_type_name( 38 ),     'UNIFIED_BUS',   'REV_LINK_TYPE 38' );
-    is( Net::DHCPv6::Constants::link_type_name( 256 ),    'HW_EXP2',       'REV_LINK_TYPE 256' );
-    is( Net::DHCPv6::Constants::link_type_name( 65_535 ), 'RESERVED_HIGH', 'REV_LINK_TYPE 65535' );
-    ok( !defined Net::DHCPv6::Constants::link_type_name( 99 ), 'REV_LINK_TYPE 99 undef' );
+    is( Net::DHCPv6::Constants::link_type_name( 1 ),      'ETHERNET',      'REV_LINK_TYPE 1' );        ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    is( Net::DHCPv6::Constants::link_type_name( 38 ),     'UNIFIED_BUS',   'REV_LINK_TYPE 38' );       ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    is( Net::DHCPv6::Constants::link_type_name( 256 ),    'HW_EXP2',       'REV_LINK_TYPE 256' );      ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    is( Net::DHCPv6::Constants::link_type_name( 65_535 ), 'RESERVED_HIGH', 'REV_LINK_TYPE 65535' );    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    ok( !defined Net::DHCPv6::Constants::link_type_name( 99 ), 'REV_LINK_TYPE 99 undef' );             ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
 };
 
 # -------------------------------------------------------------------
