@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: DHCPv6 packet base class
 # PODNAME: Net::DHCPv6::Packet
 package Net::DHCPv6::Packet;

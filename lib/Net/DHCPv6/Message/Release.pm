@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Release message (type 8)
 # PODNAME: Net::DHCPv6::Message::Release
 package Net::DHCPv6::Message::Release;

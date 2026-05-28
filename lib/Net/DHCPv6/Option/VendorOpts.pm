@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Vendor-specific Information option (code 17) -- enterprise + sub-options
 # PODNAME: Net::DHCPv6::Option::VendorOpts
 package Net::DHCPv6::Option::VendorOpts;

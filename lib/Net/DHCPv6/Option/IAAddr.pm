@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: IA Address option (code 5) -- address + lifetimes + sub-options
 # PODNAME: Net::DHCPv6::Option::IAAddr
 package Net::DHCPv6::Option::IAAddr;

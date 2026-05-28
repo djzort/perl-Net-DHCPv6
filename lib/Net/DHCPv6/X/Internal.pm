@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Thrown on internal logic errors in the library
 # PODNAME: Net::DHCPv6::X::Internal
 package Net::DHCPv6::X::Internal;

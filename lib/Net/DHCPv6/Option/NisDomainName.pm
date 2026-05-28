@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: NIS Domain Name option (code 29) -- RFC 1035 domain name
 # PODNAME: Net::DHCPv6::Option::NisDomainName
 package Net::DHCPv6::Option::NisDomainName;

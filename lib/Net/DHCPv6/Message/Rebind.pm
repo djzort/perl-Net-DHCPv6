@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Rebind message (type 6)
 # PODNAME: Net::DHCPv6::Message::Rebind
 package Net::DHCPv6::Message::Rebind;

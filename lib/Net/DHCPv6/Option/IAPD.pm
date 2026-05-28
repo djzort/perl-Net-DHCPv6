@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Identity Association for Prefix Delegation option (code 25)
 # PODNAME: Net::DHCPv6::Option::IAPD
 package Net::DHCPv6::Option::IAPD;

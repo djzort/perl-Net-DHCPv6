@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: DNS Recursive Name Servers option (code 23)
 # PODNAME: Net::DHCPv6::Option::DnsServers
 package Net::DHCPv6::Option::DnsServers;

@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Confirm message (type 4)
 # PODNAME: Net::DHCPv6::Message::Confirm
 package Net::DHCPv6::Message::Confirm;

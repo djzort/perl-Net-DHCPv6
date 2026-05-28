@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Information Refresh Time option (code 32) -- 32-bit refresh duration
 # PODNAME: Net::DHCPv6::Option::InfoRefreshTime
 package Net::DHCPv6::Option::InfoRefreshTime;

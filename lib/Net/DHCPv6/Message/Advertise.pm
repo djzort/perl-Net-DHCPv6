@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Advertise message (type 2)
 # PODNAME: Net::DHCPv6::Message::Advertise
 package Net::DHCPv6::Message::Advertise;

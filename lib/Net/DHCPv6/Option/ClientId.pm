@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Client Identifier option (code 1)
 # PODNAME: Net::DHCPv6::Option::ClientId
 package Net::DHCPv6::Option::ClientId;

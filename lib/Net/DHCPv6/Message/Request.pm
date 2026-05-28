@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Request message (type 3)
 # PODNAME: Net::DHCPv6::Message::Request
 package Net::DHCPv6::Message::Request;

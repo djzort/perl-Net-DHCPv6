@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: SIP Server Domain Name option (code 21) -- list of domain names
 # PODNAME: Net::DHCPv6::Option::SipServerD
 package Net::DHCPv6::Option::SipServerD;

@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: SIP Server A option (code 22) -- list of IPv6 addresses
 # PODNAME: Net::DHCPv6::Option::SipServerA
 package Net::DHCPv6::Option::SipServerA;

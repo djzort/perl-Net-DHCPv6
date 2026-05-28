@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Identity Association for Temporary Addresses option (code 4)
 # PODNAME: Net::DHCPv6::Option::IATA
 package Net::DHCPv6::Option::IATA;

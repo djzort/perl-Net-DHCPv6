@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Interface-ID option (code 18) -- opaque interface identifier
 # PODNAME: Net::DHCPv6::Option::InterfaceId
 package Net::DHCPv6::Option::InterfaceId;

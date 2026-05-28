@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: PD Exclude option (code 67) -- prefix to exclude from IA_PD
 # PODNAME: Net::DHCPv6::Option::PdExclude
 package Net::DHCPv6::Option::PdExclude;

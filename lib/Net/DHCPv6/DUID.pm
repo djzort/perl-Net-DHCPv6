@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: DUID parse/emit and helper constructors
 # PODNAME: Net::DHCPv6::DUID
 package Net::DHCPv6::DUID;

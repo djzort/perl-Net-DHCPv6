@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Thrown when DUID data is invalid
 # PODNAME: Net::DHCPv6::X::BadDUID
 package Net::DHCPv6::X::BadDUID;

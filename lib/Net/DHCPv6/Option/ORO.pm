@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Option Request option (code 6)
 # PODNAME: Net::DHCPv6::Option::ORO
 package Net::DHCPv6::Option::ORO;

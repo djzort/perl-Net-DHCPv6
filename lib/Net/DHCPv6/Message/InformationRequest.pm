@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Information-Request message (type 11)
 # PODNAME: Net::DHCPv6::Message::InformationRequest
 package Net::DHCPv6::Message::InformationRequest;

@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Elapsed Time option (code 8) -- 16-bit centiseconds
 # PODNAME: Net::DHCPv6::Option::ElapsedTime
 package Net::DHCPv6::Option::ElapsedTime;

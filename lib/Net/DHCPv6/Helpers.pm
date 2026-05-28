@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Internal helper methods for IPv6 address resolution
 # PODNAME: Net::DHCPv6::Helpers
 package Net::DHCPv6::Helpers;

@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Client Link-Layer Address option (code 79) -- link-layer type + address
 # PODNAME: Net::DHCPv6::Option::ClientLinkLayerAddr
 package Net::DHCPv6::Option::ClientLinkLayerAddr;

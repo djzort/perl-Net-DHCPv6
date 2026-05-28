@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Reply message (type 7)
 # PODNAME: Net::DHCPv6::Message::Reply
 package Net::DHCPv6::Message::Reply;

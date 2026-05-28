@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: DHCPv6 packet decoder/encoder
 # PODNAME: Net::DHCPv6
 package Net::DHCPv6;

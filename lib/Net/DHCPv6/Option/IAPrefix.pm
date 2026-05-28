@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: IA Prefix option (code 26) -- prefix delegation sub-option
 # PODNAME: Net::DHCPv6::Option::IAPrefix
 package Net::DHCPv6::Option::IAPrefix;

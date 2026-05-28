@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: DHCPv6 numeric constants (message types, option codes, status codes, DUID types, client architecture types, link-layer types)
 # PODNAME: Net::DHCPv6::Constants
 package Net::DHCPv6::Constants;

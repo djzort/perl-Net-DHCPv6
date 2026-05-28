@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: User Class option (code 15) -- list of opaque user class data
 # PODNAME: Net::DHCPv6::Option::UserClass
 package Net::DHCPv6::Option::UserClass;

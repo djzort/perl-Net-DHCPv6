@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: NEW_POSIX_TIMEZONE option (code 41) -- POSIX timezone string
 # PODNAME: Net::DHCPv6::Option::NewPosixTimezone
 package Net::DHCPv6::Option::NewPosixTimezone;
