@@ -64,7 +64,7 @@ $packet = Net::DHCPv6->decode_or_null( '' );
 ok( !defined $packet, 'decode_or_null returns undef for empty data' );
 
 # decode_or_null - truncated
-$packet = Net::DHCPv6->decode_or_null( "\x01\x02" );
+$packet = Net::DHCPv6->decode_or_null( pack( 'H*', '0102' ) );
 ok( !defined $packet, 'decode_or_null returns undef for truncated data' );
 
 # decode_with_error - valid
@@ -74,7 +74,7 @@ ok( defined $pkt,  'decode_with_error returns packet for valid data' );
 ok( !defined $err, 'decode_with_error no error for valid data' );
 
 # decode_with_error - invalid
-( $pkt, $err ) = Net::DHCPv6->decode_with_error( "\x01\x02" );
+( $pkt, $err ) = Net::DHCPv6->decode_with_error( pack( 'H*', '0102' ) );
 ok( !defined $pkt, 'decode_with_error returns undef for truncated' );
 ok( defined $err,  'decode_with_error returns error for truncated' );
 

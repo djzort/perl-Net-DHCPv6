@@ -47,7 +47,7 @@ ok( defined $duid, 'partial DUID-EN returns duid' );
 is( $duid->duid_type, $DUID_EN, 'partial DUID-EN type' );
 
 # decode_duid_with_error -- partial DUID-UUID (type + 8 of 16 bytes)
-( $duid, $err ) = Net::DHCPv6->decode_duid_with_error( pack( 'n a8', 4, "\x00" x 8 ) );
+( $duid, $err ) = Net::DHCPv6->decode_duid_with_error( pack( 'n a8', 4, chr( 0 ) x 8 ) );
 ok( defined $duid, 'partial DUID-UUID returns duid' );
 is( $duid->duid_type, $DUID_UUID, 'partial DUID-UUID type' );
 ok( !defined $duid->identifier, 'partial DUID-UUID no identifier' );

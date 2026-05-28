@@ -99,8 +99,9 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     is( $parsed->address,     '2001:db8::1', 'Unicast parsed address text' );
     is( $parsed->address_raw, $raw,          'Unicast parsed address_raw' );
 
-    ok( dies { Net::DHCPv6::Option::Unicast->new },                          'Unicast dies without address' );
-    ok( dies { Net::DHCPv6::Option::Unicast->new( address => "\x01" x 4 ) }, 'Unicast dies with short address' );
+    ok( dies { Net::DHCPv6::Option::Unicast->new }, 'Unicast dies without address' );
+    ok( dies { Net::DHCPv6::Option::Unicast->new( address => pack( 'C*', ( 1 ) x 4 ) ) },
+        'Unicast dies with short address' );
 }
 
 # ----------------------------------------------------------------
@@ -141,16 +142,16 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 # RSOO (66) -- opaque relay-supplied option data
 # ----------------------------------------------------------------
 {
-    my $rsoo = Net::DHCPv6::Option::RSOO->new( option_data => "\x00\x01\x02\x03" );
-    is( $rsoo->code,        $OPTION_RSOO,       'RSOO code' );
-    is( $rsoo->option_data, "\x00\x01\x02\x03", 'RSOO data' );
+    my $rsoo = Net::DHCPv6::Option::RSOO->new( option_data => pack( 'H*', '00010203' ) );
+    is( $rsoo->code,        $OPTION_RSOO,             'RSOO code' );
+    is( $rsoo->option_data, pack( 'H*', '00010203' ), 'RSOO data' );
 
     my $bytes = $rsoo->as_bytes;
     is( bytes2hex( $bytes ), '0042000400010203', 'RSOO wire' );
 
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::RSOO' ), 'RSOO parsed class' );
-    is( $parsed->option_data, "\x00\x01\x02\x03", 'RSOO parsed data' );
+    is( $parsed->option_data, pack( 'H*', '00010203' ), 'RSOO parsed data' );
 }
 
 # ----------------------------------------------------------------
@@ -188,7 +189,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 {
     my $vo = Net::DHCPv6::Option::VendorOpts->new(
         enterprise_number => 999,
-        sub_options       => "\x01\x02",
+        sub_options       => pack( 'H*', '0102' ),
     );
     is( $vo->code,              $OPTION_VENDOR_OPTS, 'VendorOpts code' );
     is( $vo->enterprise_number, 999,                 'VendorOpts enterprise_number' );
@@ -222,7 +223,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 
     ok(
         dies {
-            Net::DHCPv6::Option::DnsServers::from_bytes_inner( undef, $OPTION_DNS_SERVERS, "\x01\x02" )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::DnsServers::from_bytes_inner( undef, $OPTION_DNS_SERVERS, pack( 'H*', '0102' ) )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
         },
         'DnsServers dies on truncated data (non-16-byte-aligned)'
     );
@@ -246,7 +247,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 
     ok(
         dies {
-            Net::DHCPv6::Option::NisServers::from_bytes_inner( undef, $OPTION_NIS_SERVERS, "\x01" x 15 )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::NisServers::from_bytes_inner( undef, $OPTION_NIS_SERVERS, pack( 'C*', ( 1 ) x 15 ) )  ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
         },
         'NisServers dies on non-16-byte-aligned data'
     );
@@ -270,7 +271,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 
     ok(
         dies {
-            Net::DHCPv6::Option::NtpServer::from_bytes_inner( undef, $OPTION_SNTP_SERVERS, "\x01" x 15 )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::NtpServer::from_bytes_inner( undef, $OPTION_SNTP_SERVERS, pack( 'C*', ( 1 ) x 15 ) )  ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
         },
         'NtpServer dies on non-16-byte-aligned data'
     );
@@ -482,7 +483,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     );
     ok(
         dies {
-            Net::DHCPv6::Option::Auth::from_bytes_inner( undef, $OPTION_AUTH, "\x00\x00\x00" )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::Auth::from_bytes_inner( undef, $OPTION_AUTH, pack( 'H*', '000000' ) )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
         },
         'Auth dies on truncated data (< 11 bytes)'
     );
@@ -594,7 +595,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     ok( dies { Net::DHCPv6::Option::SolMaxRt->new }, 'SolMaxRt dies without value' );
     ok(
         dies {
-            Net::DHCPv6::Option::SolMaxRt::from_bytes_inner( undef, $OPTION_SOL_MAX_RT, "\x01\x02\x03" )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::SolMaxRt::from_bytes_inner( undef, $OPTION_SOL_MAX_RT, pack( 'H*', '010203' ) )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
         },
         'SolMaxRt dies on data != 4 bytes'
     );
@@ -618,7 +619,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 
     ok(
         dies {
-            Net::DHCPv6::Option::SipServerA::from_bytes_inner( undef, $OPTION_SIP_SERVER_A, "\x01" x 15 )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::SipServerA::from_bytes_inner( undef, $OPTION_SIP_SERVER_A, pack( 'C*', ( 1 ) x 15 ) ) ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
         },
         'SipServerA dies on non-16-byte-aligned data'
     );
@@ -666,17 +667,17 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 {
     my $rid = Net::DHCPv6::Option::RemoteId->new(
         enterprise_number => 9,
-        remote_data       => "\x00\x01\x02\x03",
+        remote_data       => pack( 'H*', '00010203' ),
     );
-    is( $rid->code,              $OPTION_REMOTE_ID,  'RemoteId code' );
-    is( $rid->enterprise_number, 9,                  'RemoteId enterprise_number' );
-    is( $rid->remote_data,       "\x00\x01\x02\x03", 'RemoteId remote_data' );
+    is( $rid->code,              $OPTION_REMOTE_ID,        'RemoteId code' );
+    is( $rid->enterprise_number, 9,                        'RemoteId enterprise_number' );
+    is( $rid->remote_data,       pack( 'H*', '00010203' ), 'RemoteId remote_data' );
 
     my $bytes = $rid->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::RemoteId' ), 'RemoteId parsed class' );
-    is( $parsed->enterprise_number, 9,                  'RemoteId parsed enterprise_number' );
-    is( $parsed->remote_data,       "\x00\x01\x02\x03", 'RemoteId parsed remote_data' );
+    is( $parsed->enterprise_number, 9,                        'RemoteId parsed enterprise_number' );
+    is( $parsed->remote_data,       pack( 'H*', '00010203' ), 'RemoteId parsed remote_data' );
 
     ok( dies { Net::DHCPv6::Option::RemoteId->new( enterprise_number => 1 ) }, 'RemoteId dies without remote_data' );
     ok( dies { Net::DHCPv6::Option::RemoteId->new( remote_data => '' ) }, 'RemoteId dies without enterprise_number' );
@@ -686,14 +687,14 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 # SubscriberId (38) -- opaque data
 # ----------------------------------------------------------------
 {
-    my $sid = Net::DHCPv6::Option::SubscriberId->new( subscriber_id => "\x00\x01\x02" );
-    is( $sid->code,          $OPTION_SUBSCRIBER_ID, 'SubscriberId code' );
-    is( $sid->subscriber_id, "\x00\x01\x02",        'SubscriberId data' );
+    my $sid = Net::DHCPv6::Option::SubscriberId->new( subscriber_id => pack( 'H*', '000102' ) );
+    is( $sid->code,          $OPTION_SUBSCRIBER_ID,  'SubscriberId code' );
+    is( $sid->subscriber_id, pack( 'H*', '000102' ), 'SubscriberId data' );
 
     my $bytes = $sid->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::SubscriberId' ), 'SubscriberId parsed class' );
-    is( $parsed->subscriber_id, "\x00\x01\x02", 'SubscriberId parsed data' );
+    is( $parsed->subscriber_id, pack( 'H*', '000102' ), 'SubscriberId parsed data' );
 
     my $empty = Net::DHCPv6::Option::SubscriberId->new;
     is( $empty->subscriber_id, '', 'SubscriberId defaults to empty' );
@@ -763,7 +764,8 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 
     ok(
         dies {
-            Net::DHCPv6::Option::NispServers::from_bytes_inner( undef, $OPTION_NISP_SERVERS, "\x01" x 15 )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::NispServers::from_bytes_inner( undef, $OPTION_NISP_SERVERS,
+                pack( 'C*', ( 1 ) x 15 ) )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
         },
         'NispServers dies on non-16-byte-aligned data'
     );
@@ -852,7 +854,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     ok( dies { Net::DHCPv6::Option::ClientArchType->new }, 'ClientArchType dies without type' );
     ok(
         dies {
-            Net::DHCPv6::Option::ClientArchType::from_bytes_inner( undef, $OPTION_CLIENT_ARCH_TYPE, "\x01" )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::ClientArchType::from_bytes_inner( undef, $OPTION_CLIENT_ARCH_TYPE, chr( 1 ) )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
         },
         'ClientArchType dies on data != 2 bytes'
     );
@@ -862,7 +864,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 # PdExclude (67) -- prefix-length + address
 # ----------------------------------------------------------------
 {
-    my $addr    = "\x20\x01\x0d\xb8\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00";
+    my $addr    = pack( 'H*', '20010db8000000000000000000000000' );
     my $pd_addr = substr( $addr, 0, 6 );
     my $pe      = Net::DHCPv6::Option::PdExclude->new(
         prefix_length => 48,
@@ -892,17 +894,17 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 {
     my $clla = Net::DHCPv6::Option::ClientLinkLayerAddr->new(
         link_layer_type => $LINK_TYPE_ETHERNET,
-        link_layer_addr => "\x00\x11\x22\x33\x44\x55",
+        link_layer_addr => pack( 'H*', '001122334455' ),
     );
     is( $clla->code,            $OPTION_CLIENT_LINKLAYER_ADDR, 'ClientLinkLayerAddr code' );
     is( $clla->link_layer_type, $LINK_TYPE_ETHERNET,           'ClientLinkLayerAddr type' );
-    is( $clla->link_layer_addr, "\x00\x11\x22\x33\x44\x55",    'ClientLinkLayerAddr addr' );
+    is( $clla->link_layer_addr, pack( 'H*', '001122334455' ),  'ClientLinkLayerAddr addr' );
 
     my $bytes = $clla->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::ClientLinkLayerAddr' ), 'ClientLinkLayerAddr parsed class' );
-    is( $parsed->link_layer_type, $LINK_TYPE_ETHERNET,        'ClientLinkLayerAddr parsed type' );
-    is( $parsed->link_layer_addr, "\x00\x11\x22\x33\x44\x55", 'ClientLinkLayerAddr parsed addr' );
+    is( $parsed->link_layer_type, $LINK_TYPE_ETHERNET,          'ClientLinkLayerAddr parsed type' );
+    is( $parsed->link_layer_addr, pack( 'H*', '001122334455' ), 'ClientLinkLayerAddr parsed addr' );
 
     ok( dies { Net::DHCPv6::Option::ClientLinkLayerAddr->new( link_layer_type => $LINK_TYPE_ETHERNET ) },
         'ClientLinkLayerAddr dies without link_layer_addr' );
@@ -910,7 +912,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
         dies {
             Net::DHCPv6::Option::ClientLinkLayerAddr::from_bytes_inner(    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
                 undef, $OPTION_CLIENT_LINKLAYER_ADDR,                      ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                "\x00\x01"
+                pack( 'H*', '0001' )
             )
         },
         'ClientLinkLayerAddr dies on truncated data (< 3 bytes)'
@@ -937,7 +939,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
             protocol  => 3,
             algorithm => 1,
             rdm       => 0,
-            replay    => "\x00" x 8,
+            replay    => chr( 0 ) x 8,
             auth_info => '',
         )
     );
