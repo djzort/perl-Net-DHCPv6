@@ -215,8 +215,10 @@ is( $iana2->iaid,                          42,   'parse IANA iaid' );
 is( $iana2->get_option( 8 )->centiseconds, 1000, 'parse IANA sub-option' );
 
 ok( dies { Net::DHCPv6::Option::IANA->new }, 'IANA dies without iaid' );
-ok( dies { Net::DHCPv6::Option::IANA::from_bytes_inner( undef, 3, pack( 'C*', ( 1 ) x 11 ) ) },
-    'IANA dies on data < 12 bytes' );    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+ok(
+    dies { Net::DHCPv6::Option::IANA::from_bytes_inner( undef, 3, pack( 'C*', ( 1 ) x 11 ) ) },    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    'IANA dies on data < 12 bytes'
+);
 
 # IAAddr option
 my $addr   = pack( 'H*', '20010db8000000000000000000000001' );
@@ -307,7 +309,9 @@ is( $iaprefix2->valid_lifetime,     86400,        'parse IAPrefix valid' );
 is( $iaprefix2->prefix_length,      64,           'parse IAPrefix prefix_len' );
 
 ok( dies { Net::DHCPv6::Option::IAPD->new }, 'IAPD dies without iaid' );
-ok( dies { Net::DHCPv6::Option::IAPD::from_bytes_inner( undef, 25, pack( 'C*', ( 1 ) x 11 ) ) },
-    'IAPD dies on data < 12 bytes' );    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+ok(
+    dies { Net::DHCPv6::Option::IAPD::from_bytes_inner( undef, 25, pack( 'C*', ( 1 ) x 11 ) ) },    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+    'IAPD dies on data < 12 bytes'
+);
 
 done_testing;
