@@ -1,7 +1,8 @@
 #!/usr/bin/env perl
 # ABSTRACT: Validate every constant against IANA/RFC values and verify option class coverage
 use strictures 2;
-use Test2::V1 -ipP;
+use Test2::V1 -ipP, qw(is ok subtest pass note done_testing);    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
+
 use lib 't/lib';
 use lib 'lib';
 
