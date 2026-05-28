@@ -163,7 +163,7 @@ is( $ol->get_option( 2 )->code, 2, 'OptionList get ServerId' );
 is( $ol->get_option( 6 )->code, 6, 'OptionList get ORO' );
 
 my $opts = $ol->options;
-is( scalar @$opts, 3, 'OptionList order preserved with 3 options' );
+is( scalar @{$opts}, 3, 'OptionList order preserved with 3 options' );
 
 # OptionList from_bytes / as_bytes
 my $ol_bytes = $ol->as_bytes;
@@ -185,7 +185,7 @@ is( $ol3->get_option( 6 )->code, 6, 'remove_option: ORO still present' );
 
 # remove_option preserves order of remaining options
 my $remaining = $ol3->options;
-is( scalar @$remaining,    2, 'remove_option: 2 options remain' );
+is( scalar @{$remaining},  2, 'remove_option: 2 options remain' );
 is( $remaining->[0]->code, 1, 'remove_option: first remaining is ClientId' );
 is( $remaining->[1]->code, 6, 'remove_option: second remaining is ORO' );
 
