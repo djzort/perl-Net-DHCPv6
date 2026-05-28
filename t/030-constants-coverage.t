@@ -22,6 +22,7 @@ sub check_option_constant {
     exists $OPTION_CLASS_CODES{$expected}
         ? pass( "$desc: option class registered for code $expected" )
         : note( "$desc: no dedicated option class for code $expected (Generic OK)" );
+    return;
 }
 
 # -------------------------------------------------------------------
