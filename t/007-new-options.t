@@ -767,8 +767,10 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 
     ok(
         dies {
-            Net::DHCPv6::Option::NispServers::from_bytes_inner( undef, $OPTION_NISP_SERVERS,
-                pack( 'C*', ( 1 ) x 15 ) )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::NispServers::from_bytes_inner(    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+                undef, $OPTION_NISP_SERVERS,
+                pack( 'C*', ( 1 ) x 15 )
+            )
         },
         'NispServers dies on non-16-byte-aligned data'
     );
