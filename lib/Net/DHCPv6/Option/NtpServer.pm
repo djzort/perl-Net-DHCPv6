@@ -13,16 +13,16 @@ use namespace::clean ();
 
 sub new {
     my ( $class, %args ) = @_;
-    my $addrs = $class->_pick_addrs( \%args, 'servers' );
-    if ( !defined $addrs && $args{addresses} ) {
+    my $addresses = $class->_pick_addrs( \%args, 'servers' );
+    if ( !defined $addresses && $args{addresses} ) {
         my $list = is_plain_arrayref( $args{addresses} ) ? $args{addresses} : [ $args{addresses} ];
-        $addrs = [ map { $class->_resolve_ipv6( $_ ) } @{$list} ];
+        $addresses = [ map { $class->_resolve_ipv6( $_ ) } @{$list} ];
     }
-    $addrs //= [];
+    $addresses //= [];
     $args{code} = $OPTION_SNTP_SERVERS;
-    $args{data} = join( '', @{$addrs} );
+    $args{data} = join( '', @{$addresses} );
     my $self = $class->SUPER::new( %args );
-    $self->{servers} = $addrs;
+    $self->{servers} = $addresses;
     return bless $self, $class;
 }
 

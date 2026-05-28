@@ -4,20 +4,20 @@
 package Net::DHCPv6::Packet;
 
 use strictures 2;
-use Carp qw(croak);
+use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Packet::Relay;
 use Net::DHCPv6::X::BadMessage;
-use namespace::clean;
+use namespace::clean ();
 
 sub new {
-    my ( $class, @args ) = @_;
-    if ( @args == 1 ) {
-        return $class->from_bytes( $args[0] );
+    my ( $class, @argv ) = @_;
+    if ( @argv == 1 ) {
+        return $class->from_bytes( $argv[0] );
     }
-    croak 'Packet->new: no arguments' unless @args;
-    my %args = @args;
+    croak 'Packet->new: no arguments' unless @argv;
+    my %args = @argv;
     croak 'Packet->new: msg_type is required'       unless defined $args{msg_type};
     croak 'Packet->new: transaction_id is required' unless defined $args{transaction_id};
     croak 'transaction_id must fit in 24 bits'
