@@ -4,11 +4,12 @@
 package Net::DHCPv6::Packet::Relay;
 
 use strictures 2;
-use Carp qw(croak);
+use Net::DHCPv6::Packet;
+use Carp qw( croak );
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::X::BadMessage;
 use parent 'Net::DHCPv6::Helpers', 'Net::DHCPv6::Packet';
-use namespace::clean;
+use namespace::clean ();
 
 sub new {
     my ( $class, %args ) = @_;

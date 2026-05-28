@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 use strictures 2;
+use Net::DHCPv6::OptionList;
 use Test2::V1 -ipP;
 use lib 't/lib';
 use lib 'lib';

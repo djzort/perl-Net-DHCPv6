@@ -4,12 +4,14 @@
 package Net::DHCPv6::Option::SipServerD;
 
 use strictures 2;
+use Net::DHCPv6::OptionList;
+use Net::DHCPv6::Option;
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use Net::DHCPv6::X::BadOption;
 use parent 'Net::DHCPv6::Option';
-use Ref::Util qw(is_plain_arrayref);
-use namespace::clean;
+use Ref::Util qw( is_plain_arrayref );
+use namespace::clean ();
 
 sub _encode_domain {
     my ( $domain ) = @_;

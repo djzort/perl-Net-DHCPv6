@@ -4,9 +4,10 @@
 package Net::DHCPv6::OptionList;
 
 use strictures 2;
-use Carp      qw(croak);
-use Ref::Util qw(is_ref);
-use namespace::clean;
+use Net::DHCPv6::Option::Generic;
+use Carp qw( croak );
+use Ref::Util qw( is_ref );
+use namespace::clean ();
 
 our %OPTION_CLASS;
 

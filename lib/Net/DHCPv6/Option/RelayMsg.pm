@@ -4,9 +4,10 @@
 package Net::DHCPv6::Option::RelayMsg;
 
 use strictures 2;
+use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean;
+use namespace::clean ();
 
 sub new {
     my ( $class, %args ) = @_;

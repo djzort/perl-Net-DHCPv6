@@ -4,12 +4,13 @@
 package Net::DHCPv6::Option::PdExclude;
 
 use strictures 2;
-use Carp qw(croak);
+use Net::DHCPv6::OptionList;
+use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use Net::DHCPv6::X::BadOption;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean;
+use namespace::clean ();
 
 sub new {
     my ( $class, %args ) = @_;
