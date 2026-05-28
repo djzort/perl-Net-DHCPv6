@@ -62,7 +62,7 @@ sub from_bytes {
         return Net::DHCPv6::Packet::Relay->from_bytes( $bytes );
     }
 
-    my $tid        = unpack( 'N', "\x00" . substr( $bytes, 1, 3 ) );
+    my $tid        = unpack( 'N', chr( 0 ) . substr( $bytes, 1, 3 ) );
     my $opts_bytes = substr( $bytes, 4 );
 
     my $subclass = $Net::DHCPv6::Packet::MESSAGE_CLASS{$msg_type} || $class;

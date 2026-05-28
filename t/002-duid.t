@@ -59,7 +59,7 @@ my $str = $duid->as_string;
 ok( $str =~ m/^DUID_LLT:/, 'as_string format' );
 
 # Unknown DUID type
-my $unknown = Net::DHCPv6::DUID->new( duid_type => 99, identifier => "\x01\x02" );
+my $unknown = Net::DHCPv6::DUID->new( duid_type => 99, identifier => pack( 'H*', '0102' ) );
 $bytes = $unknown->as_bytes;
 $got   = Net::DHCPv6::DUID->from_bytes( $bytes );
 is( $got->duid_type, 99, 'unknown DUID type preserved' );
