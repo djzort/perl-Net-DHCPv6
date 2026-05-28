@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 use strictures 2;
+use Net::DHCPv6::Option::ServerId;
+use Net::DHCPv6::Option::ClientId;
+use Net::DHCPv6::DUID;
 use Test2::V1 -ipP;
 use lib 't/lib';
 use lib 'lib';

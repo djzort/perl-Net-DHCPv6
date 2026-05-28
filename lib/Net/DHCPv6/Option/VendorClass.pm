@@ -4,12 +4,13 @@
 package Net::DHCPv6::Option::VendorClass;
 
 use strictures 2;
-use Carp qw(croak);
+use Net::DHCPv6::OptionList;
+use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
-use Ref::Util qw(is_plain_arrayref);
-use namespace::clean;
+use Ref::Util qw( is_plain_arrayref );
+use namespace::clean ();
 
 sub new {
     my ( $class, %args ) = @_;
