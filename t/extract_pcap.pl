@@ -18,9 +18,9 @@ for my $line ( split /\n/, $in ) {
                 advertise => 2,
                 request   => 3,
                 reply     => 7,
-                release   => 8
+                release   => 8,
             }->{$1},
-            hex => ''
+            hex => '',
         };
     }
     elsif ( $current && $line =~ m/^\s+0x[0-9a-f]+:\s+(.*?)\s*$/ ) {
