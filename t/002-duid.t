@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
 use strictures 2;
-use Test2::V1 -ipP;
+use Test2::Tools::Exception qw( dies lives );
+use Test2::V1 -ipP, qw(is ok done_testing);            ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
+
 use lib 't/lib';
 use lib 'lib';
 

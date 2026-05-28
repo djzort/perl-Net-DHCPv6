@@ -4,7 +4,7 @@
 package Net::DHCPv6::Constants;
 
 use strictures 2;
-use Const::Fast::Exporter;
+use Const::Fast::Exporter qw( const );
 
 # Message types (RFC 8415 Section 14)
 const our $SOLICIT             => 1;
@@ -189,7 +189,7 @@ our %REV_STATUS_CODE;
 
 # placed after const declarations so const remains available during compile-time declarations;
 # Const::Fast::Exporter installs `import` at use-time, so it must survive namespace::clean
-use namespace::clean -except => ['import'];
+use namespace::clean ();
 
 BEGIN {
     %REV_CLIENT_ARCH = (
