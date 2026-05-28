@@ -61,7 +61,7 @@ subtest '_warns counts carp warnings' => sub {
 
 subtest '_warnings returns warning strings' => sub {
     my $w = _warnings { require Carp; Carp::carp( 'test warning' ) };
-    ok( @$w, 'returned at least one warning' );
+    ok( @{$w}, 'returned at least one warning' );
     like( $w->[0], qr/test warning/, 'warning matches expected string' );
 };
 
