@@ -8,6 +8,7 @@ severity = 1
 verbose = \n---\nViolation: %m\nFile: %f\nLocation: line %l column %c\nNear: %r\nExplanation: %e\nPolicy: %p\nLink: https://metacpan.org/pod/%P\nDiagnostic:\n%d\n---\n
 
 # Alphabetical order please
+[Bangs::ProhibitBitwiseOperators]
 [Bangs::ProhibitDebuggingModules]
 [Bangs::ProhibitFlagComments]
 [Bangs::ProhibitVagueNames]
@@ -95,6 +96,7 @@ ignore_modules = /Crypt::OpenSSL::CA::/
 [Perl::Critic::Policy::Modules::RequireNoMatchVarsWithUseEnglish]
 [Perlsecret]
 allow_secrets = Bang Bang, Venus
+[Plicease::ProhibitSignaturesAndAtUnderscore]
 [References::ProhibitDoubleSigils]
 [References::ProhibitRefChecks]
 [RegularExpressions::ProhibitUnusedCapture]
@@ -120,6 +122,7 @@ equivalent_modules = strictures
 [TooMuchCode::ProhibitExcessiveColons]
 [TooMuchCode::ProhibitExtraStricture]
 [TooMuchCode::ProhibitLargeTryBlock]
+[TooMuchCode::ProhibitLargeBlock]
 [TooMuchCode::ProhibitUnnecessaryUTF8Pragma]
 [TooMuchCode::ProhibitUnusedConstant]
 [TooMuchCode::ProhibitUnusedImport]
@@ -146,8 +149,10 @@ equivalent_modules = strictures
 [Variables::ProhibitAugmentedAssignmentInDeclaration]
 [Variables::ProhibitConditionalDeclarations]
 [Variables::ProhibitLocalVars]
+[Variables::ProhibitUselessInitialization]
 [Variables::ProhibitLoopOnHash]
 [Variables::ProhibitMatchVars]
+[Variables::NameReuse]
 [Variables::ProhibitPackageVars]
 [Variables::ProhibitPerl4PackageNames]
 [Variables::ProhibitPunctuationVars]

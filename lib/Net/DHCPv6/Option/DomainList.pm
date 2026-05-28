@@ -55,14 +55,14 @@ sub _read_labels_at {
 
 sub _decode_domains {
     my ( $payload ) = @_;
-    my @domains;
+    my @domain_list;
     my $offset = 0;
     my $len    = CORE::length( $payload );
     while ( $offset < $len ) {
         my @labels = _read_labels_at( $payload, \$offset, $len );
-        push @domains, @labels ? join( '.', @labels ) : '';
+        push @domain_list, @labels ? join( '.', @labels ) : '';
     }
-    return \@domains;
+    return \@domain_list;
 }
 
 sub new {

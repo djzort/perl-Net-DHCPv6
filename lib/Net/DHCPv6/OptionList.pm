@@ -53,9 +53,9 @@ sub options {
 }
 
 sub as_bytes {
-    my $self = shift;
-    my $opts = $self->options or return '';
-    return join( '', map { $_->as_bytes } @{$opts} );
+    my $self     = shift;
+    my $opt_list = $self->options or return '';
+    return join( '', map { $_->as_bytes } @{$opt_list} );
 }
 
 sub try_from_bytes {
