@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Shared container for a collection of DHCPv6 options
 # PODNAME: Net::DHCPv6::OptionList
 package Net::DHCPv6::OptionList;

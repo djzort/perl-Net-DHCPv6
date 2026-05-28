@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Server Identifier option (code 2)
 # PODNAME: Net::DHCPv6::Option::ServerId
 package Net::DHCPv6::Option::ServerId;

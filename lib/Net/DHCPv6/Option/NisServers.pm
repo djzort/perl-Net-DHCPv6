@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: NIS Servers option (code 27) -- list of IPv6 addresses
 # PODNAME: Net::DHCPv6::Option::NisServers
 package Net::DHCPv6::Option::NisServers;

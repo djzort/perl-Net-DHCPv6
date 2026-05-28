@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Identity Association for Non-temporary Addresses option (code 3)
 # PODNAME: Net::DHCPv6::Option::IANA
 package Net::DHCPv6::Option::IANA;

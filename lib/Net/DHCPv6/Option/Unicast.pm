@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: UNICAST option (code 12) -- server IPv6 address
 # PODNAME: Net::DHCPv6::Option::Unicast
 package Net::DHCPv6::Option::Unicast;

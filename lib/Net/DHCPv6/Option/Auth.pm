@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Authentication option (code 11) -- protocol/algorithm/rdm/replay/auth-info
 # PODNAME: Net::DHCPv6::Option::Auth
 package Net::DHCPv6::Option::Auth;

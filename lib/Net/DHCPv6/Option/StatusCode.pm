@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Status Code option (code 13)
 # PODNAME: Net::DHCPv6::Option::StatusCode
 package Net::DHCPv6::Option::StatusCode;

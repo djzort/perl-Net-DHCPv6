@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Fallback option for unknown codes -- stores raw code+data
 # PODNAME: Net::DHCPv6::Option::Generic
 package Net::DHCPv6::Option::Generic;

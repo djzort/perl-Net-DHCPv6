@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Base class for DHCPv6 relay messages (RelayForw/RelayReply)
 # PODNAME: Net::DHCPv6::Packet::Relay
 package Net::DHCPv6::Packet::Relay;

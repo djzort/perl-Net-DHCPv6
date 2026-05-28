@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: DHCPv6 option base class
 # PODNAME: Net::DHCPv6::Option
 package Net::DHCPv6::Option;

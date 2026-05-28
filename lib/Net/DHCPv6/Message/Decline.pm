@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Decline message (type 9)
 # PODNAME: Net::DHCPv6::Message::Decline
 package Net::DHCPv6::Message::Decline;

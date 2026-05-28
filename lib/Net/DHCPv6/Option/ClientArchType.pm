@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Client System Architecture Type option (code 61) -- 16-bit architecture type
 # PODNAME: Net::DHCPv6::Option::ClientArchType
 package Net::DHCPv6::Option::ClientArchType;

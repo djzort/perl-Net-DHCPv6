@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Reconfigure Accept option (code 20) -- zero-length data
 # PODNAME: Net::DHCPv6::Option::ReconfAccept
 package Net::DHCPv6::Option::ReconfAccept;

@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Solicit message (type 1)
 # PODNAME: Net::DHCPv6::Message::Solicit
 package Net::DHCPv6::Message::Solicit;

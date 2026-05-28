@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Relay-Reply message (type 13)
 # PODNAME: Net::DHCPv6::Message::RelayReply
 package Net::DHCPv6::Message::RelayReply;

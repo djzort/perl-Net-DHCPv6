@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: SOL_MAX_RT option (code 10) -- maximum solicit retransmission duration (32-bit)
 # PODNAME: Net::DHCPv6::Option::SolMaxRt
 package Net::DHCPv6::Option::SolMaxRt;

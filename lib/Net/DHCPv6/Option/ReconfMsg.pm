@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Reconfigure Message option (code 19) -- 1-byte msg-type
 # PODNAME: Net::DHCPv6::Option::ReconfMsg
 package Net::DHCPv6::Option::ReconfMsg;

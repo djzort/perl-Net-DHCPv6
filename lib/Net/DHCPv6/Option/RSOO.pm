@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Relay-Supplied Options option (code 66) -- opaque
 # PODNAME: Net::DHCPv6::Option::RSOO
 package Net::DHCPv6::Option::RSOO;

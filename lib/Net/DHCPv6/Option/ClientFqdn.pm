@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Client FQDN option (code 39) -- flags + domain name
 # PODNAME: Net::DHCPv6::Option::ClientFqdn
 package Net::DHCPv6::Option::ClientFqdn;

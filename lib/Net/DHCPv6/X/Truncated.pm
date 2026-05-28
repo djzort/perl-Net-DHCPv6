@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Thrown when a buffer is too short for expected data
 # PODNAME: Net::DHCPv6::X::Truncated
 package Net::DHCPv6::X::Truncated;

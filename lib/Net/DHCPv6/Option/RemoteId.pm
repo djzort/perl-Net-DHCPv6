@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Remote ID option (code 37) -- enterprise-number + opaque data
 # PODNAME: Net::DHCPv6::Option::RemoteId
 package Net::DHCPv6::Option::RemoteId;

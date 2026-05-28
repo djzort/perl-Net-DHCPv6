@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Subscriber ID option (code 38) -- opaque subscriber identification
 # PODNAME: Net::DHCPv6::Option::SubscriberId
 package Net::DHCPv6::Option::SubscriberId;

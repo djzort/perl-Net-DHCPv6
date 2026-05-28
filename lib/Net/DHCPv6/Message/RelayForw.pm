@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Relay-Forward message (type 12)
 # PODNAME: Net::DHCPv6::Message::RelayForw
 package Net::DHCPv6::Message::RelayForw;

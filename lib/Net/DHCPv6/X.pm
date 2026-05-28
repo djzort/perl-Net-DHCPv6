@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Exception base class for Net::DHCPv6
 # PODNAME: Net::DHCPv6::X
 package Net::DHCPv6::X;

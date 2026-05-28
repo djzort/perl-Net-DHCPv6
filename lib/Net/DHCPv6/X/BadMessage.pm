@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Thrown when a message header is invalid
 # PODNAME: Net::DHCPv6::X::BadMessage
 package Net::DHCPv6::X::BadMessage;

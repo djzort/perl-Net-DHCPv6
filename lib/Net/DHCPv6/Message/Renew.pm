@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Renew message (type 5)
 # PODNAME: Net::DHCPv6::Message::Renew
 package Net::DHCPv6::Message::Renew;

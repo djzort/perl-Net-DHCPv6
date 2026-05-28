@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Preference option (code 7) -- 8-bit server preference value
 # PODNAME: Net::DHCPv6::Option::Preference
 package Net::DHCPv6::Option::Preference;

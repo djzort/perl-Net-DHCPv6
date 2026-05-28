@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Thrown when option data violates expected format
 # PODNAME: Net::DHCPv6::X::BadOption
 package Net::DHCPv6::X::BadOption;

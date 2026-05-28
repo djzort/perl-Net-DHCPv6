@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Domain Search List option (code 24) -- RFC 1035 domain names
 # PODNAME: Net::DHCPv6::Option::DomainList
 package Net::DHCPv6::Option::DomainList;

@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: MUD URL option (code 112) -- Manufacturer Usage Description URL
 # PODNAME: Net::DHCPv6::Option::MudUrl
 package Net::DHCPv6::Option::MudUrl;

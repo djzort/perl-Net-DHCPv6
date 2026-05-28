@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: SNTP Servers option (code 31) -- list of IPv6 addresses
 # PODNAME: Net::DHCPv6::Option::NtpServer
 package Net::DHCPv6::Option::NtpServer;

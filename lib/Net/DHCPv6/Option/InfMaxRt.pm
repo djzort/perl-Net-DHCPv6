@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: INF_MAX_RT option (code 83) -- maximum Information-Request retransmission duration
 # PODNAME: Net::DHCPv6::Option::InfMaxRt
 package Net::DHCPv6::Option::InfMaxRt;

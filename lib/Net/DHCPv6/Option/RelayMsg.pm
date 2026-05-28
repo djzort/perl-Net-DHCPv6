@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Relay Message option (code 9) -- encapsulated relay message
 # PODNAME: Net::DHCPv6::Option::RelayMsg
 package Net::DHCPv6::Option::RelayMsg;

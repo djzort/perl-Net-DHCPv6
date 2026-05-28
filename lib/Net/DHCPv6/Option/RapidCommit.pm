@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/bin/false
 # ABSTRACT: Rapid Commit option (code 14) -- zero-length data
 # PODNAME: Net::DHCPv6::Option::RapidCommit
 package Net::DHCPv6::Option::RapidCommit;
