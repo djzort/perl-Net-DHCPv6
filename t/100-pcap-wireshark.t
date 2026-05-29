@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 use strictures 2;
 use Test2::V1 -ipP, qw(is ok subtest diag done_testing);    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
 
@@ -201,4 +202,5 @@ subtest 'reply2 (release ack) options' => sub {
     is( $sc->message,     'Release received.', 'StatusCode message' );
 };
 
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

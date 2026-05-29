@@ -187,11 +187,18 @@ our %REV_MESSAGE_TYPE;
 our %REV_OPTION_CODE;
 our %REV_STATUS_CODE;
 
+# Wire-format sizes (byte lengths of protocol fields)
+const our $IPV6_ADDR_LEN => 16;
+
+# Domain name label compression (RFC 1035 Section 4.1.4)
+const our $DN_COMPRESS_MASK => 0xC0;
+const our $DN_LABEL_MASK    => 0x3F;
+
 # placed after const declarations so const remains available during compile-time declarations;
 # Const::Fast::Exporter installs `import` at use-time, so it must survive namespace::clean
 use namespace::clean ();
 
-BEGIN {
+BEGIN {    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
     %REV_CLIENT_ARCH = (
         0  => 'X86_BIOS',
         1  => 'NEC_PC98',

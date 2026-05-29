@@ -4,6 +4,7 @@
 package Net::DHCPv6::Packet::Relay;
 
 use strictures 2;
+use Net::DHCPv6::Constants qw( $IPV6_ADDR_LEN );
 use Net::DHCPv6::Packet;
 use Carp qw( croak );
 use Net::DHCPv6::OptionList;
@@ -11,15 +12,18 @@ use Net::DHCPv6::X::BadMessage;
 use parent 'Net::DHCPv6::Helpers', 'Net::DHCPv6::Packet';
 use namespace::clean ();
 
+my $RELAY_HDR_SIZE   = 34;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
+my $LINK_ADDR_OFFSET = 2;
+
 sub new {
     my ( $class, %args ) = @_;
     croak 'Relay->new: hop_count is required' unless defined $args{hop_count};
     my $link_addr = $class->_pick_addr( \%args, 'link_address' );
     croak 'Relay->new: link_address is required'      unless defined $link_addr;
-    croak 'Relay->new: link_address must be 16 bytes' unless CORE::length( $link_addr ) == 16;
+    croak 'Relay->new: link_address must be 16 bytes' unless CORE::length( $link_addr ) == $IPV6_ADDR_LEN;
     my $peer_addr = $class->_pick_addr( \%args, 'peer_address' );
     croak 'Relay->new: peer_address is required'      unless defined $peer_addr;
-    croak 'Relay->new: peer_address must be 16 bytes' unless CORE::length( $peer_addr ) == 16;
+    croak 'Relay->new: peer_address must be 16 bytes' unless CORE::length( $peer_addr ) == $IPV6_ADDR_LEN;
 
     $args{options} = $args{options} // Net::DHCPv6::OptionList->new;
 
@@ -49,13 +53,13 @@ sub peer_address_raw { return shift->{peer_address} }
 sub from_bytes {
     my ( $class, $bytes ) = @_;
     Net::DHCPv6::X::BadMessage->throw( message => 'Empty relay data' )
-        if !defined $bytes || CORE::length( $bytes ) < 34;
+        if !defined $bytes || CORE::length( $bytes ) < $RELAY_HDR_SIZE;
 
     my $msg_type   = unpack( 'C', substr( $bytes, 0, 1 ) );
     my $hop_count  = unpack( 'C', substr( $bytes, 1, 1 ) );
-    my $link_addr  = substr( $bytes, 2,  16 );
-    my $peer_addr  = substr( $bytes, 18, 16 );
-    my $opts_bytes = substr( $bytes, 34 );
+    my $link_addr  = substr( $bytes, $LINK_ADDR_OFFSET,                  $IPV6_ADDR_LEN );
+    my $peer_addr  = substr( $bytes, $LINK_ADDR_OFFSET + $IPV6_ADDR_LEN, $IPV6_ADDR_LEN );
+    my $opts_bytes = substr( $bytes, $RELAY_HDR_SIZE );
     my $opts       = Net::DHCPv6::OptionList->from_bytes( $opts_bytes );
 
     my $subclass = $Net::DHCPv6::Packet::MESSAGE_CLASS{$msg_type} || $class;

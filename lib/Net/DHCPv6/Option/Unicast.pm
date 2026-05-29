@@ -15,7 +15,7 @@ sub new {
     my ( $class, %args ) = @_;
     my $addr = $class->_pick_addr( \%args, 'address' );
     croak 'Unicast requires address'
-        unless $addr && CORE::length( $addr ) == 16;
+        unless $addr && CORE::length( $addr ) == $IPV6_ADDR_LEN;
     $args{code} = $OPTION_UNICAST;
     $args{data} = $addr;
     my $self = $class->SUPER::new( %args );
@@ -33,8 +33,8 @@ sub address {
 sub from_bytes_inner {
     my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated Unicast option' )
-        if CORE::length( $payload ) < 16;
-    return $class->new( address_raw => substr( $payload, 0, 16 ) );
+        if CORE::length( $payload ) < $IPV6_ADDR_LEN;
+    return $class->new( address_raw => substr( $payload, 0, $IPV6_ADDR_LEN ) );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_UNICAST} = __PACKAGE__;

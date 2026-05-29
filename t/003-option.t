@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 use strictures 2;
 use Test2::Tools::Exception qw( dies );
 use Test2::V1 -ipP, qw(is ok done_testing);            ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
@@ -231,7 +232,6 @@ is( $iaaddr_parsed->valid_lifetime,     86400,         'IAAddr parsed valid' );
 ok( dies { Net::DHCPv6::Option::IAAddr->new }, 'IAAddr dies without address' );
 ok( dies { Net::DHCPv6::Option::IAAddr::from_bytes_inner( undef, 5, pack( 'C*', ( 1 ) x 23 ) ) },
     'IAAddr dies on data < 24 bytes' );
-## use critic
 
 # IATA option
 my $iata = Net::DHCPv6::Option::IATA->new( iaid => 99 );
@@ -298,4 +298,5 @@ ok( dies { Net::DHCPv6::Option::IAPD->new }, 'IAPD dies without iaid' );
 ok( dies { Net::DHCPv6::Option::IAPD::from_bytes_inner( undef, 25, pack( 'C*', ( 1 ) x 11 ) ) },
     'IAPD dies on data < 12 bytes' );
 
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

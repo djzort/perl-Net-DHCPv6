@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 use strictures 2;
 use Test2::Tools::Exception qw( dies );
 use Net::DHCPv6::Packet;
@@ -91,4 +92,5 @@ ok( $packet->isa( 'Net::DHCPv6::Message::Solicit' ), 'Packet->new($bytes) delega
 ok( dies { Net::DHCPv6->decode_or_croak( $EMPTY ) }, 'decode_or_croak with empty dies' );
 ok( dies { Net::DHCPv6->decode_or_croak( undef ) },  'decode_or_croak with undef dies' );
 
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

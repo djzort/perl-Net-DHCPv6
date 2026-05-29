@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 use strictures 2;
 use Test2::V1 -ipP, qw(is ok subtest like diag done_testing);    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
 
@@ -151,4 +152,5 @@ subtest 'reply options' => sub {
     ok( $aftr, 'OPTION_64 (AFTR-Name-like) present' );
 };
 
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

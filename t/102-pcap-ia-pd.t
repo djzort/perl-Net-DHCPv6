@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 use strictures 2;
 use Test2::V1 -ipP, qw(is ok subtest diag done_testing);    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
 
@@ -141,4 +142,5 @@ subtest 'reply options' => sub {
     is( $pfx->prefix_length,      56,   'IAPREFIX prefix_len=56' );
 };
 
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

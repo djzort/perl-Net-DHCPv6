@@ -11,7 +11,8 @@ use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
 use Ref::Util        qw( is_plain_arrayref );
 use namespace::clean ();
-my $EMPTY = q();
+my $EMPTY       = q();
+my $ENT_NUM_LEN = 4;     ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 
 sub new {
     my ( $class, %args ) = @_;
@@ -34,9 +35,9 @@ sub vendor_data       { return shift->{vendor_data} }
 sub from_bytes_inner {
     my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated VendorClass option' )
-        if CORE::length( $payload ) < 4;
-    my $en   = unpack( 'N', substr( $payload, 0, 4 ) );
-    my $rest = substr( $payload, 4 );
+        if CORE::length( $payload ) < $ENT_NUM_LEN;
+    my $en   = unpack( 'N', substr( $payload, 0, $ENT_NUM_LEN ) );
+    my $rest = substr( $payload, $ENT_NUM_LEN );
     my @items;
     my $offset = 0;
     my $len    = CORE::length( $rest );

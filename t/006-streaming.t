@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 use strictures 2;
 use Test2::Tools::Exception qw( dies );
 use Net::DHCPv6::Option::ServerId;
@@ -138,4 +139,5 @@ ok( defined $ol, 'decode_options_or_croak full' );
 # decode_options_or_croak -- truncated (croaks)
 ok( dies { Net::DHCPv6->decode_options_or_croak( $truncated ) }, 'decode_options_or_croak truncated croaks' );
 
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

@@ -8,7 +8,9 @@ use Net::DHCPv6::Option::Generic;
 use Carp             qw( croak );
 use Ref::Util        qw( is_ref );
 use namespace::clean ();
-my $EMPTY = q();
+
+my $EMPTY        = q();
+my $OPT_HDR_SIZE = 4;     ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 
 our %OPTION_CLASS;
 
@@ -68,10 +70,10 @@ sub try_from_bytes {
     my $len    = CORE::length( $bytes );
     my $error;
 
-    while ( $offset + 4 <= $len ) {
+    while ( $offset + $OPT_HDR_SIZE <= $len ) {
         my $code   = unpack( 'n', substr( $bytes, $offset,     2 ) );
         my $optlen = unpack( 'n', substr( $bytes, $offset + 2, 2 ) );
-        $offset += 4;
+        $offset += $OPT_HDR_SIZE;
         if ( $offset + $optlen > $len ) {
             $error = "Truncated option $code: need $optlen bytes, have " . ( $len - $offset );
             last;

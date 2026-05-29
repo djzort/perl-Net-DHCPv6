@@ -4,50 +4,65 @@
 package Net::DHCPv6::DUID;
 
 use strictures 2;
-use Carp qw(croak);
+use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::BadDUID;
-use namespace::clean;
-my $EMPTY = q();
+use namespace::clean ();
+my $EMPTY        = q();
+my $N_LEN        = 4;     ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
+my $LLT_HDR_SIZE = 6;     ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 
 sub new {
     my ( $class, %args ) = @_;
     my $type = $args{duid_type} // croak 'Net::DHCPv6::DUID->new: duid_type is required';
-
-    my $self = { duid_type => $type, identifier => $args{identifier} // q() };
-
-    if ( $type == $DUID_LLT ) {
-        croak 'DUID-LLT requires link_layer_type, time, and identifier'
-            unless defined $args{link_layer_type}
-            && defined $args{time}
-            && defined $args{identifier};
-        $self->{link_layer_type} = $args{link_layer_type};
-        $self->{time}            = $args{time};
-        $self->{identifier}      = $args{identifier};
-    }
-    if ( $type == $DUID_EN ) {
-        croak 'DUID-EN requires enterprise_number and identifier'
-            unless defined $args{enterprise_number}
-            && defined $args{identifier};
-        $self->{enterprise_number} = $args{enterprise_number};
-        $self->{identifier}        = $args{identifier};
-    }
-    if ( $type == $DUID_LL ) {
-        croak 'DUID-LL requires link_layer_type and identifier'
-            unless defined $args{link_layer_type}
-            && defined $args{identifier};
-        $self->{link_layer_type} = $args{link_layer_type};
-        $self->{identifier}      = $args{identifier};
-    }
-    if ( $type == $DUID_UUID ) {
-        croak 'DUID-UUID requires identifier (16 bytes)'
-            unless defined $args{identifier};
-        croak 'DUID-UUID identifier must be 16 bytes'
-            unless CORE::length( $args{identifier} ) == 16;
-        $self->{identifier} = $args{identifier};
-    }
-
+    my $self = { duid_type => $type, identifier => $args{identifier} // $EMPTY };
+    if ( $type == $DUID_LLT )  { _new_llt( $self, \%args ) }
+    if ( $type == $DUID_EN )   { _new_en( $self, \%args ) }
+    if ( $type == $DUID_LL )   { _new_ll( $self, \%args ) }
+    if ( $type == $DUID_UUID ) { _new_uuid( $self, \%args ) }
     return bless $self, $class;
+}
+
+sub _new_llt {
+    my ( $self, $args ) = @_;
+    croak 'DUID-LLT requires link_layer_type, time, and identifier'
+        unless defined $args->{link_layer_type}
+        && defined $args->{time}
+        && defined $args->{identifier};
+    $self->{link_layer_type} = $args->{link_layer_type};
+    $self->{time}            = $args->{time};
+    $self->{identifier}      = $args->{identifier};
+    return;
+}
+
+sub _new_en {
+    my ( $self, $args ) = @_;
+    croak 'DUID-EN requires enterprise_number and identifier'
+        unless defined $args->{enterprise_number}
+        && defined $args->{identifier};
+    $self->{enterprise_number} = $args->{enterprise_number};
+    $self->{identifier}        = $args->{identifier};
+    return;
+}
+
+sub _new_ll {
+    my ( $self, $args ) = @_;
+    croak 'DUID-LL requires link_layer_type and identifier'
+        unless defined $args->{link_layer_type}
+        && defined $args->{identifier};
+    $self->{link_layer_type} = $args->{link_layer_type};
+    $self->{identifier}      = $args->{identifier};
+    return;
+}
+
+sub _new_uuid {
+    my ( $self, $args ) = @_;
+    croak 'DUID-UUID requires identifier (16 bytes)'
+        unless defined $args->{identifier};
+    croak 'DUID-UUID identifier must be 16 bytes'
+        unless CORE::length( $args->{identifier} ) == $IPV6_ADDR_LEN;
+    $self->{identifier} = $args->{identifier};
+    return;
 }
 
 sub duid_type         { return shift->{duid_type} }
@@ -57,8 +72,8 @@ sub enterprise_number { return shift->{enterprise_number} }
 sub identifier        { return shift->{identifier} }
 
 my %DUID_LENGTH_BASE = (
-    $DUID_LLT  => 2 + 2 + 4,
-    $DUID_EN   => 2 + 4,
+    $DUID_LLT  => 2 + 2 + $N_LEN,
+    $DUID_EN   => 2 + $N_LEN,
     $DUID_LL   => 2 + 2,
     $DUID_UUID => 2,
 );
@@ -114,12 +129,12 @@ sub _try_llt {
     my $error;
     if ( $rest_len >= 2 ) {
         $partial->{link_layer_type} = unpack( 'n', $rest );
-        if ( $rest_len >= 6 ) {
+        if ( $rest_len >= $LLT_HDR_SIZE ) {
             $partial->{time}       = unpack( 'x2 N', $rest );
-            $partial->{identifier} = substr( $rest, 6 );
+            $partial->{identifier} = substr( $rest, $LLT_HDR_SIZE );
         }
         else {
-            $error = "Need 6 bytes for DUID-LLT hwtype+time, got $rest_len";
+            $error = "Need $LLT_HDR_SIZE bytes for DUID-LLT hwtype+time, got $rest_len";
         }
     }
     else {
@@ -132,12 +147,12 @@ sub _try_en {
     my ( $class, $rest, $rest_len ) = @_;
     my $partial = bless( { duid_type => $DUID_EN }, $class );
     my $error;
-    if ( $rest_len >= 4 ) {
+    if ( $rest_len >= $N_LEN ) {
         $partial->{enterprise_number} = unpack( 'N', $rest );
-        $partial->{identifier}        = substr( $rest, 4 );
+        $partial->{identifier}        = substr( $rest, $N_LEN );
     }
     else {
-        $error = "Need 4 bytes for DUID-EN enterprise_number, got $rest_len";
+        $error = "Need $N_LEN bytes for DUID-EN enterprise_number, got $rest_len";
     }
     return ( $partial, $error );
 }
@@ -160,11 +175,11 @@ sub _try_uuid {
     my ( $class, $rest, $rest_len ) = @_;
     my $partial = bless( { duid_type => $DUID_UUID }, $class );
     my $error;
-    if ( $rest_len >= 16 ) {
-        $partial->{identifier} = substr( $rest, 0, 16 );
+    if ( $rest_len >= $IPV6_ADDR_LEN ) {
+        $partial->{identifier} = substr( $rest, 0, $IPV6_ADDR_LEN );
     }
     else {
-        $error = "Need 16 bytes for DUID-UUID, got $rest_len";
+        $error = "Need $IPV6_ADDR_LEN bytes for DUID-UUID, got $rest_len";
     }
     return ( $partial, $error );
 }

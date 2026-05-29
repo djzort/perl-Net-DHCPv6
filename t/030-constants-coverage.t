@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 # ABSTRACT: Validate every constant against IANA/RFC values and verify option class coverage
 use strictures 2;
 use Test2::V1 -ipP, qw(is ok subtest pass note done_testing);    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
@@ -314,4 +315,5 @@ subtest 'Option class registration' => sub {
     }
 };
 
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

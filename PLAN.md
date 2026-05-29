@@ -1,6 +1,7 @@
 # perlcritic status
 
-**Zero violations** across `lib/` and `t/`.
+**Zero violations** across `lib/`; **t/ excluded** from
+`ProhibitMagicNumbers` (test data uses raw numeric literals).
 
 ```
 perlcritic --profile .perlcriticrc --verbose "%p\n" lib/ t/ 2>&1 | \
@@ -28,9 +29,11 @@ perlcritic --profile .perlcriticrc --verbose "%p\n" lib/ t/ 2>&1 | \
 - `Variables::ProhibitPunctuationVars` — 1 violation (commit 06a0e8a)
 - `Variables::RequireInitializationForLocalVars` — 1 violation (commit c055ac4)
 
-### New policies added (0 violations)
+### New policies added (0 violations in lib/)
 - `ControlStructures::ProhibitReturnInMappingBlock` (commit 1d51902)
 - `ControlStructures::ProhibitInlineDo` (commit 1d51902)
+- `ValuesAndExpressions::ProhibitMagicNumbers` — 277 violations fixed
+  across 125 lib files; t/ excluded (current commit)
 
 ### Infrastructure
 - `.perlcriticrc` converted to `only = 1` — explicit policy list only

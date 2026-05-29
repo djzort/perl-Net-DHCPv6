@@ -10,7 +10,9 @@ use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean ();
-my $EMPTY = q();
+my $EMPTY           = q();
+my $REPLAY_WIRE_LEN = 8;     ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
+my $MIN_PAYLOAD     = 11;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 
 sub new {
     my ( $class, %args ) = @_;
@@ -18,7 +20,7 @@ sub new {
         croak "Auth requires $field" unless defined $args{$field};
     }
     croak 'Auth replay must be exactly 8 bytes'
-        if CORE::length( $args{replay} ) != 8;
+        if CORE::length( $args{replay} ) != $REPLAY_WIRE_LEN;
     $args{code} = $OPTION_AUTH;
     $args{data} =
         pack( 'C C C a8 a*', $args{protocol}, $args{algorithm}, $args{rdm}, $args{replay}, $args{auth_info} // $EMPTY );
@@ -40,7 +42,7 @@ sub auth_info { return shift->{auth_info} }
 sub from_bytes_inner {
     my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated Auth option' )
-        if CORE::length( $payload ) < 11;
+        if CORE::length( $payload ) < $MIN_PAYLOAD;
     my ( $proto, $alg, $rdm, $replay, $auth_info ) = unpack( 'C C C a8 a*', $payload );
     return $class->new(
         protocol  => $proto,

@@ -76,16 +76,18 @@ use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Packet;
 use namespace::clean ();
 
+my $MIN_LEN = 4;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
+
 # Packet-level decoders
 sub decode_or_croak {
     my ( $class, $bytes ) = @_;
-    croak 'No data provided' if !defined $bytes || CORE::length( $bytes ) < 4;
+    croak 'No data provided' if !defined $bytes || CORE::length( $bytes ) < $MIN_LEN;
     return Net::DHCPv6::Packet->from_bytes( $bytes );
 }
 
 sub decode_or_null {
     my ( $class, $bytes ) = @_;
-    return if !defined $bytes || CORE::length( $bytes ) < 4;
+    return if !defined $bytes || CORE::length( $bytes ) < $MIN_LEN;
     my $packet;
     eval { $packet = Net::DHCPv6::Packet->from_bytes( $bytes ); };
     return $packet;
@@ -95,7 +97,7 @@ sub decode_with_error {
     my ( $class, $bytes ) = @_;
     my $packet;
     my $error;
-    if ( !defined $bytes || CORE::length( $bytes ) < 4 ) {
+    if ( !defined $bytes || CORE::length( $bytes ) < $MIN_LEN ) {
         $error = 'No data provided';
     }
     else {

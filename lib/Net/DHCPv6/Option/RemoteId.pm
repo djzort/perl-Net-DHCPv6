@@ -10,6 +10,7 @@ use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean ();
+my $ENT_NUM_LEN = 4;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 
 sub new {
     my ( $class, %args ) = @_;
@@ -29,9 +30,9 @@ sub remote_data       { return shift->{remote_data} }
 sub from_bytes_inner {
     my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated RemoteId option' )
-        if CORE::length( $payload ) < 4;
-    my $en   = unpack( 'N', substr( $payload, 0, 4 ) );
-    my $rest = substr( $payload, 4 );
+        if CORE::length( $payload ) < $ENT_NUM_LEN;
+    my $en   = unpack( 'N', substr( $payload, 0, $ENT_NUM_LEN ) );
+    my $rest = substr( $payload, $ENT_NUM_LEN );
     return $class->new( enterprise_number => $en, remote_data => $rest );
 }
 

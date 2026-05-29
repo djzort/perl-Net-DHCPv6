@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 use strictures 2;
 use Test2::V1 -ipP, qw(is done_testing);    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
 
@@ -55,4 +56,5 @@ is( Net::DHCPv6::Constants::option_name( 23 ),           'DNS_SERVERS', 'REV_OPT
 is( Net::DHCPv6::Constants::status_name( 0 ),            'SUCCESS',     'REV_STATUS_CODE 0' );
 is( Net::DHCPv6::Constants::is_valid_message_type( 1 ),  1,             'is_valid_message_type 1' );
 is( Net::DHCPv6::Constants::is_valid_message_type( 99 ), $EMPTY,        'is_valid_message_type 99' );
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;
