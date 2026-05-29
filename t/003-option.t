@@ -23,6 +23,7 @@ use Net::DHCPv6::Option::IAPD;
 use Net::DHCPv6::Option::IAPrefix;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
+my $EMPTY = q();
 
 # Generic option
 my $gen = Net::DHCPv6::Option::Generic->new( code => 99, data => pack( 'H*', '0102' ) );
@@ -51,7 +52,7 @@ ok( CORE::length( $bytes ) > 4, 'ClientId as_bytes has TLV header' );
 my ( $parsed, $remain ) = Net::DHCPv6::Option->from_bytes( $bytes );
 ok( $parsed->isa( 'Net::DHCPv6::Option::ClientId' ), 'parsed ClientId class' );
 is( $parsed->duid->time, 123456, 'parsed ClientId DUID time' );
-is( $remain,             '',     'no trailing data' );
+is( $remain,             $EMPTY, 'no trailing data' );
 
 ok( dies { Net::DHCPv6::Option::ClientId->new }, 'ClientId dies without duid' );
 ok( dies { Net::DHCPv6::Option::ClientId::from_bytes_inner( undef, 1, pack( 'H*', '0001' ) ) },
@@ -130,14 +131,14 @@ ok( dies { Net::DHCPv6::Option::StatusCode::from_bytes_inner( undef, 13, chr( 0 
 
 # RapidCommit
 my $rc = Net::DHCPv6::Option::RapidCommit->new;
-is( $rc->code, 14, 'RapidCommit code' );
-is( $rc->data, '', 'RapidCommit empty data' );
+is( $rc->code, 14,     'RapidCommit code' );
+is( $rc->data, $EMPTY, 'RapidCommit empty data' );
 
 # RapidCommit round-trip
 my $rc_bytes = $rc->as_bytes;
 my ( $rc_parsed ) = Net::DHCPv6::Option->from_bytes( $rc_bytes );
 ok( $rc_parsed->isa( 'Net::DHCPv6::Option::RapidCommit' ), 'RapidCommit parsed class' );
-is( $rc_parsed->data, '', 'RapidCommit parsed empty data' );
+is( $rc_parsed->data, $EMPTY, 'RapidCommit parsed empty data' );
 
 ok( dies { Net::DHCPv6::Option::RapidCommit::from_bytes_inner( undef, 14, chr( 1 ) ) },
     'RapidCommit dies on non-empty data' );
@@ -247,8 +248,8 @@ my $iata2 = Net::DHCPv6::Option::IATA->from_bytes_inner( $OPTION_IA_TA, substr( 
 is( $iata2->iaid,                          99,   'parse IATA iaid' );
 is( $iata2->get_option( 8 )->centiseconds, 1000, 'parse IATA sub-option' );
 
-ok( dies { Net::DHCPv6::Option::IATA->new },                              'IATA dies without iaid' );
-ok( dies { Net::DHCPv6::Option::IATA::from_bytes_inner( undef, 4, '' ) }, 'IATA dies on data < 4 bytes' );
+ok( dies { Net::DHCPv6::Option::IATA->new },                                  'IATA dies without iaid' );
+ok( dies { Net::DHCPv6::Option::IATA::from_bytes_inner( undef, 4, $EMPTY ) }, 'IATA dies on data < 4 bytes' );
 
 # IAPD option (prefix delegation)
 my $iapd = Net::DHCPv6::Option::IAPD->new( iaid => 7, t1 => 3600, t2 => 5400 );

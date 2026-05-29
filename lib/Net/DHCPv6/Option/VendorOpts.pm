@@ -11,13 +11,14 @@ use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
 use Ref::Util        qw( is_plain_arrayref );
 use namespace::clean ();
+my $EMPTY = q();
 
 sub new {
     my ( $class, %args ) = @_;
     croak 'VendorOpts requires enterprise_number' unless defined $args{enterprise_number};
     $args{code} = $OPTION_VENDOR_OPTS;
-    my $sub_data = $args{sub_options} // '';
-    $sub_data = join( '', map { $_->as_bytes } @{$sub_data} ) if is_plain_arrayref( $sub_data );
+    my $sub_data = $args{sub_options} // $EMPTY;
+    $sub_data = join( $EMPTY, map { $_->as_bytes } @{$sub_data} ) if is_plain_arrayref( $sub_data );
     $args{data} = pack( 'N', $args{enterprise_number} ) . $sub_data;
     my $self = $class->SUPER::new( %args );
     $self->{enterprise_number} = $args{enterprise_number};

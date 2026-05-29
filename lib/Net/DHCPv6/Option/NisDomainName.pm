@@ -12,12 +12,13 @@ use Net::DHCPv6::X::Truncated;
 use Net::DHCPv6::X::BadOption;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean ();
+my $EMPTY = q();
 
 sub _encode_domain {
     my ( $domain ) = @_;
     return chr( 0 ) unless defined $domain && CORE::length( $domain );
     my @labels = split m/\./, $domain;
-    return join( '', map { pack( 'C', CORE::length ) . $_ } @labels ) . chr( 0 );
+    return join( $EMPTY, map { pack( 'C', CORE::length ) . $_ } @labels ) . chr( 0 );
 }
 
 sub _read_labels_at {
@@ -55,7 +56,7 @@ sub _read_labels_at {
 
 sub _decode_domain {
     my ( $payload ) = @_;
-    return '' unless CORE::length( $payload );
+    return $EMPTY unless CORE::length( $payload );
     my $offset = 0;
     my @labels = _read_labels_at( $payload, \$offset, CORE::length( $payload ) );
     return join( '.', @labels );

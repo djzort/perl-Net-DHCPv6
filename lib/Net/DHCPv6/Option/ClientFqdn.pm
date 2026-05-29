@@ -12,12 +12,13 @@ use Net::DHCPv6::X::Truncated;
 use Net::DHCPv6::X::BadOption;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean ();
+my $EMPTY = q();
 
 sub _encode_domain {
     my ( $domain ) = @_;
     return chr( 0 ) unless defined $domain && CORE::length( $domain );
     my @labels = split m/\./, $domain;
-    return join( '', map { pack( 'C', CORE::length ) . $_ } @labels ) . chr( 0 );
+    return join( $EMPTY, map { pack( 'C', CORE::length ) . $_ } @labels ) . chr( 0 );
 }
 
 sub _read_labels_at {
@@ -55,7 +56,7 @@ sub _read_labels_at {
 
 sub _decode_domain {
     my ( $payload ) = @_;
-    return '' unless CORE::length( $payload );
+    return $EMPTY unless CORE::length( $payload );
     my $offset = 0;
     my @labels = _read_labels_at( $payload, \$offset, CORE::length( $payload ) );
     return join( '.', @labels );
@@ -67,11 +68,11 @@ sub new {
     croak 'ClientFqdn flags must be 0-255'
         if $args{flags} < 0 || $args{flags} > 255;
     $args{code} = $OPTION_CLIENT_FQDN;
-    my $domain = _encode_domain( $args{domain_name} // '' );
+    my $domain = _encode_domain( $args{domain_name} // $EMPTY );
     $args{data} = pack( 'C', $args{flags} ) . $domain;
     my $self = $class->SUPER::new( %args );
     $self->{flags}       = $args{flags};
-    $self->{domain_name} = $args{domain_name} // '';
+    $self->{domain_name} = $args{domain_name} // $EMPTY;
     return bless $self, $class;
 }
 

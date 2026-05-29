@@ -46,6 +46,7 @@ use Net::DHCPv6::Option::VendorClass;
 use Net::DHCPv6::Option::VendorOpts;
 use Net::DHCPv6::Constants;
 use Test::Net::DHCPv6 qw(bytes2hex);
+my $EMPTY = q();
 
 # ----------------------------------------------------------------
 # ReconfAccept (20) -- zero-length
@@ -53,7 +54,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 {
     my $ra = Net::DHCPv6::Option::ReconfAccept->new;
     is( $ra->code, $OPTION_RECONF_ACCEPT, 'ReconfAccept code' );
-    is( $ra->data, '',                    'ReconfAccept empty data' );
+    is( $ra->data, $EMPTY,                'ReconfAccept empty data' );
 
     my $bytes = $ra->as_bytes;
     is( bytes2hex( $bytes ), '00140000', 'ReconfAccept wire' );
@@ -78,7 +79,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     is( $parsed->msg_type, 5, 'ReconfMsg parsed msg_type' );
 
     ok( dies { Net::DHCPv6::Option::ReconfMsg->new }, 'ReconfMsg dies without msg_type' );
-    ok( dies { Net::DHCPv6::Option::ReconfMsg::from_bytes_inner( undef, $OPTION_RECONF_MSG, '' ) },
+    ok( dies { Net::DHCPv6::Option::ReconfMsg::from_bytes_inner( undef, $OPTION_RECONF_MSG, $EMPTY ) },
         'ReconfMsg dies on truncated data' );
 }
 
@@ -121,7 +122,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     is( $parsed->interface_id, "eth0", 'InterfaceId parsed data' );
 
     my $empty = Net::DHCPv6::Option::InterfaceId->new;
-    is( $empty->interface_id, '', 'InterfaceId defaults to empty' );
+    is( $empty->interface_id, $EMPTY, 'InterfaceId defaults to empty' );
 }
 
 # ----------------------------------------------------------------
@@ -538,7 +539,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     ok( dies { Net::DHCPv6::Option::MudUrl->new }, 'MudUrl dies without url' );
     ok(
         dies {
-            Net::DHCPv6::Option::MudUrl::from_bytes_inner( undef, $OPTION_MUD_URL, '' )
+            Net::DHCPv6::Option::MudUrl::from_bytes_inner( undef, $OPTION_MUD_URL, $EMPTY )
         },
         'MudUrl dies on empty data'
     );
@@ -664,7 +665,8 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     is( $parsed->remote_data,       pack( 'H*', '00010203' ), 'RemoteId parsed remote_data' );
 
     ok( dies { Net::DHCPv6::Option::RemoteId->new( enterprise_number => 1 ) }, 'RemoteId dies without remote_data' );
-    ok( dies { Net::DHCPv6::Option::RemoteId->new( remote_data => '' ) }, 'RemoteId dies without enterprise_number' );
+    ok( dies { Net::DHCPv6::Option::RemoteId->new( remote_data       => $EMPTY ) },
+        'RemoteId dies without enterprise_number' );
 }
 
 # ----------------------------------------------------------------
@@ -681,7 +683,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     is( $parsed->subscriber_id, pack( 'H*', '000102' ), 'SubscriberId parsed data' );
 
     my $empty = Net::DHCPv6::Option::SubscriberId->new;
-    is( $empty->subscriber_id, '', 'SubscriberId defaults to empty' );
+    is( $empty->subscriber_id, $EMPTY, 'SubscriberId defaults to empty' );
 }
 
 # ----------------------------------------------------------------
@@ -701,7 +703,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     ok( dies { Net::DHCPv6::Option::BootfileUrl->new }, 'BootfileUrl dies without url' );
     ok(
         dies {
-            Net::DHCPv6::Option::BootfileUrl::from_bytes_inner( undef, $OPTION_BOOTFILE_URL, '' )
+            Net::DHCPv6::Option::BootfileUrl::from_bytes_inner( undef, $OPTION_BOOTFILE_URL, $EMPTY )
         },
         'BootfileUrl dies on empty data'
     );
@@ -724,7 +726,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     ok( dies { Net::DHCPv6::Option::CaptivePortal->new }, 'CaptivePortal dies without uri' );
     ok(
         dies {
-            Net::DHCPv6::Option::CaptivePortal::from_bytes_inner( undef, $OPTION_CAPTIVE_PORTAL, '' )
+            Net::DHCPv6::Option::CaptivePortal::from_bytes_inner( undef, $OPTION_CAPTIVE_PORTAL, $EMPTY )
         },
         'CaptivePortal dies on empty data'
     );
@@ -921,7 +923,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
             algorithm => 1,
             rdm       => 0,
             replay    => chr( 0 ) x 8,
-            auth_info => '',
+            auth_info => $EMPTY,
         )
     );
 

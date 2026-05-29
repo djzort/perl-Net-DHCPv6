@@ -8,11 +8,12 @@ use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean ();
+my $EMPTY = q();
 
 sub new {
     my ( $class, %args ) = @_;
     $args{code} = $OPTION_RSOO;
-    $args{data} = $args{data} // ( $args{option_data} // '' );
+    $args{data} = $args{data} // ( $args{option_data} // $EMPTY );
     return $class->SUPER::new( %args );
 }
 

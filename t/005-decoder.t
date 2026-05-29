@@ -9,6 +9,7 @@ use lib 'lib';
 
 use Net::DHCPv6;
 use Test::Net::DHCPv6 qw(hex2bytes solicit_hex advertise_hex request_hex reply_hex);
+my $EMPTY = q();
 
 # decode_or_croak - Solicit
 my $bytes  = hex2bytes( solicit_hex() );
@@ -63,7 +64,7 @@ ok( defined $packet,                                 'decode_or_null returns pac
 ok( $packet->isa( 'Net::DHCPv6::Message::Solicit' ), 'decode_or_null returns correct class' );
 
 # decode_or_null - invalid (empty)
-$packet = Net::DHCPv6->decode_or_null( '' );
+$packet = Net::DHCPv6->decode_or_null( $EMPTY );
 ok( !defined $packet, 'decode_or_null returns undef for empty data' );
 
 # decode_or_null - truncated
@@ -87,7 +88,7 @@ $packet = Net::DHCPv6::Packet->new( $bytes );
 ok( $packet->isa( 'Net::DHCPv6::Message::Solicit' ), 'Packet->new($bytes) delegates' );
 
 # decode_or_croak on empty data
-ok( dies { Net::DHCPv6->decode_or_croak( '' ) },    'decode_or_croak with empty dies' );
-ok( dies { Net::DHCPv6->decode_or_croak( undef ) }, 'decode_or_croak with undef dies' );
+ok( dies { Net::DHCPv6->decode_or_croak( $EMPTY ) }, 'decode_or_croak with empty dies' );
+ok( dies { Net::DHCPv6->decode_or_croak( undef ) },  'decode_or_croak with undef dies' );
 
 done_testing;

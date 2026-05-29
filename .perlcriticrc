@@ -138,6 +138,7 @@ equivalent_modules = strictures
 [ValuesAndExpressions::ProhibitComplexVersion]
 [ValuesAndExpressions::ProhibitDuplicateHashKeys]
 [ValuesAndExpressions::ProhibitEmptyCommas]
+[ValuesAndExpressions::ProhibitEmptyQuotes]
 [ValuesAndExpressions::ProhibitEmptyPostfixLoop]
 [ValuesAndExpressions::ProhibitEscapedCharacters]
 [ValuesAndExpressions::ProhibitLeadingZeros]
