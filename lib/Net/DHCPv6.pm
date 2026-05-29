@@ -4,7 +4,7 @@
 package Net::DHCPv6;
 
 use strictures 2;
-use Carp qw(croak);
+use Carp qw( croak );
 use Net::DHCPv6::DUID;
 
 # Option classes - loaded so they register in the dispatch tables
@@ -74,7 +74,7 @@ use Net::DHCPv6::Message::RelayReply;
 
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Packet;
-use namespace::clean;
+use namespace::clean ();
 
 # Packet-level decoders
 sub decode_or_croak {
@@ -100,7 +100,7 @@ sub decode_with_error {
     }
     else {
         eval { $packet = Net::DHCPv6::Packet->from_bytes( $bytes ); 1 }
-            or do { $error = $@; };
+            or $error = $@;
     }
     return ( $packet, $error );
 }

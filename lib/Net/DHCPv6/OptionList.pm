@@ -82,14 +82,13 @@ sub try_from_bytes {
         my $option;
         eval { $option = $class_name->from_bytes_inner( $code, $payload ); };
         if ( my $err = $@ ) {
-            is_ref( $err ) && $err->isa( 'Net::DHCPv6::X' )
-                ? do {
+            if ( is_ref( $err ) && $err->isa( 'Net::DHCPv6::X' ) ) {
                 $option = Net::DHCPv6::Option::Generic->new( code => $code, data => $payload );
-                }
-                : do {
+            }
+            else {
                 $error = "Option $code parse error: $err";
                 last;
-                };
+            }
         }
         $list->add_option( $option );
     }
