@@ -78,10 +78,8 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     is( $parsed->msg_type, 5, 'ReconfMsg parsed msg_type' );
 
     ok( dies { Net::DHCPv6::Option::ReconfMsg->new }, 'ReconfMsg dies without msg_type' );
-    ok(
-        dies { Net::DHCPv6::Option::ReconfMsg::from_bytes_inner( undef, $OPTION_RECONF_MSG, '' ) },    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-        'ReconfMsg dies on truncated data'
-    );
+    ok( dies { Net::DHCPv6::Option::ReconfMsg::from_bytes_inner( undef, $OPTION_RECONF_MSG, '' ) },
+        'ReconfMsg dies on truncated data' );
 }
 
 # ----------------------------------------------------------------
@@ -226,7 +224,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 
     ok(
         dies {
-            Net::DHCPv6::Option::DnsServers::from_bytes_inner( undef, $OPTION_DNS_SERVERS, pack( 'H*', '0102' ) )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::DnsServers::from_bytes_inner( undef, $OPTION_DNS_SERVERS, pack( 'H*', '0102' ) )
         },
         'DnsServers dies on truncated data (non-16-byte-aligned)'
     );
@@ -250,7 +248,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 
     ok(
         dies {
-            Net::DHCPv6::Option::NisServers::from_bytes_inner( undef, $OPTION_NIS_SERVERS, pack( 'C*', ( 1 ) x 15 ) )  ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::NisServers::from_bytes_inner( undef, $OPTION_NIS_SERVERS, pack( 'C*', ( 1 ) x 15 ) )
         },
         'NisServers dies on non-16-byte-aligned data'
     );
@@ -274,7 +272,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 
     ok(
         dies {
-            Net::DHCPv6::Option::NtpServer::from_bytes_inner( undef, $OPTION_SNTP_SERVERS, pack( 'C*', ( 1 ) x 15 ) )  ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::NtpServer::from_bytes_inner( undef, $OPTION_SNTP_SERVERS, pack( 'C*', ( 1 ) x 15 ) )
         },
         'NtpServer dies on non-16-byte-aligned data'
     );
@@ -301,10 +299,8 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     my $compressed = pack( 'H*', '076578616d706c6503636f6d000474657374c000' );
     ok(
         dies {
-            Net::DHCPv6::Option::DomainList::from_bytes_inner(    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                'Net::DHCPv6::Option::DomainList',                ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                $OPTION_DOMAIN_LIST, $compressed
-            )
+            Net::DHCPv6::Option::DomainList::from_bytes_inner( 'Net::DHCPv6::Option::DomainList',
+                $OPTION_DOMAIN_LIST, $compressed )
         },
         'DomainList croaks on compression pointer in strict mode'
     );
@@ -312,10 +308,8 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     my $badlen = pack( 'H*', '7f00' );
     ok(
         dies {
-            Net::DHCPv6::Option::DomainList::from_bytes_inner(    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                'Net::DHCPv6::Option::DomainList',                ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                $OPTION_DOMAIN_LIST, $badlen
-            )
+            Net::DHCPv6::Option::DomainList::from_bytes_inner( 'Net::DHCPv6::Option::DomainList',
+                $OPTION_DOMAIN_LIST, $badlen )
         },
         'DomainList croaks on invalid label length 127'
     );
@@ -323,10 +317,8 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     {
         local $Net::DHCPv6::Option::FOLLOW_COMPRESSION = 1;
         my $ptr = pack( 'H*', '076578616d706c6503636f6d000474657374c000' );
-        my $dl  = Net::DHCPv6::Option::DomainList::from_bytes_inner(          ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-            'Net::DHCPv6::Option::DomainList',                                ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-            $OPTION_DOMAIN_LIST, $ptr
-        );
+        my $dl  = Net::DHCPv6::Option::DomainList::from_bytes_inner( 'Net::DHCPv6::Option::DomainList',
+            $OPTION_DOMAIN_LIST, $ptr );
         is(
             $dl->domains,
             [ 'example.com', 'test.example.com' ],
@@ -338,10 +330,8 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     my $trunc_ptr = pack( 'H*', '03' );
     ok(
         dies {
-            Net::DHCPv6::Option::DomainList::from_bytes_inner(    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                'Net::DHCPv6::Option::DomainList',                ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                $OPTION_DOMAIN_LIST, $trunc_ptr
-            )
+            Net::DHCPv6::Option::DomainList::from_bytes_inner( 'Net::DHCPv6::Option::DomainList',
+                $OPTION_DOMAIN_LIST, $trunc_ptr )
         },
         'DomainList croaks on truncated pointer (no room for 2nd byte)'
     );
@@ -350,10 +340,8 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     my $trunc_label = pack( 'H*', '0a666f6f' );
     ok(
         dies {
-            Net::DHCPv6::Option::DomainList::from_bytes_inner(    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                'Net::DHCPv6::Option::DomainList',                ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                $OPTION_DOMAIN_LIST, $trunc_label
-            )
+            Net::DHCPv6::Option::DomainList::from_bytes_inner( 'Net::DHCPv6::Option::DomainList',
+                $OPTION_DOMAIN_LIST, $trunc_label )
         },
         'DomainList croaks on truncated domain label'
     );
@@ -364,10 +352,8 @@ use Test::Net::DHCPv6 qw(bytes2hex);
         my $oor = pack( 'H*', '03666f6fc0ff' );
         ok(
             dies {
-                Net::DHCPv6::Option::DomainList::from_bytes_inner(    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                    'Net::DHCPv6::Option::DomainList',                ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                    $OPTION_DOMAIN_LIST, $oor
-                )
+                Net::DHCPv6::Option::DomainList::from_bytes_inner( 'Net::DHCPv6::Option::DomainList',
+                    $OPTION_DOMAIN_LIST, $oor )
             },
             'DomainList croaks on out-of-range compression pointer'
         );
@@ -436,7 +422,6 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     my $ptr = pack( 'H*', '0474657374c009076578616d706c6503636f6d00' );
     ok(
         dies {
-            ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
             Net::DHCPv6::Option::AftrName::from_bytes_inner( 'Net::DHCPv6::Option::AftrName', $OPTION_AFTR_NAME, $ptr );
             ## use critic
         },
@@ -486,7 +471,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     );
     ok(
         dies {
-            Net::DHCPv6::Option::Auth::from_bytes_inner( undef, $OPTION_AUTH, pack( 'H*', '000000' ) )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::Auth::from_bytes_inner( undef, $OPTION_AUTH, pack( 'H*', '000000' ) )
         },
         'Auth dies on truncated data (< 11 bytes)'
     );
@@ -516,10 +501,8 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     {
         local $Net::DHCPv6::Option::FOLLOW_COMPRESSION = 1;
         my $ptr = pack( 'H*', '0473697031076578616d706c6503636f6d000474657374c005' );
-        my $sd  = Net::DHCPv6::Option::SipServerD::from_bytes_inner(                    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-            'Net::DHCPv6::Option::SipServerD',                                          ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-            $OPTION_SIP_SERVER_D, $ptr
-        );
+        my $sd  = Net::DHCPv6::Option::SipServerD::from_bytes_inner( 'Net::DHCPv6::Option::SipServerD',
+            $OPTION_SIP_SERVER_D, $ptr );
         is(
             $sd->domains,
             [ 'sip1.example.com', 'test.example.com' ],
@@ -531,10 +514,8 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     my $ptr = pack( 'H*', '0473697031076578616d706c6503636f6d000474657374c005' );
     ok(
         dies {
-            Net::DHCPv6::Option::SipServerD::from_bytes_inner(    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                'Net::DHCPv6::Option::SipServerD',                ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                $OPTION_SIP_SERVER_D, $ptr
-            )
+            Net::DHCPv6::Option::SipServerD::from_bytes_inner( 'Net::DHCPv6::Option::SipServerD',
+                $OPTION_SIP_SERVER_D, $ptr )
         },
         'SipServerD croaks on compression pointer in strict mode'
     );
@@ -557,7 +538,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     ok( dies { Net::DHCPv6::Option::MudUrl->new }, 'MudUrl dies without url' );
     ok(
         dies {
-            Net::DHCPv6::Option::MudUrl::from_bytes_inner( undef, $OPTION_MUD_URL, '' )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::MudUrl::from_bytes_inner( undef, $OPTION_MUD_URL, '' )
         },
         'MudUrl dies on empty data'
     );
@@ -598,7 +579,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     ok( dies { Net::DHCPv6::Option::SolMaxRt->new }, 'SolMaxRt dies without value' );
     ok(
         dies {
-            Net::DHCPv6::Option::SolMaxRt::from_bytes_inner( undef, $OPTION_SOL_MAX_RT, pack( 'H*', '010203' ) )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::SolMaxRt::from_bytes_inner( undef, $OPTION_SOL_MAX_RT, pack( 'H*', '010203' ) )
         },
         'SolMaxRt dies on data != 4 bytes'
     );
@@ -622,7 +603,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 
     ok(
         dies {
-            Net::DHCPv6::Option::SipServerA::from_bytes_inner( undef, $OPTION_SIP_SERVER_A, pack( 'C*', ( 1 ) x 15 ) ) ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::SipServerA::from_bytes_inner( undef, $OPTION_SIP_SERVER_A, pack( 'C*', ( 1 ) x 15 ) )
         },
         'SipServerA dies on non-16-byte-aligned data'
     );
@@ -720,7 +701,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     ok( dies { Net::DHCPv6::Option::BootfileUrl->new }, 'BootfileUrl dies without url' );
     ok(
         dies {
-            Net::DHCPv6::Option::BootfileUrl::from_bytes_inner( undef, $OPTION_BOOTFILE_URL, '' )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::BootfileUrl::from_bytes_inner( undef, $OPTION_BOOTFILE_URL, '' )
         },
         'BootfileUrl dies on empty data'
     );
@@ -743,7 +724,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     ok( dies { Net::DHCPv6::Option::CaptivePortal->new }, 'CaptivePortal dies without uri' );
     ok(
         dies {
-            Net::DHCPv6::Option::CaptivePortal::from_bytes_inner( undef, $OPTION_CAPTIVE_PORTAL, '' )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::CaptivePortal::from_bytes_inner( undef, $OPTION_CAPTIVE_PORTAL, '' )
         },
         'CaptivePortal dies on empty data'
     );
@@ -767,10 +748,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 
     ok(
         dies {
-            Net::DHCPv6::Option::NispServers::from_bytes_inner(    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                undef, $OPTION_NISP_SERVERS,
-                pack( 'C*', ( 1 ) x 15 )
-            )
+            Net::DHCPv6::Option::NispServers::from_bytes_inner( undef, $OPTION_NISP_SERVERS, pack( 'C*', ( 1 ) x 15 ) )
         },
         'NispServers dies on non-16-byte-aligned data'
     );
@@ -859,7 +837,7 @@ use Test::Net::DHCPv6 qw(bytes2hex);
     ok( dies { Net::DHCPv6::Option::ClientArchType->new }, 'ClientArchType dies without type' );
     ok(
         dies {
-            Net::DHCPv6::Option::ClientArchType::from_bytes_inner( undef, $OPTION_CLIENT_ARCH_TYPE, chr( 1 ) )    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
+            Net::DHCPv6::Option::ClientArchType::from_bytes_inner( undef, $OPTION_CLIENT_ARCH_TYPE, chr( 1 ) )
         },
         'ClientArchType dies on data != 2 bytes'
     );
@@ -915,10 +893,8 @@ use Test::Net::DHCPv6 qw(bytes2hex);
         'ClientLinkLayerAddr dies without link_layer_addr' );
     ok(
         dies {
-            Net::DHCPv6::Option::ClientLinkLayerAddr::from_bytes_inner(    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                undef, $OPTION_CLIENT_LINKLAYER_ADDR,                      ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-                pack( 'H*', '0001' )
-            )
+            Net::DHCPv6::Option::ClientLinkLayerAddr::from_bytes_inner( undef, $OPTION_CLIENT_LINKLAYER_ADDR,
+                pack( 'H*', '0001' ) )
         },
         'ClientLinkLayerAddr dies on truncated data (< 3 bytes)'
     );

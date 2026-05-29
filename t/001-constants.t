@@ -47,12 +47,11 @@ is( $DUID_EN,   2, 'DUID_EN' );
 is( $DUID_LL,   3, 'DUID_LL' );
 is( $DUID_UUID, 4, 'DUID_UUID' );
 
-is( Net::DHCPv6::Constants::message_type_name( 1 ),      'SOLICIT',     'REV_MESSAGE_TYPE 1' );          ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-is( Net::DHCPv6::Constants::message_type_name( 7 ),      'REPLY',       'REV_MESSAGE_TYPE 7' );          ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-is( Net::DHCPv6::Constants::option_name( 1 ),            'CLIENTID',    'REV_OPTION_CODE 1' );           ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-is( Net::DHCPv6::Constants::option_name( 23 ),           'DNS_SERVERS', 'REV_OPTION_CODE 23' );          ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-is( Net::DHCPv6::Constants::status_name( 0 ),            'SUCCESS',     'REV_STATUS_CODE 0' );           ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-is( Net::DHCPv6::Constants::is_valid_message_type( 1 ),  1,             'is_valid_message_type 1' );     ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-is( Net::DHCPv6::Constants::is_valid_message_type( 99 ), '',            'is_valid_message_type 99' );    ## no critic (Subroutines::ProhibitCallsToUnexportedSubs)
-
+is( Net::DHCPv6::Constants::message_type_name( 1 ),      'SOLICIT',     'REV_MESSAGE_TYPE 1' );
+is( Net::DHCPv6::Constants::message_type_name( 7 ),      'REPLY',       'REV_MESSAGE_TYPE 7' );
+is( Net::DHCPv6::Constants::option_name( 1 ),            'CLIENTID',    'REV_OPTION_CODE 1' );
+is( Net::DHCPv6::Constants::option_name( 23 ),           'DNS_SERVERS', 'REV_OPTION_CODE 23' );
+is( Net::DHCPv6::Constants::status_name( 0 ),            'SUCCESS',     'REV_STATUS_CODE 0' );
+is( Net::DHCPv6::Constants::is_valid_message_type( 1 ),  1,             'is_valid_message_type 1' );
+is( Net::DHCPv6::Constants::is_valid_message_type( 99 ), '',            'is_valid_message_type 99' );
 done_testing;

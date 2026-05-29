@@ -19,7 +19,7 @@ use Net::DHCPv6::Option::SipServerD;
 # Carp::carp-based deprecation warnings work with both approaches
 # because carp calls CORE::warn() without triggering a fatal category.
 
-sub _warns (&) {    ## no critic (Subroutines::ProhibitSubroutinePrototypes)
+sub _warns (&) {
     my $code  = shift;
     my $count = 0;
     local $SIG{__WARN__} = sub { $count++ };
@@ -27,7 +27,7 @@ sub _warns (&) {    ## no critic (Subroutines::ProhibitSubroutinePrototypes)
     return $count;
 }
 
-sub _warnings (&) {    ## no critic (Subroutines::ProhibitSubroutinePrototypes)
+sub _warnings (&) {
     my $code = shift;
     my @warnings;
     local $SIG{__WARN__} = sub { push @warnings, @_ };
@@ -35,7 +35,7 @@ sub _warnings (&) {    ## no critic (Subroutines::ProhibitSubroutinePrototypes)
     return \@warnings;
 }
 
-sub _no_warnings (&) {    ## no critic (Subroutines::ProhibitSubroutinePrototypes)
+sub _no_warnings (&) {
     my $code  = shift;
     my $count = 0;
     local $SIG{__WARN__} = sub { $count++ };
