@@ -11,6 +11,8 @@ use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean ();
 
+my $IA_HDR_SIZE = 4;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
+
 sub new {
     my ( $class, %args ) = @_;
     croak 'IATA requires iaid' unless defined $args{iaid};
@@ -40,9 +42,9 @@ sub get_option {
 sub from_bytes_inner {
     my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated IATA option' )
-        if CORE::length( $payload ) < 4;
-    my $iaid     = unpack( 'N', substr( $payload, 0, 4 ) );
-    my $opt_data = substr( $payload, 4 );
+        if CORE::length( $payload ) < $IA_HDR_SIZE;
+    my $iaid     = unpack( 'N', substr( $payload, 0, $IA_HDR_SIZE ) );
+    my $opt_data = substr( $payload, $IA_HDR_SIZE );
     my $opts     = Net::DHCPv6::OptionList->from_bytes( $opt_data );
     return $class->new( iaid => $iaid, options => $opts );
 }

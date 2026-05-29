@@ -11,10 +11,14 @@ use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean ();
 
+my $IA_PREFIX_HDR     = 25;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
+my $LIFETIME_WIRE_LEN = 8;     ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
+my $PLEN_OFFSET       = 9;     ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
+
 sub new {
     my ( $class, %args ) = @_;
     my $addr = $class->_pick_addr( \%args, 'address' );
-    croak 'IAPrefix requires address' unless $addr && CORE::length( $addr ) == 16;
+    croak 'IAPrefix requires address' unless $addr && CORE::length( $addr ) == $IPV6_ADDR_LEN;
     $args{code}               = $OPTION_IAPREFIX;
     $args{preferred_lifetime} = $args{preferred_lifetime} // 0;
     $args{valid_lifetime}     = $args{valid_lifetime}     // 0;
@@ -59,11 +63,11 @@ sub get_option {
 sub from_bytes_inner {
     my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated IAPrefix option' )
-        if CORE::length( $payload ) < 25;
-    my ( $pl, $vl ) = unpack( 'N N', substr( $payload, 0, 8 ) );
-    my $plen     = unpack( 'C', substr( $payload, 8, 1 ) );
-    my $addr     = substr( $payload, 9, 16 );
-    my $opt_data = substr( $payload, 25 );
+        if CORE::length( $payload ) < $IA_PREFIX_HDR;
+    my ( $pl, $vl ) = unpack( 'N N', substr( $payload, 0, $LIFETIME_WIRE_LEN ) );
+    my $plen     = unpack( 'C', substr( $payload, $LIFETIME_WIRE_LEN, 1 ) );
+    my $addr     = substr( $payload, $PLEN_OFFSET, $IPV6_ADDR_LEN );
+    my $opt_data = substr( $payload, $IA_PREFIX_HDR );
     my $opts     = Net::DHCPv6::OptionList->from_bytes( $opt_data );
     return $class->new(
         address_raw        => $addr,

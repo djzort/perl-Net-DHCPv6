@@ -37,10 +37,10 @@ sub servers {
 sub from_bytes_inner {
     my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated NispServers option' )
-        if CORE::length( $payload ) % 16 != 0;
+        if CORE::length( $payload ) % $IPV6_ADDR_LEN != 0;
     my @addrs;
-    for ( my $i = 0 ; $i < CORE::length( $payload ) ; $i += 16 ) {
-        push @addrs, substr( $payload, $i, 16 );
+    for ( my $i = 0 ; $i < CORE::length( $payload ) ; $i += $IPV6_ADDR_LEN ) {
+        push @addrs, substr( $payload, $i, $IPV6_ADDR_LEN );
     }
     return $class->new( servers_raw => \@addrs );
 }

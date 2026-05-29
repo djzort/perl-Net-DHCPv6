@@ -12,12 +12,15 @@ use Net::DHCPv6::X::BadOption;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean ();
 
+my $BYTE_ALIGN_MASK = 7;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
+my $BYTE_SHIFT      = 3;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
+
 sub new {
     my ( $class, %args ) = @_;
     croak 'PdExclude requires prefix_length' unless defined $args{prefix_length};
     my $addr = $class->_pick_addr( \%args, 'address' );
     croak 'PdExclude requires address' unless $addr;
-    my $addr_len = ( $args{prefix_length} + 7 ) >> 3;
+    my $addr_len = ( $args{prefix_length} + $BYTE_ALIGN_MASK ) >> $BYTE_SHIFT;
     $addr       = substr( $addr, 0, $addr_len );
     $args{code} = $OPTION_PD_EXCLUDE;
     $args{data} = pack( 'C', $args{prefix_length} ) . $addr;
@@ -36,7 +39,7 @@ sub from_bytes_inner {
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated PdExclude option' )
         if CORE::length( $payload ) < 2;
     my $plen     = unpack( 'C', substr( $payload, 0, 1 ) );
-    my $addr_len = ( $plen + 7 ) >> 3;
+    my $addr_len = ( $plen + $BYTE_ALIGN_MASK ) >> $BYTE_SHIFT;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated PdExclude address' )
         if 1 + $addr_len > CORE::length( $payload );
     my $addr = substr( $payload, 1, $addr_len );

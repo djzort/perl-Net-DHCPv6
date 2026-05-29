@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 use strictures 2;
 use Test2::V1 -ipP, qw(is ok done_testing);    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
 
@@ -223,4 +224,5 @@ $decoded = Net::DHCPv6::Packet->from_bytes( $bytes );
 is( $decoded->msg_type, 255, 'Unknown msg_type preserved' );
 ok( !$decoded->isa( 'Net::DHCPv6::Message::Solicit' ), 'Unknown msg_type not subclassed' );
 
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

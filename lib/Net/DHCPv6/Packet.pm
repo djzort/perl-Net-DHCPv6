@@ -11,6 +11,10 @@ use Net::DHCPv6::Packet::Relay;
 use Net::DHCPv6::X::BadMessage;
 use namespace::clean ();
 
+my $TX_ID_MAX   = 0xFFFFFF;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
+my $TX_ID_BYTES = 3;           ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
+my $HDR_SIZE    = 4;           ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
+
 sub new {
     my ( $class, @argv ) = @_;
     if ( @argv == 1 ) {
@@ -21,7 +25,7 @@ sub new {
     croak 'Packet->new: msg_type is required'       unless defined $args{msg_type};
     croak 'Packet->new: transaction_id is required' unless defined $args{transaction_id};
     croak 'transaction_id must fit in 24 bits'
-        if $args{transaction_id} < 0 || $args{transaction_id} > 0xFFFFFF;
+        if $args{transaction_id} < 0 || $args{transaction_id} > $TX_ID_MAX;
     $args{options} = $args{options} // Net::DHCPv6::OptionList->new;
     my $self = {
         msg_type       => $args{msg_type},
@@ -47,7 +51,7 @@ sub get_option {
 
 sub as_bytes {
     my $self = shift;
-    my $tid  = substr( pack( 'N', $self->{transaction_id} ), 1, 3 );
+    my $tid  = substr( pack( 'N', $self->{transaction_id} ), 1, $TX_ID_BYTES );
     my $opts = $self->{options}->as_bytes;
     return pack( 'C', $self->{msg_type} ) . $tid . $opts;
 }
@@ -55,15 +59,15 @@ sub as_bytes {
 sub from_bytes {
     my ( $class, $bytes ) = @_;
     Net::DHCPv6::X::BadMessage->throw( message => 'Empty packet data' )
-        if !defined $bytes || CORE::length( $bytes ) < 4;
+        if !defined $bytes || CORE::length( $bytes ) < $HDR_SIZE;
     my $msg_type = unpack( 'C', substr( $bytes, 0, 1 ) );
 
     if ( $msg_type == $RELAY_FORW || $msg_type == $RELAY_REPLY ) {
         return Net::DHCPv6::Packet::Relay->from_bytes( $bytes );
     }
 
-    my $tid        = unpack( 'N', chr( 0 ) . substr( $bytes, 1, 3 ) );
-    my $opts_bytes = substr( $bytes, 4 );
+    my $tid        = unpack( 'N', chr( 0 ) . substr( $bytes, 1, $TX_ID_BYTES ) );
+    my $opts_bytes = substr( $bytes, $HDR_SIZE );
 
     my $subclass = $Net::DHCPv6::Packet::MESSAGE_CLASS{$msg_type} || $class;
     my $opts     = Net::DHCPv6::OptionList->from_bytes( $opts_bytes );

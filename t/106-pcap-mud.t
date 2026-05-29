@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 use strictures 2;
 use Test2::V1 -ipP, qw(is ok subtest like diag done_testing);    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
 
@@ -61,4 +62,5 @@ subtest 'inner solicit' => sub {
     ok( !@{ $ia_na->options->options }, 'IA_NA no sub-options in solicit' );
 };
 
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

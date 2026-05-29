@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 use strictures 2;
 use Test2::V1 -ipP, qw(is ok subtest like diag done_testing);    ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
 
@@ -166,4 +167,5 @@ subtest 'reply options' => sub {
     is( $addr->valid_lifetime,     600, 'IAADDR valid' );
 };
 
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

@@ -10,8 +10,8 @@ use Net::DHCPv6::OptionList;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Helpers';
 use namespace::clean ();
-my $EMPTY = q();
-
+my $EMPTY        = q();
+my $OPT_HDR_SIZE = 4;     ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 our $FOLLOW_COMPRESSION = 0;
 
 sub new {
@@ -38,13 +38,13 @@ sub as_bytes {
 sub from_bytes {
     my ( $class, $bytes ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Option->from_bytes: need at least 4 bytes for TLV header' )
-        if !defined $bytes || CORE::length( $bytes ) < 4;
+        if !defined $bytes || CORE::length( $bytes ) < $OPT_HDR_SIZE;
     my $code   = unpack( 'n', substr( $bytes, 0, 2 ) );
     my $optlen = unpack( 'n', substr( $bytes, 2, 2 ) );
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated option TLV payload' )
-        if 4 + $optlen > CORE::length( $bytes );
-    my $payload = substr( $bytes, 4, $optlen );
-    my $remain  = substr( $bytes, 4 + $optlen );
+        if $OPT_HDR_SIZE + $optlen > CORE::length( $bytes );
+    my $payload = substr( $bytes, $OPT_HDR_SIZE, $optlen );
+    my $remain  = substr( $bytes, $OPT_HDR_SIZE + $optlen );
 
     my $class_name = $Net::DHCPv6::OptionList::OPTION_CLASS{$code}
         || 'Net::DHCPv6::Option::Generic';

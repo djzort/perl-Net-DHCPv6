@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 use strictures 2;
 use Test2::Tools::Exception qw( dies );
 use Net::DHCPv6::OptionList;
@@ -934,4 +935,5 @@ my $EMPTY = q();
     is( $ol2->get_option( $OPTION_AUTH )->code,        $OPTION_AUTH,        'Integration Auth' );
 }
 
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

@@ -30,11 +30,12 @@ sub _read_labels_at {
             ++${$offset_ref};
             last;
         }
-        if ( ( $llen & 0xC0 ) == 0xC0 ) {    ## no critic (Bangs::ProhibitBitwiseOperators)
+        if ( ( $llen & $DN_COMPRESS_MASK ) == $DN_COMPRESS_MASK ) {    ## no critic (Bangs::ProhibitBitwiseOperators ValuesAndExpressions::ProhibitMagicNumbers)
             if ( $Net::DHCPv6::Option::FOLLOW_COMPRESSION ) {
                 Net::DHCPv6::X::Truncated->throw( message => 'Truncated compression pointer' )
                     if ${$offset_ref} + 2 > $len;
-                my $ptr = ( ( $llen & 0x3F ) << 8 ) | unpack( 'C', substr( $payload, ${$offset_ref} + 1, 1 ) );    ## no critic (Bangs::ProhibitBitwiseOperators)
+                my $ptr =
+                    ( ( $llen & $DN_LABEL_MASK ) << 8 ) | unpack( 'C', substr( $payload, ${$offset_ref} + 1, 1 ) );    ## no critic (Bangs::ProhibitBitwiseOperators ValuesAndExpressions::ProhibitMagicNumbers)
                 Net::DHCPv6::X::BadOption->throw( message => 'Compression pointer out of range' )
                     if $ptr >= $len;
                 ${$offset_ref} += 2;
@@ -44,7 +45,7 @@ sub _read_labels_at {
             }
             Net::DHCPv6::X::BadOption->throw( message => 'Compression pointer in domain name' );
         }
-        Net::DHCPv6::X::BadOption->throw( message => 'Invalid domain label length' ) if $llen > 63;
+        Net::DHCPv6::X::BadOption->throw( message => 'Invalid domain label length' ) if $llen > $DN_LABEL_MASK;
         ++${$offset_ref};
         Net::DHCPv6::X::Truncated->throw( message => 'Truncated domain label' )
             if ${$offset_ref} + $llen > $len;

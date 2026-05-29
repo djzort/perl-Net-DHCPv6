@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 use strictures 2;
 use Test2::Tools::Exception qw( dies lives );
 use Test2::V1 -ipP, qw(is ok done_testing);            ## no critic (Subroutines::ProhibitCallsToUndeclaredSubs)
@@ -66,4 +67,5 @@ $bytes = $unknown->as_bytes;
 $got   = Net::DHCPv6::DUID->from_bytes( $bytes );
 is( $got->duid_type, 99, 'unknown DUID type preserved' );
 
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

@@ -26,7 +26,7 @@ sub value { return shift->{value} }
 sub from_bytes_inner {
     my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::BadOption->throw( message => 'InfoRefreshTime must be exactly 4 bytes' )
-        if CORE::length( $payload ) != 4;
+        if CORE::length( $payload ) != 4;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
     my $value = unpack( 'N', $payload );
     return $class->new( value => $value );
 }
