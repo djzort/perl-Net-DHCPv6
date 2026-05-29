@@ -24,44 +24,44 @@ sub new {
 }
 
 sub _new_llt {
-    my ( $self, $args ) = @_;
+    my ( $self, $arg ) = @_;
     croak 'DUID-LLT requires link_layer_type, time, and identifier'
-        unless defined $args->{link_layer_type}
-        && defined $args->{time}
-        && defined $args->{identifier};
-    $self->{link_layer_type} = $args->{link_layer_type};
-    $self->{time}            = $args->{time};
-    $self->{identifier}      = $args->{identifier};
+        unless defined $arg->{link_layer_type}
+        && defined $arg->{time}
+        && defined $arg->{identifier};
+    $self->{link_layer_type} = $arg->{link_layer_type};
+    $self->{time}            = $arg->{time};
+    $self->{identifier}      = $arg->{identifier};
     return;
 }
 
 sub _new_en {
-    my ( $self, $args ) = @_;
+    my ( $self, $arg ) = @_;
     croak 'DUID-EN requires enterprise_number and identifier'
-        unless defined $args->{enterprise_number}
-        && defined $args->{identifier};
-    $self->{enterprise_number} = $args->{enterprise_number};
-    $self->{identifier}        = $args->{identifier};
+        unless defined $arg->{enterprise_number}
+        && defined $arg->{identifier};
+    $self->{enterprise_number} = $arg->{enterprise_number};
+    $self->{identifier}        = $arg->{identifier};
     return;
 }
 
 sub _new_ll {
-    my ( $self, $args ) = @_;
+    my ( $self, $arg ) = @_;
     croak 'DUID-LL requires link_layer_type and identifier'
-        unless defined $args->{link_layer_type}
-        && defined $args->{identifier};
-    $self->{link_layer_type} = $args->{link_layer_type};
-    $self->{identifier}      = $args->{identifier};
+        unless defined $arg->{link_layer_type}
+        && defined $arg->{identifier};
+    $self->{link_layer_type} = $arg->{link_layer_type};
+    $self->{identifier}      = $arg->{identifier};
     return;
 }
 
 sub _new_uuid {
-    my ( $self, $args ) = @_;
+    my ( $self, $arg ) = @_;
     croak 'DUID-UUID requires identifier (16 bytes)'
-        unless defined $args->{identifier};
+        unless defined $arg->{identifier};
     croak 'DUID-UUID identifier must be 16 bytes'
-        unless CORE::length( $args->{identifier} ) == $IPV6_ADDR_LEN;
-    $self->{identifier} = $args->{identifier};
+        unless CORE::length( $arg->{identifier} ) == $IPV6_ADDR_LEN;
+    $self->{identifier} = $arg->{identifier};
     return;
 }
 
