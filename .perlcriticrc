@@ -54,6 +54,7 @@ except_function_calls = 1
 [Community::Wantarray]
 [Community::WarningsSwitch]
 [Community::WhileDiamondDefaultAssignment]
+[ControlStructures::ProhibitCascadingIfElse]
 [ControlStructures::ProhibitDeepNests]
 max_nests = 7
 [ControlStructures::ProhibitInlineDo]

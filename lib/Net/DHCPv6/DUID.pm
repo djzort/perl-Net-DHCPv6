@@ -13,7 +13,7 @@ sub new {
     my ( $class, %args ) = @_;
     my $type = $args{duid_type} // croak 'Net::DHCPv6::DUID->new: duid_type is required';
 
-    my $self = { duid_type => $type };
+    my $self = { duid_type => $type, identifier => $args{identifier} // q() };
 
     if ( $type == $DUID_LLT ) {
         croak 'DUID-LLT requires link_layer_type, time, and identifier'
@@ -24,29 +24,26 @@ sub new {
         $self->{time}            = $args{time};
         $self->{identifier}      = $args{identifier};
     }
-    elsif ( $type == $DUID_EN ) {
+    if ( $type == $DUID_EN ) {
         croak 'DUID-EN requires enterprise_number and identifier'
             unless defined $args{enterprise_number}
             && defined $args{identifier};
         $self->{enterprise_number} = $args{enterprise_number};
         $self->{identifier}        = $args{identifier};
     }
-    elsif ( $type == $DUID_LL ) {
+    if ( $type == $DUID_LL ) {
         croak 'DUID-LL requires link_layer_type and identifier'
             unless defined $args{link_layer_type}
             && defined $args{identifier};
         $self->{link_layer_type} = $args{link_layer_type};
         $self->{identifier}      = $args{identifier};
     }
-    elsif ( $type == $DUID_UUID ) {
+    if ( $type == $DUID_UUID ) {
         croak 'DUID-UUID requires identifier (16 bytes)'
             unless defined $args{identifier};
         croak 'DUID-UUID identifier must be 16 bytes'
             unless CORE::length( $args{identifier} ) == 16;
         $self->{identifier} = $args{identifier};
-    }
-    else {
-        $self->{identifier} = $args{identifier} // '';
     }
 
     return bless $self, $class;
@@ -58,15 +55,18 @@ sub time              { return shift->{time} }
 sub enterprise_number { return shift->{enterprise_number} }
 sub identifier        { return shift->{identifier} }
 
+my %DUID_LENGTH_BASE = (
+    $DUID_LLT  => 2 + 2 + 4,
+    $DUID_EN   => 2 + 4,
+    $DUID_LL   => 2 + 2,
+    $DUID_UUID => 2,
+);
+
 sub length {
     my $self = shift;
     my $type = $self->{duid_type};
     my $id   = $self->{identifier} // '';
-    if    ( $type == $DUID_LLT )  { return 2 + 2 + 4 + CORE::length( $id ); }
-    elsif ( $type == $DUID_EN )   { return 2 + 4 + CORE::length( $id ); }
-    elsif ( $type == $DUID_LL )   { return 2 + 2 + CORE::length( $id ); }
-    elsif ( $type == $DUID_UUID ) { return 2 + CORE::length( $id ); }
-    else                          { return 2 + CORE::length( $id ); }
+    return ( $DUID_LENGTH_BASE{$type} // 2 ) + CORE::length( $id );
 }
 
 sub as_bytes {
@@ -79,22 +79,23 @@ sub as_bytes {
         $buf .= pack( 'n', $self->{link_layer_type} );
         $buf .= pack( 'N', $self->{time} );
         $buf .= $id;
+        return $buf;
     }
-    elsif ( $type == $DUID_EN ) {
+    if ( $type == $DUID_EN ) {
         $buf .= pack( 'N', $self->{enterprise_number} );
         $buf .= $id;
+        return $buf;
     }
-    elsif ( $type == $DUID_LL ) {
+    if ( $type == $DUID_LL ) {
         $buf .= pack( 'n', $self->{link_layer_type} );
         $buf .= $id;
+        return $buf;
     }
-    elsif ( $type == $DUID_UUID ) {
+    if ( $type == $DUID_UUID ) {
         $buf .= $id;
+        return $buf;
     }
-    else {
-        $buf .= $id;
-    }
-
+    $buf .= $id;
     return $buf;
 }
 
@@ -104,6 +105,67 @@ sub as_string {
     my $tname = $Net::DHCPv6::Constants::REV_DUID_TYPE{ $self->{duid_type} }
         || sprintf( 'TYPE%d', $self->{duid_type} );
     return sprintf( '%s:%s', $tname, unpack( 'H*', $bytes ) );
+}
+
+sub _try_llt {
+    my ( $class, $rest, $rest_len ) = @_;
+    my $partial = bless( { duid_type => $DUID_LLT }, $class );
+    my $error;
+    if ( $rest_len >= 2 ) {
+        $partial->{link_layer_type} = unpack( 'n', $rest );
+        if ( $rest_len >= 6 ) {
+            $partial->{time}       = unpack( 'x2 N', $rest );
+            $partial->{identifier} = substr( $rest, 6 );
+        }
+        else {
+            $error = "Need 6 bytes for DUID-LLT hwtype+time, got $rest_len";
+        }
+    }
+    else {
+        $error = "Need at least 2 bytes for DUID-LLT hwtype, got $rest_len";
+    }
+    return ( $partial, $error );
+}
+
+sub _try_en {
+    my ( $class, $rest, $rest_len ) = @_;
+    my $partial = bless( { duid_type => $DUID_EN }, $class );
+    my $error;
+    if ( $rest_len >= 4 ) {
+        $partial->{enterprise_number} = unpack( 'N', $rest );
+        $partial->{identifier}        = substr( $rest, 4 );
+    }
+    else {
+        $error = "Need 4 bytes for DUID-EN enterprise_number, got $rest_len";
+    }
+    return ( $partial, $error );
+}
+
+sub _try_ll {
+    my ( $class, $rest, $rest_len ) = @_;
+    my $partial = bless( { duid_type => $DUID_LL }, $class );
+    my $error;
+    if ( $rest_len >= 2 ) {
+        $partial->{link_layer_type} = unpack( 'n', $rest );
+        $partial->{identifier}      = substr( $rest, 2 );
+    }
+    else {
+        $error = "Need at least 2 bytes for DUID-LL hwtype, got $rest_len";
+    }
+    return ( $partial, $error );
+}
+
+sub _try_uuid {
+    my ( $class, $rest, $rest_len ) = @_;
+    my $partial = bless( { duid_type => $DUID_UUID }, $class );
+    my $error;
+    if ( $rest_len >= 16 ) {
+        $partial->{identifier} = substr( $rest, 0, 16 );
+    }
+    else {
+        $error = "Need 16 bytes for DUID-UUID, got $rest_len";
+    }
+    return ( $partial, $error );
 }
 
 sub try_from_bytes {
@@ -117,71 +179,21 @@ sub try_from_bytes {
     my $rest     = substr( $bytes, 2 );
     my $rest_len = CORE::length( $rest );
 
-    if ( $type == $DUID_LLT ) {
-        my $partial = bless( { duid_type => $DUID_LLT }, $class );
-        my $error;
-        if ( $rest_len >= 2 ) {
-            $partial->{link_layer_type} = unpack( 'n', $rest );
-            if ( $rest_len >= 6 ) {
-                $partial->{time}       = unpack( 'x2 N', $rest );
-                $partial->{identifier} = substr( $rest, 6 );
-            }
-            else {
-                $error = "Need 6 bytes for DUID-LLT hwtype+time, got $rest_len";
-            }
-        }
-        else {
-            $error = "Need at least 2 bytes for DUID-LLT hwtype, got $rest_len";
-        }
-        return ( $partial, $error );
-    }
-    elsif ( $type == $DUID_EN ) {
-        my $partial = bless( { duid_type => $DUID_EN }, $class );
-        my $error;
-        if ( $rest_len >= 4 ) {
-            $partial->{enterprise_number} = unpack( 'N', $rest );
-            $partial->{identifier}        = substr( $rest, 4 );
-        }
-        else {
-            $error = "Need 4 bytes for DUID-EN enterprise_number, got $rest_len";
-        }
-        return ( $partial, $error );
-    }
-    elsif ( $type == $DUID_LL ) {
-        my $partial = bless( { duid_type => $DUID_LL }, $class );
-        my $error;
-        if ( $rest_len >= 2 ) {
-            $partial->{link_layer_type} = unpack( 'n', $rest );
-            $partial->{identifier}      = substr( $rest, 2 );
-        }
-        else {
-            $error = "Need at least 2 bytes for DUID-LL hwtype, got $rest_len";
-        }
-        return ( $partial, $error );
-    }
-    elsif ( $type == $DUID_UUID ) {
-        my $partial = bless( { duid_type => $DUID_UUID }, $class );
-        my $error;
-        if ( $rest_len >= 16 ) {
-            $partial->{identifier} = substr( $rest, 0, 16 );
-        }
-        else {
-            $error = "Need 16 bytes for DUID-UUID, got $rest_len";
-        }
-        return ( $partial, $error );
-    }
-    else {
-        return (
-            bless(
-                {
-                    duid_type  => $type,
-                    identifier => $rest,
-                },
-                $class
-            ),
-            undef
-        );
-    }
+    if ( $type == $DUID_LLT )  { return _try_llt( $class, $rest, $rest_len ) }
+    if ( $type == $DUID_EN )   { return _try_en( $class, $rest, $rest_len ) }
+    if ( $type == $DUID_LL )   { return _try_ll( $class, $rest, $rest_len ) }
+    if ( $type == $DUID_UUID ) { return _try_uuid( $class, $rest, $rest_len ) }
+
+    return (
+        bless(
+            {
+                duid_type  => $type,
+                identifier => $rest,
+            },
+            $class
+        ),
+        undef
+    );
 }
 
 sub from_bytes {
