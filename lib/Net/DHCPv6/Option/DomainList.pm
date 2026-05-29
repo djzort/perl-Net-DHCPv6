@@ -12,12 +12,13 @@ use Net::DHCPv6::X::BadOption;
 use parent 'Net::DHCPv6::Option';
 use Ref::Util        qw( is_plain_arrayref );
 use namespace::clean ();
+my $EMPTY = q();
 
 sub _encode_domain {
     my ( $domain ) = @_;
     return chr( 0 ) unless defined $domain && CORE::length( $domain );
     my @labels = split m/\./, $domain;
-    return join( '', map { pack( 'C', CORE::length ) . $_ } @labels ) . chr( 0 );
+    return join( $EMPTY, map { pack( 'C', CORE::length ) . $_ } @labels ) . chr( 0 );
 }
 
 sub _read_labels_at {
@@ -60,7 +61,7 @@ sub _decode_domains {
     my $len    = CORE::length( $payload );
     while ( $offset < $len ) {
         my @labels = _read_labels_at( $payload, \$offset, $len );
-        push @domain_list, @labels ? join( '.', @labels ) : '';
+        push @domain_list, @labels ? join( '.', @labels ) : $EMPTY;
     }
     return \@domain_list;
 }
@@ -70,7 +71,7 @@ sub new {
     my $domains = $args{domains} // $args{data} // [];
     $domains    = [$domains] unless is_plain_arrayref( $domains );
     $args{code} = $OPTION_DOMAIN_LIST;
-    $args{data} = join( '', map { _encode_domain( $_ ) } @{$domains} );
+    $args{data} = join( $EMPTY, map { _encode_domain( $_ ) } @{$domains} );
     my $self = $class->SUPER::new( %args );
     $self->{domains} = $domains;
     return bless $self, $class;

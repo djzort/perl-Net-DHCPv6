@@ -10,12 +10,13 @@ use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean ();
+my $EMPTY = q();
 
 sub new {
     my ( $class, %args ) = @_;
     croak 'StatusCode requires status_code' unless defined $args{status_code};
     $args{code}    = $OPTION_STATUS_CODE;
-    $args{message} = $args{message} // '';
+    $args{message} = $args{message} // $EMPTY;
     $args{data}    = pack( 'n', $args{status_code} ) . $args{message};
     my $self = $class->SUPER::new( %args );
     $self->{status_code} = $args{status_code};

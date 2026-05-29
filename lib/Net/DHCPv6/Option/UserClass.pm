@@ -10,13 +10,14 @@ use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
 use Ref::Util        qw( is_plain_arrayref );
 use namespace::clean ();
+my $EMPTY = q();
 
 sub new {
     my ( $class, %args ) = @_;
     $args{code} = $OPTION_USER_CLASS;
     my $data_list = $args{user_class_data} // [];
     $data_list = [$data_list] unless is_plain_arrayref( $data_list );
-    $args{data} = join( '', map { pack( 'n', CORE::length ) . $_ } @{$data_list} );
+    $args{data} = join( $EMPTY, map { pack( 'n', CORE::length ) . $_ } @{$data_list} );
     my $self = $class->SUPER::new( %args );
     $self->{user_class_data} = $data_list;
     return bless $self, $class;

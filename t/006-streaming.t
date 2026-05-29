@@ -11,6 +11,7 @@ use lib 'lib';
 
 use Net::DHCPv6;
 use Net::DHCPv6::Constants;
+my $EMPTY = q();
 
 my $mac = pack( 'H*', '001122334455' );
 
@@ -37,7 +38,7 @@ ok( !defined $duid->identifier, 'partial DUID-LLT has no identifier' );
 like( $err, qr/LLT/, 'error mentions LLT' );
 
 # decode_duid_with_error -- empty
-( $duid, $err ) = Net::DHCPv6->decode_duid_with_error( '' );
+( $duid, $err ) = Net::DHCPv6->decode_duid_with_error( $EMPTY );
 ok( !defined $duid, 'empty DUID returns undef' );
 ok( defined $err,   'empty DUID returns error' );
 
@@ -67,7 +68,7 @@ ok( defined $duid, 'decode_duid_or_null partial returns duid (tolerant)' );
 is( $duid->duid_type, $DUID_LLT, 'partial duid has type' );
 
 # decode_duid_or_null -- empty (no bytes at all, returns undef)
-$duid = Net::DHCPv6->decode_duid_or_null( '' );
+$duid = Net::DHCPv6->decode_duid_or_null( $EMPTY );
 ok( !defined $duid, 'decode_duid_or_null empty returns undef' );
 
 # decode_duid_or_croak -- full
@@ -79,7 +80,7 @@ ok( dies { Net::DHCPv6->decode_duid_or_croak( pack( 'n n', $DUID_LLT, $LINK_TYPE
     'decode_duid_or_croak partial croaks' );
 
 # decode_duid_or_croak -- empty (croaks)
-ok( dies { Net::DHCPv6->decode_duid_or_croak( '' ) }, 'decode_duid_or_croak empty croaks' );
+ok( dies { Net::DHCPv6->decode_duid_or_croak( $EMPTY ) }, 'decode_duid_or_croak empty croaks' );
 
 # --- Options streaming helpers -------------------------------------
 
@@ -113,7 +114,7 @@ is( $ol->get_option( 1 )->code, 1, 'first option still parsed' );
 ok( !$ol->get_option( 2 ), 'second option not present' );
 
 # decode_options_with_error -- empty bytes
-( $ol, $err ) = Net::DHCPv6->decode_options_with_error( '' );
+( $ol, $err ) = Net::DHCPv6->decode_options_with_error( $EMPTY );
 ok( defined $ol,   'empty options returns empty OptionList' );
 ok( !defined $err, 'empty options no error' );
 

@@ -10,6 +10,7 @@ use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean ();
+my $EMPTY = q();
 
 sub new {
     my ( $class, %args ) = @_;
@@ -20,13 +21,13 @@ sub new {
         if CORE::length( $args{replay} ) != 8;
     $args{code} = $OPTION_AUTH;
     $args{data} =
-        pack( 'C C C a8 a*', $args{protocol}, $args{algorithm}, $args{rdm}, $args{replay}, $args{auth_info} // '' );
+        pack( 'C C C a8 a*', $args{protocol}, $args{algorithm}, $args{rdm}, $args{replay}, $args{auth_info} // $EMPTY );
     my $self = $class->SUPER::new( %args );
     $self->{protocol}  = $args{protocol};
     $self->{algorithm} = $args{algorithm};
     $self->{rdm}       = $args{rdm};
     $self->{replay}    = $args{replay};
-    $self->{auth_info} = $args{auth_info} // '';
+    $self->{auth_info} = $args{auth_info} // $EMPTY;
     return bless $self, $class;
 }
 

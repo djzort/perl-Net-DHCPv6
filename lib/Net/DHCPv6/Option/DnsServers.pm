@@ -10,6 +10,7 @@ use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
 use Ref::Util        qw( is_plain_arrayref );
 use namespace::clean ();
+my $EMPTY = q();
 
 sub new {
     my ( $class, %args ) = @_;
@@ -20,7 +21,7 @@ sub new {
     }
     $addresses //= [];
     $args{code} = $OPTION_DNS_SERVERS;
-    $args{data} = join( '', @{$addresses} );
+    $args{data} = join( $EMPTY, @{$addresses} );
     my $self = $class->SUPER::new( %args );
     $self->{servers} = $addresses;
     return bless $self, $class;

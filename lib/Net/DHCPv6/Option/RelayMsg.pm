@@ -8,11 +8,12 @@ use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean ();
+my $EMPTY = q();
 
 sub new {
     my ( $class, %args ) = @_;
     $args{code} = $OPTION_RELAY_MSG;
-    $args{data} = $args{data} // ( $args{message} // '' );
+    $args{data} = $args{data} // ( $args{message} // $EMPTY );
     my $self = $class->SUPER::new( %args );
     $self->{message} = $args{data};
     return bless $self, $class;

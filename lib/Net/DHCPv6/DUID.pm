@@ -8,6 +8,7 @@ use Carp qw(croak);
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::BadDUID;
 use namespace::clean;
+my $EMPTY = q();
 
 sub new {
     my ( $class, %args ) = @_;
@@ -65,14 +66,14 @@ my %DUID_LENGTH_BASE = (
 sub length {
     my $self = shift;
     my $type = $self->{duid_type};
-    my $id   = $self->{identifier} // '';
+    my $id   = $self->{identifier} // $EMPTY;
     return ( $DUID_LENGTH_BASE{$type} // 2 ) + CORE::length( $id );
 }
 
 sub as_bytes {
     my $self = shift;
     my $type = $self->{duid_type};
-    my $id   = $self->{identifier} // '';
+    my $id   = $self->{identifier} // $EMPTY;
     my $buf  = pack( 'n', $type );
 
     if ( $type == $DUID_LLT ) {

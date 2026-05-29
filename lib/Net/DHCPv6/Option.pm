@@ -10,13 +10,14 @@ use Net::DHCPv6::OptionList;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Helpers';
 use namespace::clean ();
+my $EMPTY = q();
 
 our $FOLLOW_COMPRESSION = 0;
 
 sub new {
     my ( $class, %args ) = @_;
     croak 'Option->new: code is required' unless defined $args{code};
-    my $self = { code => $args{code}, data => $args{data} // '' };
+    my $self = { code => $args{code}, data => $args{data} // $EMPTY };
     return bless $self, $class;
 }
 
@@ -30,7 +31,7 @@ sub type {
 
 sub as_bytes {
     my $self    = shift;
-    my $payload = $self->{data} // '';
+    my $payload = $self->{data} // $EMPTY;
     return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
