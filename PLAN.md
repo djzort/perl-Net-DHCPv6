@@ -44,6 +44,9 @@ perlcritic --profile .perlcriticrc --verbose "%p\n" lib/ t/ 2>&1 | \
 - `Community::IndirectObjectNotation` (commit 008586a)
 - `InputOutput::RequireCheckedOpen` (commit 008586a)
 - `InputOutput::RequireCheckedSyscalls` (commit 008586a)
+- `ErrorHandling::RequireCarping` (commit 8125c05)
+- `ErrorHandling::RequireCheckingReturnValueOfEval` (commit 8125c05)
+- `References::RequireSigils` (commit 8125c05)
 
 ### Infrastructure
 - `.perlcriticrc` converted to `only = 1` — explicit policy list only
