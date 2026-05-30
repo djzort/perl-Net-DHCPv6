@@ -5,7 +5,7 @@ package Net::DHCPv6::X::BadDUID;
 
 use strictures 2;
 use parent 'Net::DHCPv6::X';
-use namespace::clean;
+use namespace::clean ();
 
 1;
 
