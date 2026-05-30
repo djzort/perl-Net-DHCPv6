@@ -12,31 +12,31 @@ use Net::DHCPv6::Constants;
 
 ok( dies { Net::DHCPv6::DUID->new },                           'new() without args dies' );
 ok( dies { Net::DHCPv6::DUID->new( duid_type => $DUID_LLT ) }, 'DUID-LLT without hwtype dies' );
-ok( lives { Net::DHCPv6::DUID->new_llt( $LINK_TYPE_ETHERNET, 123456, pack( 'H*', '001122334455' ) ) },
+ok( lives { Net::DHCPv6::DUID->new_llt( $LINK_TYPE_ETHERNET, 123_456, pack( 'H*', '001122334455' ) ) },
     'new_llt lives' );
 
 # DUID-LLT round-trip
 my $mac  = pack( 'H*', '001122334455' );
-my $duid = Net::DHCPv6::DUID->new_llt( $LINK_TYPE_ETHERNET, 123456, $mac );
+my $duid = Net::DHCPv6::DUID->new_llt( $LINK_TYPE_ETHERNET, 123_456, $mac );
 is( $duid->duid_type,       $DUID_LLT,           'LLT duid_type' );
 is( $duid->link_layer_type, $LINK_TYPE_ETHERNET, 'LLT hwtype' );
-is( $duid->time,            123456,              'LLT time' );
+is( $duid->time,            123_456,             'LLT time' );
 is( $duid->identifier,      $mac,                'LLT identifier' );
 
 my $bytes = $duid->as_bytes;
 my $got   = Net::DHCPv6::DUID->from_bytes( $bytes );
 is( $got->duid_type,       $DUID_LLT,           'parse LLT duid_type' );
 is( $got->link_layer_type, $LINK_TYPE_ETHERNET, 'parse LLT hwtype' );
-is( $got->time,            123456,              'parse LLT time' );
+is( $got->time,            123_456,             'parse LLT time' );
 is( $got->identifier,      $mac,                'parse LLT identifier' );
 
 # DUID-EN round-trip
 my $en_id = pack( 'H*', 'aabbccdd' );
-my $en    = Net::DHCPv6::DUID->new_en( 32473, $en_id );
-is( $en->enterprise_number, 32473, 'EN enterprise_number' );
+my $en    = Net::DHCPv6::DUID->new_en( 32_473, $en_id );
+is( $en->enterprise_number, 32_473, 'EN enterprise_number' );
 $bytes = $en->as_bytes;
 $got   = Net::DHCPv6::DUID->from_bytes( $bytes );
-is( $got->enterprise_number, 32473,  'parse EN enterprise_number' );
+is( $got->enterprise_number, 32_473, 'parse EN enterprise_number' );
 is( $got->identifier,        $en_id, 'parse EN identifier' );
 
 # DUID-LL round-trip

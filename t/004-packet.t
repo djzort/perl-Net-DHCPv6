@@ -30,41 +30,41 @@ use Net::DHCPv6::Constants;
 use Test::Net::DHCPv6 qw(hex2bytes);
 
 # Solicit construction
-my $duid    = Net::DHCPv6::DUID->new_llt( $LINK_TYPE_ETHERNET, 123456, pack( 'H*', '001122334455' ) );
+my $duid    = Net::DHCPv6::DUID->new_llt( $LINK_TYPE_ETHERNET, 123_456, pack( 'H*', '001122334455' ) );
 my $cid     = Net::DHCPv6::Option::ClientId->new( duid           => $duid );
-my $solicit = Net::DHCPv6::Message::Solicit->new( transaction_id => 123456 );
+my $solicit = Net::DHCPv6::Message::Solicit->new( transaction_id => 123_456 );
 $solicit->add_option( $cid );
 
 is( $solicit->msg_type,       1,         'Solicit msg_type' );
 is( $solicit->type,           'SOLICIT', 'Solicit type()' );
-is( $solicit->transaction_id, 123456,    'Solicit transaction_id' );
+is( $solicit->transaction_id, 123_456,   'Solicit transaction_id' );
 
 # Advertise
 my $sid = Net::DHCPv6::Option::ServerId->new(
-    duid => Net::DHCPv6::DUID->new_llt( $LINK_TYPE_ETHERNET, 999999, pack( 'H*', 'aabbccddeeff' ) ) );
-my $adv = Net::DHCPv6::Message::Advertise->new( transaction_id => 456789 );
+    duid => Net::DHCPv6::DUID->new_llt( $LINK_TYPE_ETHERNET, 999_999, pack( 'H*', 'aabbccddeeff' ) ) );
+my $adv = Net::DHCPv6::Message::Advertise->new( transaction_id => 456_789 );
 $adv->add_option( $sid );
 is( $adv->msg_type, 2, 'Advertise msg_type' );
 
 # Request with ORO
 my $oro = Net::DHCPv6::Option::ORO->new( requested_options => [ 23, 24 ] );
-my $req = Net::DHCPv6::Message::Request->new( transaction_id => 789012 );
+my $req = Net::DHCPv6::Message::Request->new( transaction_id => 789_012 );
 $req->add_option( $cid );
 $req->add_option( $sid );
 $req->add_option( $oro );
 is( $req->msg_type, 3, 'Request msg_type' );
 
 # Confirm
-my $con = Net::DHCPv6::Message::Confirm->new( transaction_id => 333333 );
+my $con = Net::DHCPv6::Message::Confirm->new( transaction_id => 333_333 );
 is( $con->msg_type, 4,         'Confirm msg_type' );
 is( $con->type,     'CONFIRM', 'Confirm type()' );
 
 # Renew
-my $ren = Net::DHCPv6::Message::Renew->new( transaction_id => 111111 );
+my $ren = Net::DHCPv6::Message::Renew->new( transaction_id => 111_111 );
 is( $ren->msg_type, 5, 'Renew msg_type' );
 
 # Rebind
-my $reb = Net::DHCPv6::Message::Rebind->new( transaction_id => 444444 );
+my $reb = Net::DHCPv6::Message::Rebind->new( transaction_id => 444_444 );
 is( $reb->msg_type, 6,        'Rebind msg_type' );
 is( $reb->type,     'REBIND', 'Rebind type()' );
 
@@ -74,30 +74,30 @@ my $addr   = pack( 'H*', '20010db8000000000000000000000001' );
 my $iaaddr = Net::DHCPv6::Option::IAAddr->new(
     address            => $addr,
     preferred_lifetime => 7200,
-    valid_lifetime     => 86400,
+    valid_lifetime     => 86_400,
 );
 $iana->add_option( $iaaddr );
-my $reply = Net::DHCPv6::Message::Reply->new( transaction_id => 314159 );
+my $reply = Net::DHCPv6::Message::Reply->new( transaction_id => 314_159 );
 $reply->add_option( $iana );
 is( $reply->msg_type,              7,  'Reply msg_type' );
 is( $reply->get_option( 3 )->iaid, 42, 'Reply IA_NA iaid' );
 
 # Release
-my $rel = Net::DHCPv6::Message::Release->new( transaction_id => 222222 );
+my $rel = Net::DHCPv6::Message::Release->new( transaction_id => 222_222 );
 is( $rel->msg_type, 8, 'Release msg_type' );
 
 # Decline
-my $dec = Net::DHCPv6::Message::Decline->new( transaction_id => 555555 );
+my $dec = Net::DHCPv6::Message::Decline->new( transaction_id => 555_555 );
 is( $dec->msg_type, 9,         'Decline msg_type' );
 is( $dec->type,     'DECLINE', 'Decline type()' );
 
 # Reconfigure
-my $rec = Net::DHCPv6::Message::Reconfigure->new( transaction_id => 666666 );
+my $rec = Net::DHCPv6::Message::Reconfigure->new( transaction_id => 666_666 );
 is( $rec->msg_type, 10,            'Reconfigure msg_type' );
 is( $rec->type,     'RECONFIGURE', 'Reconfigure type()' );
 
 # InformationRequest
-my $inf = Net::DHCPv6::Message::InformationRequest->new( transaction_id => 777777 );
+my $inf = Net::DHCPv6::Message::InformationRequest->new( transaction_id => 777_777 );
 is( $inf->msg_type, 11,                    'InformationRequest msg_type' );
 is( $inf->type,     'INFORMATION_REQUEST', 'InformationRequest type()' );
 
@@ -138,14 +138,14 @@ is( $relay_reply->peer_address_raw, $link_addr_raw, 'RelayReply peer_address_raw
 my $bytes   = $solicit->as_bytes;
 my $decoded = Net::DHCPv6::Packet->from_bytes( $bytes );
 ok( $decoded->isa( 'Net::DHCPv6::Message::Solicit' ), 'Solicit class preserved' );
-is( $decoded->transaction_id,              123456, 'Solicit tid round-trip' );
-is( $decoded->get_option( 1 )->duid->time, 123456, 'Solicit ClientId preserved' );
+is( $decoded->transaction_id,              123_456, 'Solicit tid round-trip' );
+is( $decoded->get_option( 1 )->duid->time, 123_456, 'Solicit ClientId preserved' );
 
 # Round-trip: Advertise
 $bytes   = $adv->as_bytes;
 $decoded = Net::DHCPv6::Packet->from_bytes( $bytes );
 ok( $decoded->isa( 'Net::DHCPv6::Message::Advertise' ), 'Advertise class preserved' );
-is( $decoded->transaction_id, 456789, 'Advertise tid round-trip' );
+is( $decoded->transaction_id, 456_789, 'Advertise tid round-trip' );
 
 # Round-trip: Request
 $bytes   = $req->as_bytes;
@@ -168,31 +168,31 @@ is( $d_iaaddr->preferred_lifetime, 7200,          'Reply IAAddr preferred round-
 $bytes   = $con->as_bytes;
 $decoded = Net::DHCPv6::Packet->from_bytes( $bytes );
 ok( $decoded->isa( 'Net::DHCPv6::Message::Confirm' ), 'Confirm class preserved' );
-is( $decoded->transaction_id, 333333, 'Confirm tid round-trip' );
+is( $decoded->transaction_id, 333_333, 'Confirm tid round-trip' );
 
 # Rebind round-trip
 $bytes   = $reb->as_bytes;
 $decoded = Net::DHCPv6::Packet->from_bytes( $bytes );
 ok( $decoded->isa( 'Net::DHCPv6::Message::Rebind' ), 'Rebind class preserved' );
-is( $decoded->transaction_id, 444444, 'Rebind tid round-trip' );
+is( $decoded->transaction_id, 444_444, 'Rebind tid round-trip' );
 
 # Decline round-trip
 $bytes   = $dec->as_bytes;
 $decoded = Net::DHCPv6::Packet->from_bytes( $bytes );
 ok( $decoded->isa( 'Net::DHCPv6::Message::Decline' ), 'Decline class preserved' );
-is( $decoded->transaction_id, 555555, 'Decline tid round-trip' );
+is( $decoded->transaction_id, 555_555, 'Decline tid round-trip' );
 
 # Reconfigure round-trip
 $bytes   = $rec->as_bytes;
 $decoded = Net::DHCPv6::Packet->from_bytes( $bytes );
 ok( $decoded->isa( 'Net::DHCPv6::Message::Reconfigure' ), 'Reconfigure class preserved' );
-is( $decoded->transaction_id, 666666, 'Reconfigure tid round-trip' );
+is( $decoded->transaction_id, 666_666, 'Reconfigure tid round-trip' );
 
 # InformationRequest round-trip
 $bytes   = $inf->as_bytes;
 $decoded = Net::DHCPv6::Packet->from_bytes( $bytes );
 ok( $decoded->isa( 'Net::DHCPv6::Message::InformationRequest' ), 'InformationRequest class preserved' );
-is( $decoded->transaction_id, 777777, 'InformationRequest tid round-trip' );
+is( $decoded->transaction_id, 777_777, 'InformationRequest tid round-trip' );
 
 # RelayForw round-trip
 $bytes   = $relay_forw->as_bytes;

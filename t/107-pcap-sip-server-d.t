@@ -21,7 +21,7 @@ if ( $err ) { diag "err: $err"; done_testing; exit }
 
 subtest 'reply' => sub {
     is( $msg->msg_type,       7,        'Checking msg_type is 7 (REPLY)' );
-    is( $msg->transaction_id, 0x6890D8, 'Checking transaction_id' );
+    is( $msg->transaction_id, 0x6890D8, 'Checking transaction_id' );          ## no critic (ValuesAndExpressions::RequireNumberSeparators)
     ok( $msg->options->isa( 'Net::DHCPv6::OptionList' ), 'options is an OptionList' );
 };
 
@@ -30,13 +30,13 @@ subtest 'reply options' => sub {
 
     my $cid = $ol->get_option( 1 );
     ok( $cid, 'CLIENTID present' );
-    is( $cid->duid->duid_type, 1,         'ClientId duid_type=1 (LLT)' );
-    is( $cid->duid->time,      418384703, 'ClientId time' );
+    is( $cid->duid->duid_type, 1,           'ClientId duid_type=1 (LLT)' );
+    is( $cid->duid->time,      418_384_703, 'ClientId time' );
 
     my $sid = $ol->get_option( 2 );
     ok( $sid, 'SERVERID present' );
-    is( $sid->duid->duid_type, 1,         'ServerId duid_type=1 (LLT)' );
-    is( $sid->duid->time,      418354459, 'ServerId time' );
+    is( $sid->duid->duid_type, 1,           'ServerId duid_type=1 (LLT)' );
+    is( $sid->duid->time,      418_354_459, 'ServerId time' );
 
     my $sip = $ol->get_option( 21 );
     ok( $sip,                                           'SIP_SERVER_D (option 21) present' );

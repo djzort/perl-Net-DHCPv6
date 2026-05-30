@@ -20,12 +20,12 @@ my $mac = pack( 'H*', '001122334455' );
 
 # decode_duid_with_error -- full DUID-LLT
 my ( $duid, $err ) =
-    Net::DHCPv6->decode_duid_with_error( pack( 'n n N a*', $DUID_LLT, $LINK_TYPE_ETHERNET, 123456, $mac ) );
+    Net::DHCPv6->decode_duid_with_error( pack( 'n n N a*', $DUID_LLT, $LINK_TYPE_ETHERNET, 123_456, $mac ) );
 ok( defined $duid, 'decode_duid_with_error full DUID-LLT returns duid' );
 ok( !defined $err, 'decode_duid_with_error full DUID-LLT no error' );
 is( $duid->duid_type,       $DUID_LLT,           'full DUID-LLT type' );
 is( $duid->link_layer_type, $LINK_TYPE_ETHERNET, 'full DUID-LLT hwtype' );
-is( $duid->time,            123456,              'full DUID-LLT time' );
+is( $duid->time,            123_456,             'full DUID-LLT time' );
 is( $duid->identifier,      $mac,                'full DUID-LLT identifier' );
 
 # decode_duid_with_error -- partial DUID-LLT (only type + hwtype, no time)
@@ -60,7 +60,7 @@ is( $duid->duid_type, $DUID_UUID, 'partial DUID-UUID type' );
 ok( !defined $duid->identifier, 'partial DUID-UUID no identifier' );
 
 # decode_duid_or_null -- full data
-$duid = Net::DHCPv6->decode_duid_or_null( pack( 'n n N a*', $DUID_LLT, $LINK_TYPE_ETHERNET, 123456, $mac ) );
+$duid = Net::DHCPv6->decode_duid_or_null( pack( 'n n N a*', $DUID_LLT, $LINK_TYPE_ETHERNET, 123_456, $mac ) );
 ok( defined $duid, 'decode_duid_or_null full returns duid' );
 
 # decode_duid_or_null -- partial (returns partial, not undef)
@@ -73,7 +73,7 @@ $duid = Net::DHCPv6->decode_duid_or_null( $EMPTY );
 ok( !defined $duid, 'decode_duid_or_null empty returns undef' );
 
 # decode_duid_or_croak -- full
-$duid = Net::DHCPv6->decode_duid_or_croak( pack( 'n n N a*', $DUID_LLT, $LINK_TYPE_ETHERNET, 123456, $mac ) );
+$duid = Net::DHCPv6->decode_duid_or_croak( pack( 'n n N a*', $DUID_LLT, $LINK_TYPE_ETHERNET, 123_456, $mac ) );
 ok( defined $duid, 'decode_duid_or_croak full returns duid' );
 
 # decode_duid_or_croak -- partial (croaks)
@@ -86,8 +86,8 @@ ok( dies { Net::DHCPv6->decode_duid_or_croak( $EMPTY ) }, 'decode_duid_or_croak 
 # --- Options streaming helpers -------------------------------------
 
 # Build a known good options byte string
-my $cid        = Net::DHCPv6::Option::ClientId->new( duid => Net::DHCPv6::DUID->new_llt( 1, 123456, $mac ) );
-my $sid        = Net::DHCPv6::Option::ServerId->new( duid => Net::DHCPv6::DUID->new_llt( 1, 123456, $mac ) );
+my $cid        = Net::DHCPv6::Option::ClientId->new( duid => Net::DHCPv6::DUID->new_llt( 1, 123_456, $mac ) );
+my $sid        = Net::DHCPv6::Option::ServerId->new( duid => Net::DHCPv6::DUID->new_llt( 1, 123_456, $mac ) );
 my $opts_bytes = $cid->as_bytes . $sid->as_bytes;
 
 # decode_options_with_error -- full

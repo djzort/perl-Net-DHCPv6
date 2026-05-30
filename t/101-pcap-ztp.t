@@ -40,10 +40,10 @@ my @entries = (
 );
 
 my @expect = (
-    { msg_type => 1, transaction_id => 0x9A0006 },
-    { msg_type => 2, transaction_id => 0x9A0006 },
-    { msg_type => 3, transaction_id => 0xCD0220 },
-    { msg_type => 7, transaction_id => 0xCD0220 },
+    { msg_type => 1, transaction_id => 0x9A0006 },    ## no critic (ValuesAndExpressions::RequireNumberSeparators)
+    { msg_type => 2, transaction_id => 0x9A0006 },    ## no critic (ValuesAndExpressions::RequireNumberSeparators)
+    { msg_type => 3, transaction_id => 0xCD0220 },    ## no critic (ValuesAndExpressions::RequireNumberSeparators)
+    { msg_type => 7, transaction_id => 0xCD0220 },    ## no critic (ValuesAndExpressions::RequireNumberSeparators)
 );
 
 for my $i ( 0 .. $#entries ) {
@@ -88,9 +88,9 @@ subtest 'solicit options' => sub {
 
     my $ia = $ol->get_option( 3 );
     ok( $ia, 'IA_NA present' );
-    is( $ia->iaid, 486604010, 'IA_NA iaid' );
-    is( $ia->t1,   3600,      'IA_NA t1' );
-    is( $ia->t2,   5400,      'IA_NA t2' );
+    is( $ia->iaid, 486_604_010, 'IA_NA iaid' );
+    is( $ia->t1,   3600,        'IA_NA t1' );
+    is( $ia->t2,   5400,        'IA_NA t2' );
     ok( !@{ $ia->options->options }, 'IA_NA no sub-options in solicit' );
 };
 
@@ -100,9 +100,9 @@ subtest 'advertise options' => sub {
 
     my $ia = $ol->get_option( 3 );
     ok( $ia, 'IA_NA present' );
-    is( $ia->iaid, 486604010, 'IA_NA iaid' );
-    is( $ia->t1,   0,         'IA_NA t1=0' );
-    is( $ia->t2,   0,         'IA_NA t2=0' );
+    is( $ia->iaid, 486_604_010, 'IA_NA iaid' );
+    is( $ia->t1,   0,           'IA_NA t1=0' );
+    is( $ia->t2,   0,           'IA_NA t2=0' );
 
     my $addr = $ia->get_option( 5 );
     ok( $addr, 'IAADDR present' );

@@ -39,8 +39,8 @@ sub from_bytes_inner {
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated NispServers option' )
         if CORE::length( $payload ) % $IPV6_ADDR_LEN != 0;
     my @addrs;
-    for ( my $i = 0 ; $i < CORE::length( $payload ) ; $i += $IPV6_ADDR_LEN ) {
-        push @addrs, substr( $payload, $i, $IPV6_ADDR_LEN );
+    while ( CORE::length( $payload ) ) {
+        push @addrs, substr( $payload, 0, $IPV6_ADDR_LEN, q() );
     }
     return $class->new( servers_raw => \@addrs );
 }
