@@ -61,6 +61,7 @@ perlcritic --profile .perlcriticrc --verbose "%p\n" lib/ t/ 2>&1 | \
 - `ValuesAndExpressions::ProhibitLongChainsOfMethodCalls` (commit 0913b92)
 - `ValuesAndExpressions::ProhibitNoisyQuotes` (commit 0913b92)
 - `RegularExpressions::ProhibitUnusualDelimiters` (commit 0913b92)
+- `RegularExpressions::ProhibitFixedStringMatches` (commit 5809169)
 
 ### Infrastructure
 - `.perlcriticrc` converted to `only = 1` — explicit policy list only
