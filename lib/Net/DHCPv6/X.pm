@@ -4,8 +4,8 @@
 package Net::DHCPv6::X;
 
 use strictures 2;
-use Carp qw(croak);
-use namespace::clean;
+use Carp qw( croak );
+use namespace::clean ();
 
 sub throw {
     my ( $class, %args ) = @_;
