@@ -162,17 +162,17 @@ my $EMPTY = q();
 # ----------------------------------------------------------------
 {
     my $vc = Net::DHCPv6::Option::VendorClass->new(
-        enterprise_number => 12345,
+        enterprise_number => 12_345,
         vendor_data       => [ "foo", "bar" ],
     );
     is( $vc->code,              $OPTION_VENDOR_CLASS, 'VendorClass code' );
-    is( $vc->enterprise_number, 12345,                'VendorClass enterprise_number' );
+    is( $vc->enterprise_number, 12_345,               'VendorClass enterprise_number' );
     is( $vc->vendor_data,       [ "foo", "bar" ],     'VendorClass vendor_data' );
 
     my $bytes = $vc->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::VendorClass' ), 'VendorClass parsed class' );
-    is( $parsed->enterprise_number, 12345,            'VendorClass parsed enterprise_number' );
+    is( $parsed->enterprise_number, 12_345,           'VendorClass parsed enterprise_number' );
     is( $parsed->vendor_data,       [ "foo", "bar" ], 'VendorClass parsed vendor_data' );
 
     ok( dies { Net::DHCPv6::Option::VendorClass->new( vendor_data => ["x"] ) },
@@ -615,16 +615,16 @@ my $EMPTY = q();
 # InfoRefreshTime (32) -- 32-bit integer
 # ----------------------------------------------------------------
 {
-    my $irt = Net::DHCPv6::Option::InfoRefreshTime->new( value => 86400 );
+    my $irt = Net::DHCPv6::Option::InfoRefreshTime->new( value => 86_400 );
     is( $irt->code,  $OPTION_INFORMATION_REFRESH_TIME, 'InfoRefreshTime code' );
-    is( $irt->value, 86400,                            'InfoRefreshTime value' );
+    is( $irt->value, 86_400,                           'InfoRefreshTime value' );
 
     my $bytes = $irt->as_bytes;
     is( bytes2hex( $bytes ), '0020000400015180', 'InfoRefreshTime wire' );
 
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::InfoRefreshTime' ), 'InfoRefreshTime parsed class' );
-    is( $parsed->value, 86400, 'InfoRefreshTime parsed value' );
+    is( $parsed->value, 86_400, 'InfoRefreshTime parsed value' );
 
     ok( dies { Net::DHCPv6::Option::InfoRefreshTime->new }, 'InfoRefreshTime dies without value' );
 }

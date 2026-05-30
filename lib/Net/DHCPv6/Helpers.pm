@@ -10,20 +10,20 @@ use namespace::clean;
 
 sub _resolve_ipv6 {
     my ( $class, $arg ) = @_;
-    return unless defined $arg;
-    return $arg  unless $arg =~ m/:/;
+    return      unless defined $arg;
+    return $arg unless $arg =~ m/:/;
     my $bytes = inet_pton( AF_INET6, $arg );
     croak( "Invalid IPv6 address: $arg" ) unless defined $bytes;
     return $bytes;
 }
 
-sub _format_ipv6 {
+sub _format_ipv6 {    ## no critic (Subroutines::ProhibitUnusedPrivateSubroutines)
     my ( $self, $bytes ) = @_;
     return unless defined $bytes;
     return inet_ntop( AF_INET6, $bytes );
 }
 
-sub _pick_addr {
+sub _pick_addr {    ## no critic (Subroutines::ProhibitUnusedPrivateSubroutines)
     my ( $class, $args, $field ) = @_;
     my $key = "${field}_raw";
     return $args->{$key} if exists $args->{$key};
@@ -31,7 +31,7 @@ sub _pick_addr {
     return $class->_resolve_ipv6( $args->{$field} );
 }
 
-sub _pick_addrs {
+sub _pick_addrs {    ## no critic (Subroutines::ProhibitUnusedPrivateSubroutines)
     my ( $class, $args, $field ) = @_;
     my $key = "${field}_raw";
     return $args->{$key} if exists $args->{$key};

@@ -54,25 +54,25 @@ my @entries = (
 my @expect = (
     {    # solicit
         msg_type       => 1,
-        transaction_id => 0x100874,
+        transaction_id => 0x100874,    ## no critic (ValuesAndExpressions::RequireNumberSeparators)
     },
-    {    # advertise
+    {                                  # advertise
         msg_type       => 2,
-        transaction_id => 0x100874,
+        transaction_id => 0x100874,    ## no critic (ValuesAndExpressions::RequireNumberSeparators)
     },
-    {    # request
+    {                                  # request
         msg_type       => 3,
-        transaction_id => 0x49174E,
+        transaction_id => 0x49174E,    ## no critic (ValuesAndExpressions::RequireNumberSeparators)
     },
-    {    # reply
+    {                                  # reply
         msg_type       => 7,
-        transaction_id => 0x49174E,
+        transaction_id => 0x49174E,    ## no critic (ValuesAndExpressions::RequireNumberSeparators)
     },
-    {    # release
+    {                                  # release
         msg_type       => 8,
         transaction_id => 0xC789B0,
     },
-    {    # reply2
+    {                                  # reply2
         msg_type       => 7,
         transaction_id => 0xC789B0,
     },
@@ -102,7 +102,7 @@ subtest 'solicit options' => sub {
     ok( $cid, 'CLIENTID present' );
     is( $cid->duid->duid_type,                  1,                   'ClientId duid_type=1 (LLT)' );
     is( $cid->duid->link_layer_type,            $LINK_TYPE_ETHERNET, 'ClientId hwtype=1 (Ethernet)' );
-    is( $cid->duid->time,                       473550728,           'ClientId time' );
+    is( $cid->duid->time,                       473_550_728,         'ClientId time' );
     is( unpack( 'H*', $cid->duid->identifier ), '080027fe8f95',      'ClientId MAC' );
 
     my $oro = $ol->get_option( 6 );
@@ -115,9 +115,9 @@ subtest 'solicit options' => sub {
 
     my $pd = $ol->get_option( 25 );
     ok( $pd, 'IA_PD present' );
-    is( $pd->iaid, 670994325, 'IA_PD iaid' );
-    is( $pd->t1,   3600,      'IA_PD t1' );
-    is( $pd->t2,   5400,      'IA_PD t2' );
+    is( $pd->iaid, 670_994_325, 'IA_PD iaid' );
+    is( $pd->t1,   3600,        'IA_PD t1' );
+    is( $pd->t2,   5400,        'IA_PD t2' );
     ok( !@{ $pd->options->options }, 'IA_PD no sub-options in solicit' );
 };
 
@@ -127,9 +127,9 @@ subtest 'advertise options' => sub {
 
     my $pd = $ol->get_option( 25 );
     ok( $pd, 'IA_PD present' );
-    is( $pd->iaid, 670994325, 'IA_PD iaid' );
-    is( $pd->t1,   0,         'IA_PD t1=0' );
-    is( $pd->t2,   0,         'IA_PD t2=0' );
+    is( $pd->iaid, 670_994_325, 'IA_PD iaid' );
+    is( $pd->t1,   0,           'IA_PD t1=0' );
+    is( $pd->t2,   0,           'IA_PD t2=0' );
 
     my $pfx = $pd->get_option( 26 );
     ok( $pfx, 'IAPREFIX present' );
@@ -144,7 +144,7 @@ subtest 'advertise options' => sub {
 
     my $sid = $ol->get_option( 2 );
     ok( $sid, 'SERVERID present' );
-    is( $sid->duid->time,                       473441768,      'ServerId time' );
+    is( $sid->duid->time,                       473_441_768,    'ServerId time' );
     is( unpack( 'H*', $sid->duid->identifier ), '080027d410bb', 'ServerId MAC' );
 };
 

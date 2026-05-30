@@ -74,7 +74,7 @@ subtest 'solicit options' => sub {
 
     my $ta = $ol->get_option( 4 );
     ok( $ta, 'IA_TA present' );
-    is( $ta->iaid, 33752069, 'IA_TA iaid' );
+    is( $ta->iaid, 33_752_069, 'IA_TA iaid' );
     ok( !@{ $ta->options->options }, 'IA_TA no sub-options in solicit' );
 };
 
@@ -84,7 +84,7 @@ subtest 'advertise options' => sub {
 
     my $ta = $ol->get_option( 4 );
     ok( $ta, 'IA_TA present' );
-    is( $ta->iaid, 33752069, 'IA_TA iaid' );
+    is( $ta->iaid, 33_752_069, 'IA_TA iaid' );
 
     my $addr = $ta->get_option( 5 );
     ok( $addr, 'IAADDR present' );

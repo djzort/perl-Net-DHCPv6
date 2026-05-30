@@ -78,9 +78,9 @@ subtest 'solicit options' => sub {
 
     my $pd = $ol->get_option( 25 );
     ok( $pd, 'IA_PD present' );
-    is( $pd->iaid, 33752069, 'IA_PD iaid' );
-    is( $pd->t1,   3600,     'IA_PD t1' );
-    is( $pd->t2,   5400,     'IA_PD t2' );
+    is( $pd->iaid, 33_752_069, 'IA_PD iaid' );
+    is( $pd->t1,   3600,       'IA_PD t1' );
+    is( $pd->t2,   5400,       'IA_PD t2' );
     ok( !@{ $pd->options->options }, 'IA_PD no sub-options in solicit' );
 };
 
@@ -90,9 +90,9 @@ subtest 'advertise options' => sub {
 
     my $pd = $ol->get_option( 25 );
     ok( $pd, 'IA_PD present' );
-    is( $pd->iaid, 33752069, 'IA_PD iaid' );
-    is( $pd->t1,   3600,     'IA_PD t1' );
-    is( $pd->t2,   5400,     'IA_PD t2' );
+    is( $pd->iaid, 33_752_069, 'IA_PD iaid' );
+    is( $pd->t1,   3600,       'IA_PD t1' );
+    is( $pd->t2,   5400,       'IA_PD t2' );
 
     my $pfx = $pd->get_option( 26 );
     ok( $pfx, 'IAPREFIX present' );
@@ -110,7 +110,7 @@ subtest 'advertise options' => sub {
     ok( $sid, 'SERVERID present' );
     is( $sid->duid->duid_type,                  1,                   'ServerId duid_type=1 (LLT)' );
     is( $sid->duid->link_layer_type,            $LINK_TYPE_ETHERNET, 'ServerId hwtype=1' );
-    is( $sid->duid->time,                       407259545,           'ServerId time' );
+    is( $sid->duid->time,                       407_259_545,         'ServerId time' );
     is( unpack( 'H*', $sid->duid->identifier ), '001122334455',      'ServerId MAC' );
 };
 

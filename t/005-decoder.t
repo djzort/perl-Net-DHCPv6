@@ -16,11 +16,11 @@ my $EMPTY = q();
 my $bytes  = hex2bytes( solicit_hex() );
 my $packet = Net::DHCPv6->decode_or_croak( $bytes );
 ok( $packet->isa( 'Net::DHCPv6::Message::Solicit' ), 'decode_or_croak Solicit' );
-is( $packet->transaction_id, 123456, 'Solicit tid from fixture' );
+is( $packet->transaction_id, 123_456, 'Solicit tid from fixture' );
 
 my $cid = $packet->get_option( 1 );
 ok( $cid->isa( 'Net::DHCPv6::Option::ClientId' ), 'Solicit has ClientId' );
-is( $cid->duid->time,       123456,                       'ClientId DUID time' );
+is( $cid->duid->time,       123_456,                      'ClientId DUID time' );
 is( $cid->duid->identifier, pack( 'H*', '001122334455' ), 'ClientId DUID mac' );
 
 # decode_or_croak - Advertise
@@ -56,7 +56,7 @@ ok( $iaaddr->isa( 'Net::DHCPv6::Option::IAAddr' ), 'IANA has IAAddr' );
 is( $iaaddr->address,            '2001:db8::1',                                    'IAAddr address' );
 is( $iaaddr->address_raw,        pack( 'H*', '20010db8000000000000000000000001' ), 'IAAddr address_raw' );
 is( $iaaddr->preferred_lifetime, 7200,                                             'IAAddr preferred' );
-is( $iaaddr->valid_lifetime,     86400,                                            'IAAddr valid' );
+is( $iaaddr->valid_lifetime,     86_400,                                           'IAAddr valid' );
 
 # decode_or_null - valid
 $bytes  = hex2bytes( solicit_hex() );
