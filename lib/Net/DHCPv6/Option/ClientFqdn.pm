@@ -11,7 +11,7 @@ use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use Net::DHCPv6::X::BadOption;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean ();
+use namespace::clean;
 my $EMPTY    = q();
 my $MAX_BYTE = 255;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 

@@ -7,7 +7,7 @@ use strictures 2;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean ();
+use namespace::clean;
 my $EMPTY = q();
 
 sub new {

@@ -10,7 +10,7 @@ use Carp qw( croak );
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::X::BadMessage;
 use parent 'Net::DHCPv6::Helpers', 'Net::DHCPv6::Packet';
-use namespace::clean ();
+use namespace::clean;
 
 my $RELAY_HDR_SIZE   = 34;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 my $LINK_ADDR_OFFSET = 2;

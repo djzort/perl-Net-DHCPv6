@@ -10,7 +10,7 @@ use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use Net::DHCPv6::X::BadOption;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean ();
+use namespace::clean;
 
 my $BYTE_ALIGN_MASK = 7;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 my $BYTE_SHIFT      = 3;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)

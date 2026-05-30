@@ -6,7 +6,7 @@ package Net::DHCPv6::Helpers;
 use strictures 2;
 use Carp qw( croak );
 use Socket qw( AF_INET6 inet_ntop inet_pton );
-use namespace::clean ();
+use namespace::clean;
 
 sub _resolve_ipv6 {
     my ( $class, $arg ) = @_;

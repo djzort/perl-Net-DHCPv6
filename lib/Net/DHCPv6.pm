@@ -74,7 +74,7 @@ use Net::DHCPv6::Message::RelayReply;
 
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Packet;
-use namespace::clean ();
+use namespace::clean;
 
 my $MIN_LEN = 4;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 

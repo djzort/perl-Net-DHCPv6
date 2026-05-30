@@ -9,7 +9,7 @@ use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
 use Ref::Util        qw( is_plain_arrayref );
-use namespace::clean ();
+use namespace::clean;
 my $EMPTY = q();
 
 sub new {
