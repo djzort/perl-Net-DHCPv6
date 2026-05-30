@@ -122,6 +122,7 @@ allow_secrets = Bang Bang, Venus
 [RegularExpressions::ProhibitUselessTopic]
 [Subroutines::ProhibitAmbiguousFunctionCalls]
 [Subroutines::ProhibitAmpersandSigils]
+[Subroutines::ProhibitBuiltinHomonyms]
 [Subroutines::ProhibitCallsToUndeclaredSubs]
 [Subroutines::ProhibitExplicitReturnUndef]
 [Subroutines::ProhibitExportingUndeclaredSubs]
@@ -135,6 +136,7 @@ skip_object = 1
 [Subroutines::ProtectPrivateSubs]
 [Subroutines::RequireArgUnpacking]
 [Subroutines::RequireFinalReturn]
+[TestingAndDebugging::ProhibitNoStrict]
 [TestingAndDebugging::ProhibitNoWarnings]
 allow = portable
 [TestingAndDebugging::ProhibitProlongedStrictureOverride]
@@ -165,6 +167,7 @@ equivalent_modules = strictures
 [ValuesAndExpressions::ProhibitInterpolationOfLiterals]
 [ValuesAndExpressions::ProhibitLeadingZeros]
 [ValuesAndExpressions::ProhibitMixedBooleanOperators]
+[ValuesAndExpressions::ProhibitMismatchedOperators]
 [ValuesAndExpressions::ProhibitNullStatements]
 [ValuesAndExpressions::ProhibitQuotesAsQuotelikeOperatorDelimiters]
 [ValuesAndExpressions::ProhibitSingleArgArraySlice]
