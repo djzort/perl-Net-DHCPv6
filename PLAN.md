@@ -39,6 +39,11 @@ perlcritic --profile .perlcriticrc --verbose "%p\n" lib/ t/ 2>&1 | \
 - `Subroutines::ProhibitExplicitReturnUndef` (commit 2d97c1b)
 - `ValuesAndExpressions::ProhibitMixedBooleanOperators` (commit 2d97c1b)
 - `ValuesAndExpressions::RequireInterpolationOfMetachars` (commit 2d97c1b)
+- `Bangs::ProhibitCommentedOutCode` (commit 008586a)
+- `Community::AmpersandSubCalls` (commit 008586a)
+- `Community::IndirectObjectNotation` (commit 008586a)
+- `InputOutput::RequireCheckedOpen` (commit 008586a)
+- `InputOutput::RequireCheckedSyscalls` (commit 008586a)
 
 ### Infrastructure
 - `.perlcriticrc` converted to `only = 1` — explicit policy list only
