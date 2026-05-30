@@ -34,6 +34,11 @@ perlcritic --profile .perlcriticrc --verbose "%p\n" lib/ t/ 2>&1 | \
 - `ControlStructures::ProhibitInlineDo` (commit 1d51902)
 - `ValuesAndExpressions::ProhibitMagicNumbers` — 277 violations fixed
   across 125 lib files; t/ excluded (current commit)
+- `BuiltinFunctions::ProhibitForeach` (commit 2d97c1b)
+- `RegularExpressions::ProhibitCaptureWithoutTest` (commit 2d97c1b)
+- `Subroutines::ProhibitExplicitReturnUndef` (commit 2d97c1b)
+- `ValuesAndExpressions::ProhibitMixedBooleanOperators` (commit 2d97c1b)
+- `ValuesAndExpressions::RequireInterpolationOfMetachars` (commit 2d97c1b)
 
 ### Infrastructure
 - `.perlcriticrc` converted to `only = 1` — explicit policy list only
