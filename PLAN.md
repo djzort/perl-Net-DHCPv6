@@ -54,6 +54,9 @@ perlcritic --profile .perlcriticrc --verbose "%p\n" lib/ t/ 2>&1 | \
 - `InputOutput::RequireEncodingWithUTF8Layer` (commit 73e3979)
 - `RegularExpressions::ProhibitUselessTopic` (commit 73e3979)
 - `Subroutines::RequireArgUnpacking` (commit 73e3979)
+- `Subroutines::ProhibitBuiltinHomonyms` (commit 0bf589e)
+- `TestingAndDebugging::ProhibitNoStrict` (commit 0bf589e)
+- `ValuesAndExpressions::ProhibitMismatchedOperators` (commit 0bf589e)
 
 ### Infrastructure
 - `.perlcriticrc` converted to `only = 1` — explicit policy list only
