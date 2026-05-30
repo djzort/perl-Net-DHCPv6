@@ -47,6 +47,13 @@ perlcritic --profile .perlcriticrc --verbose "%p\n" lib/ t/ 2>&1 | \
 - `ErrorHandling::RequireCarping` (commit 8125c05)
 - `ErrorHandling::RequireCheckingReturnValueOfEval` (commit 8125c05)
 - `References::RequireSigils` (commit 8125c05)
+- `ErrorHandling::RequireCarping` (commit 8125c05)
+- `ErrorHandling::RequireCheckingReturnValueOfEval` (commit 8125c05)
+- `InputOutput::ProhibitTwoArgOpen` (commit 73e3979)
+- `InputOutput::RequireBriefOpen` (commit 73e3979)
+- `InputOutput::RequireEncodingWithUTF8Layer` (commit 73e3979)
+- `RegularExpressions::ProhibitUselessTopic` (commit 73e3979)
+- `Subroutines::RequireArgUnpacking` (commit 73e3979)
 
 ### Infrastructure
 - `.perlcriticrc` converted to `only = 1` — explicit policy list only
