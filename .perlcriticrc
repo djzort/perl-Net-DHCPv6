@@ -9,6 +9,7 @@ verbose = \n---\nViolation: %m\nFile: %f\nLocation: line %l column %c\nNear: %r\
 
 # Alphabetical order please
 [Bangs::ProhibitBitwiseOperators]
+[Bangs::ProhibitCommentedOutCode]
 [Bangs::ProhibitDebuggingModules]
 [Bangs::ProhibitFlagComments]
 [Bangs::ProhibitVagueNames]
@@ -44,11 +45,13 @@ allow_leading_tabs = 0
 [CodeLayout::RequireFinalSemicolon]
 [CodeLayout::RequireTrailingCommaAtNewline]
 except_function_calls = 1
+[Community::AmpersandSubCalls]
 [Community::BarewordFilehandles]
 [Community::ConditionalImplicitReturn]
 [Community::DeprecatedFeatures]
 [Community::DollarAB]
 [Community::Each]
+[Community::IndirectObjectNotation]
 [Community::MultidimensionalArrayEmulation]
 [Community::OpenArgs]
 [Community::PackageMatchesFilename]
@@ -79,6 +82,8 @@ max_nests = 7
 [InputOutput::ProhibitOneArgSelect]
 [InputOutput::ProhibitReadlineInForLoop]
 [InputOutput::RequireCheckedClose]
+[InputOutput::RequireCheckedOpen]
+[InputOutput::RequireCheckedSyscalls]
 [Miscellanea::ProhibitFormats]
 [Miscellanea::ProhibitTies]
 [Miscellanea::ProhibitUnrestrictedNoCritic]
