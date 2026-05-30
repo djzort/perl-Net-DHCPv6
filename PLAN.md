@@ -57,6 +57,10 @@ perlcritic --profile .perlcriticrc --verbose "%p\n" lib/ t/ 2>&1 | \
 - `Subroutines::ProhibitBuiltinHomonyms` (commit 0bf589e)
 - `TestingAndDebugging::ProhibitNoStrict` (commit 0bf589e)
 - `ValuesAndExpressions::ProhibitMismatchedOperators` (commit 0bf589e)
+- `ValuesAndExpressions::ProhibitImplicitNewlines` (commit 0913b92)
+- `ValuesAndExpressions::ProhibitLongChainsOfMethodCalls` (commit 0913b92)
+- `ValuesAndExpressions::ProhibitNoisyQuotes` (commit 0913b92)
+- `RegularExpressions::ProhibitUnusualDelimiters` (commit 0913b92)
 
 ### Infrastructure
 - `.perlcriticrc` converted to `only = 1` — explicit policy list only
