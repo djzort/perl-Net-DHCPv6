@@ -14,7 +14,7 @@ use Net::DHCPv6::OptionList;
 # Origin: https://git.codelinaro.org/clo/la/platform/external/tcpdump/-/tree/aosp-new/aosp-new/master/tests
 my $hex =
 '076890d80001000e0001000118f00b3f000c2938f3680002000e0001000118ef951b000c299ba1530015003e0473697031096d792d646f6d61696e036e6574000473697032076578616d706c6503636f6d00047369703303737562096d792d646f6d61696e036f726700';
-my $bytes = pack( "H*", $hex );
+my $bytes = pack( 'H*', $hex );
 
 my ( $msg, $err ) = Net::DHCPv6->decode_with_error( $bytes );
 if ( $err ) { diag "err: $err"; done_testing; exit }
