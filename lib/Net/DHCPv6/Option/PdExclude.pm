@@ -94,6 +94,10 @@ Returns the prefix address bytes (variable-length, not full 16 bytes).
 
 Returns the prefix address bytes (same as C<address>).
 
+=head2 prefix_length
+
+Returns the prefix length in bits.
+
 =head1 SEE ALSO
 
 L<Net::DHCPv6::Option>, L<Net::DHCPv6::OptionList>
