@@ -7,7 +7,7 @@ use strictures 2;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::BadDUID;
-use namespace::clean ();
+use namespace::clean;
 my $EMPTY        = q();
 my $N_LEN        = 4;     ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 my $LLT_HDR_SIZE = 6;     ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)

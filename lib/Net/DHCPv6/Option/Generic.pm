@@ -5,7 +5,7 @@ package Net::DHCPv6::Option::Generic;
 
 use strictures 2;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean ();
+use namespace::clean;
 
 sub from_bytes_inner {
     my ( $class, $code, $payload ) = @_;

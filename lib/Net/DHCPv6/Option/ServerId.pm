@@ -9,7 +9,7 @@ use Net::DHCPv6::DUID;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean ();
+use namespace::clean;
 
 sub new {
     my ( $class, %args ) = @_;

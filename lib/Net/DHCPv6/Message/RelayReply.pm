@@ -7,7 +7,7 @@ use strictures 2;
 use Net::DHCPv6::Packet;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Packet::Relay';
-use namespace::clean ();
+use namespace::clean;
 
 sub new {
     my ( $class, %args ) = @_;

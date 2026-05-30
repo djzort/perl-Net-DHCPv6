@@ -9,7 +9,7 @@ use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean ();
+use namespace::clean;
 my $EMPTY           = q();
 my $REPLAY_WIRE_LEN = 8;     ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 my $MIN_PAYLOAD     = 11;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)

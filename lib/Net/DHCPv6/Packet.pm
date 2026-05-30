@@ -9,7 +9,7 @@ use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Packet::Relay;
 use Net::DHCPv6::X::BadMessage;
-use namespace::clean ();
+use namespace::clean;
 
 my $TX_ID_MAX   = 0xFFFFFF;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 my $TX_ID_BYTES = 3;           ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)

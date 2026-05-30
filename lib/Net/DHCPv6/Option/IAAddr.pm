@@ -9,7 +9,7 @@ use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean ();
+use namespace::clean;
 
 my $IA_ADDR_HDR       = 24;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 my $LIFETIME_WIRE_LEN = 8;     ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)

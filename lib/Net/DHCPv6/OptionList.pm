@@ -7,7 +7,7 @@ use strictures 2;
 use Net::DHCPv6::Option::Generic;
 use Carp             qw( croak );
 use Ref::Util        qw( is_ref );
-use namespace::clean ();
+use namespace::clean;
 
 my $EMPTY        = q();
 my $OPT_HDR_SIZE = 4;     ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
