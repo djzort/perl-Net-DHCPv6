@@ -122,6 +122,7 @@ skip_object = 1
 [TestingAndDebugging::ProhibitNoWarnings]
 allow = portable
 [TestingAndDebugging::ProhibitProlongedStrictureOverride]
+[TestingAndDebugging::RequireTestLabels]
 [TestingAndDebugging::RequireUseStrict]
 [TestingAndDebugging::RequireUseWarnings]
 equivalent_modules = strictures
@@ -145,6 +146,7 @@ equivalent_modules = strictures
 [ValuesAndExpressions::ProhibitEmptyQuotes]
 [ValuesAndExpressions::ProhibitEmptyPostfixLoop]
 [ValuesAndExpressions::ProhibitEscapedCharacters]
+[ValuesAndExpressions::ProhibitInterpolationOfLiterals]
 [ValuesAndExpressions::ProhibitLeadingZeros]
 [ValuesAndExpressions::ProhibitNullStatements]
 [ValuesAndExpressions::ProhibitQuotesAsQuotelikeOperatorDelimiters]
@@ -168,6 +170,7 @@ equivalent_modules = strictures
 [Variables::ProhibitPunctuationVars]
 allow = $@ $!
 [Variables::ProhibitReusedNames]
+[Variables::ProhibitTopicIterator]
 [Variables::ProhibitUnusedVarsStricter]
 allow_unused_subroutine_arguments = 1
 [Variables::ProtectPrivateVars]

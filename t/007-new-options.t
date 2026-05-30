@@ -111,16 +111,16 @@ my $EMPTY = q();
 # InterfaceId (18) -- opaque bytes
 # ----------------------------------------------------------------
 {
-    my $iid = Net::DHCPv6::Option::InterfaceId->new( interface_id => "eth0" );
+    my $iid = Net::DHCPv6::Option::InterfaceId->new( interface_id => 'eth0' );
     is( $iid->code,         $OPTION_INTERFACE_ID, 'InterfaceId code' );
-    is( $iid->interface_id, "eth0",               'InterfaceId data' );
+    is( $iid->interface_id, 'eth0',               'InterfaceId data' );
 
     my $bytes = $iid->as_bytes;
     is( bytes2hex( $bytes ), '0012000465746830', 'InterfaceId wire' );
 
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::InterfaceId' ), 'InterfaceId parsed class' );
-    is( $parsed->interface_id, "eth0", 'InterfaceId parsed data' );
+    is( $parsed->interface_id, 'eth0', 'InterfaceId parsed data' );
 
     my $empty = Net::DHCPv6::Option::InterfaceId->new;
     is( $empty->interface_id, $EMPTY, 'InterfaceId defaults to empty' );
@@ -163,19 +163,19 @@ my $EMPTY = q();
 {
     my $vc = Net::DHCPv6::Option::VendorClass->new(
         enterprise_number => 12_345,
-        vendor_data       => [ "foo", "bar" ],
+        vendor_data       => [ 'foo', 'bar' ],
     );
     is( $vc->code,              $OPTION_VENDOR_CLASS, 'VendorClass code' );
     is( $vc->enterprise_number, 12_345,               'VendorClass enterprise_number' );
-    is( $vc->vendor_data,       [ "foo", "bar" ],     'VendorClass vendor_data' );
+    is( $vc->vendor_data,       [ 'foo', 'bar' ],     'VendorClass vendor_data' );
 
     my $bytes = $vc->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::VendorClass' ), 'VendorClass parsed class' );
     is( $parsed->enterprise_number, 12_345,           'VendorClass parsed enterprise_number' );
-    is( $parsed->vendor_data,       [ "foo", "bar" ], 'VendorClass parsed vendor_data' );
+    is( $parsed->vendor_data,       [ 'foo', 'bar' ], 'VendorClass parsed vendor_data' );
 
-    ok( dies { Net::DHCPv6::Option::VendorClass->new( vendor_data => ["x"] ) },
+    ok( dies { Net::DHCPv6::Option::VendorClass->new( vendor_data => ['x'] ) },
         'VendorClass dies without enterprise_number' );
 
     my $empty = Net::DHCPv6::Option::VendorClass->new(
@@ -284,14 +284,14 @@ my $EMPTY = q();
 # DomainList (24) -- RFC 1035 domain names
 # ----------------------------------------------------------------
 {
-    my $dl = Net::DHCPv6::Option::DomainList->new( domains => [ "example.com", "test.net" ] );
+    my $dl = Net::DHCPv6::Option::DomainList->new( domains => [ 'example.com', 'test.net' ] );
     is( $dl->code,    $OPTION_DOMAIN_LIST,           'DomainList code' );
-    is( $dl->domains, [ "example.com", "test.net" ], 'DomainList names' );
+    is( $dl->domains, [ 'example.com', 'test.net' ], 'DomainList names' );
 
     my $bytes = $dl->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::DomainList' ), 'DomainList parsed class' );
-    is( $parsed->domains, [ "example.com", "test.net" ], 'DomainList parsed names' );
+    is( $parsed->domains, [ 'example.com', 'test.net' ], 'DomainList parsed names' );
 }
 
 # ----------------------------------------------------------------
@@ -366,14 +366,14 @@ my $EMPTY = q();
 # NisDomainName (29) -- single RFC 1035 domain name
 # ----------------------------------------------------------------
 {
-    my $nd = Net::DHCPv6::Option::NisDomainName->new( domain_name => "nis.example.com" );
+    my $nd = Net::DHCPv6::Option::NisDomainName->new( domain_name => 'nis.example.com' );
     is( $nd->code,        $OPTION_NIS_DOMAIN_NAME, 'NisDomainName code' );
-    is( $nd->domain_name, "nis.example.com",       'NisDomainName domain name' );
+    is( $nd->domain_name, 'nis.example.com',       'NisDomainName domain name' );
 
     my $bytes = $nd->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::NisDomainName' ), 'NisDomainName parsed class' );
-    is( $parsed->domain_name, "nis.example.com", 'NisDomainName parsed name' );
+    is( $parsed->domain_name, 'nis.example.com', 'NisDomainName parsed name' );
 
     ok( dies { Net::DHCPv6::Option::NisDomainName->new }, 'NisDomainName dies without domain_name' );
 }
@@ -384,33 +384,33 @@ my $EMPTY = q();
 {
     my $cf = Net::DHCPv6::Option::ClientFqdn->new(
         flags       => $CLIENT_FQDN_S,
-        domain_name => "client.example.com",
+        domain_name => 'client.example.com',
     );
     is( $cf->code,        $OPTION_CLIENT_FQDN,  'ClientFqdn code' );
     is( $cf->flags,       $CLIENT_FQDN_S,       'ClientFqdn flags' );
-    is( $cf->domain_name, "client.example.com", 'ClientFqdn domain name' );
+    is( $cf->domain_name, 'client.example.com', 'ClientFqdn domain name' );
 
     my $bytes = $cf->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::ClientFqdn' ), 'ClientFqdn parsed class' );
     is( $parsed->flags,       $CLIENT_FQDN_S,       'ClientFqdn parsed flags' );
-    is( $parsed->domain_name, "client.example.com", 'ClientFqdn parsed name' );
+    is( $parsed->domain_name, 'client.example.com', 'ClientFqdn parsed name' );
 
-    ok( dies { Net::DHCPv6::Option::ClientFqdn->new( domain_name => "x" ) }, 'ClientFqdn dies without flags' );
+    ok( dies { Net::DHCPv6::Option::ClientFqdn->new( domain_name => 'x' ) }, 'ClientFqdn dies without flags' );
 }
 
 # ----------------------------------------------------------------
 # AftrName (64) -- RFC 6334 domain name
 # ----------------------------------------------------------------
 {
-    my $an = Net::DHCPv6::Option::AftrName->new( domain_name => "aftr.example.com" );
+    my $an = Net::DHCPv6::Option::AftrName->new( domain_name => 'aftr.example.com' );
     is( $an->code,        $OPTION_AFTR_NAME,  'AftrName code' );
-    is( $an->domain_name, "aftr.example.com", 'AftrName domain name' );
+    is( $an->domain_name, 'aftr.example.com', 'AftrName domain name' );
 
     my $bytes = $an->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::AftrName' ), 'AftrName parsed class' );
-    is( $parsed->domain_name, "aftr.example.com", 'AftrName parsed name' );
+    is( $parsed->domain_name, 'aftr.example.com', 'AftrName parsed name' );
 
     ok( dies { Net::DHCPv6::Option::AftrName->new }, 'AftrName dies without domain_name' );
 }
@@ -761,14 +761,14 @@ my $EMPTY = q();
 # NispDomainName (30) -- domain name string
 # ----------------------------------------------------------------
 {
-    my $nd = Net::DHCPv6::Option::NispDomainName->new( domain_name => "nis.example.com" );
+    my $nd = Net::DHCPv6::Option::NispDomainName->new( domain_name => 'nis.example.com' );
     is( $nd->code,        $OPTION_NISP_DOMAIN_NAME, 'NispDomainName code' );
-    is( $nd->domain_name, "nis.example.com",        'NispDomainName domain name' );
+    is( $nd->domain_name, 'nis.example.com',        'NispDomainName domain name' );
 
     my $bytes = $nd->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::NispDomainName' ), 'NispDomainName parsed class' );
-    is( $parsed->domain_name, "nis.example.com", 'NispDomainName parsed name' );
+    is( $parsed->domain_name, 'nis.example.com', 'NispDomainName parsed name' );
 
     ok( dies { Net::DHCPv6::Option::NispDomainName->new }, 'NispDomainName dies without domain_name' );
 }
@@ -809,14 +809,14 @@ my $EMPTY = q();
 # BootfileParam (60) -- list of opaque items
 # ----------------------------------------------------------------
 {
-    my $bp = Net::DHCPv6::Option::BootfileParam->new( parameters => [ "foo", "bar" ], );
+    my $bp = Net::DHCPv6::Option::BootfileParam->new( parameters => [ 'foo', 'bar' ], );
     is( $bp->code,       $OPTION_BOOTFILE_PARAM, 'BootfileParam code' );
-    is( $bp->parameters, [ "foo", "bar" ],       'BootfileParam params' );
+    is( $bp->parameters, [ 'foo', 'bar' ],       'BootfileParam params' );
 
     my $bytes = $bp->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::BootfileParam' ), 'BootfileParam parsed class' );
-    is( $parsed->parameters, [ "foo", "bar" ], 'BootfileParam parsed params' );
+    is( $parsed->parameters, [ 'foo', 'bar' ], 'BootfileParam parsed params' );
 
     my $empty = Net::DHCPv6::Option::BootfileParam->new;
     is( $empty->parameters, [], 'BootfileParam defaults to empty list' );
