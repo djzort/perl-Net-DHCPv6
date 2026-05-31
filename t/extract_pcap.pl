@@ -1,10 +1,13 @@
 #!perl
+## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 use strictures 2;
 use lib 'lib';
+use File::Slurper qw( read_binary );
 use Net::DHCPv6;
+my $EMPTY = q();
 
-my $in = do { local $/; <> }
-    or die "No input";
+my $in = read_binary( '/dev/stdin' );
+die "No input\n" unless $in;
 
 my @packets;
 my $current;
@@ -20,7 +23,7 @@ for my $line ( split /\n/, $in ) {
                 reply     => 7,
                 release   => 8,
             }->{$1},
-            hex => '',
+            hex => $EMPTY,
         };
     }
     elsif ( $current && $line =~ m/^\s+0x[0-9a-f]+:\s+(.*?)\s*$/ ) {
@@ -53,7 +56,7 @@ for my $pkt ( @packets ) {
                 printf "        IAPD iaid=%d t1=%d t2=%d\n", $opt->iaid, $opt->t1, $opt->t2;
             }
             if ( $opt->code == 26 && $opt->can( 'prefix_length' ) ) {
-                printf "        prefix=%d addr=%s\n", $opt->prefix_length, unpack( 'H*', $opt->address );
+                printf "        prefix=%d addr=%s\n", $opt->prefix_length, unpack( 'H*', $opt->address_raw );
             }
             if ( $opt->code == 13 && $opt->can( 'status_code' ) ) {
                 printf "        status=%d msg=%s\n", $opt->status_code, $opt->message;
@@ -64,3 +67,4 @@ for my $pkt ( @packets ) {
         printf "%2d. %-10s ERROR: %s\n", $count, uc( $pkt->{type} ), $error // 'decode failed';
     }
 }
+## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
