@@ -31,12 +31,6 @@ sub from_bytes_inner {
     return $class->new( type => $type );
 }
 
-sub as_bytes {
-    my $self    = shift;
-    my $payload = pack( 'n', $self->{type} );
-    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
-}
-
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_CLIENT_ARCH_TYPE} = __PACKAGE__;
 1;
 
