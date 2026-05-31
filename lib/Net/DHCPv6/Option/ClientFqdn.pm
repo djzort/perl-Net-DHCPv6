@@ -18,7 +18,7 @@ my $MAX_BYTE = 255;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 sub _encode_domain {
     my ( $domain ) = @_;
     return chr( 0 ) unless defined $domain && CORE::length( $domain );
-    my @labels = split m/\./, $domain;
+    my @labels = split m/[.]/, $domain;
     return join( $EMPTY, map { pack( 'C', CORE::length ) . $_ } @labels ) . chr( 0 );
 }
 

@@ -52,7 +52,7 @@ subtest 'inner solicit' => sub {
 
     my $mud = $ol->get_option( 112 );
     ok( $mud, 'MUD_URL (option 112) present' );
-    like( $mud->url, qr{mudctl\.example\.com}, 'MUD URL contains expected domain' );
+    like( $mud->url, qr{mudctl[.]example[.]com}, 'MUD URL contains expected domain' );
     ok( $mud->isa( 'Net::DHCPv6::Option::MudUrl' ), 'MUD_URL parsed as MudUrl class' );
 
     my $accept = $ol->get_option( 20 );

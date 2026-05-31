@@ -10,14 +10,14 @@ use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use Net::DHCPv6::X::BadOption;
 use parent 'Net::DHCPv6::Option';
-use Ref::Util        qw( is_plain_arrayref );
+use Ref::Util qw( is_plain_arrayref );
 use namespace::clean;
 my $EMPTY = q();
 
 sub _encode_domain {
     my ( $domain ) = @_;
     return chr( 0 ) unless defined $domain && CORE::length( $domain );
-    my @labels = split m/\./, $domain;
+    my @labels = split m/[.]/, $domain;
     return join( $EMPTY, map { pack( 'C', CORE::length ) . $_ } @labels ) . chr( 0 );
 }
 
