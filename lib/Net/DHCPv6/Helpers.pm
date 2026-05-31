@@ -4,14 +4,15 @@
 package Net::DHCPv6::Helpers;
 
 use strictures 2;
-use Carp qw( croak );
+use Carp   qw( croak );
 use Socket qw( AF_INET6 inet_ntop inet_pton );
 use namespace::clean;
 
 sub _resolve_ipv6 {
     my ( $class, $arg ) = @_;
-    return      unless defined $arg;
-    return $arg unless $arg =~ m/:/;
+    return unless defined $arg;
+    return $arg if CORE::length( $arg ) == 16;
+    croak( "Invalid IPv6 address: $arg" ) unless $arg =~ m/:/;
     my $bytes = inet_pton( AF_INET6, $arg );
     croak( "Invalid IPv6 address: $arg" ) unless defined $bytes;
     return $bytes;
@@ -55,8 +56,9 @@ L<Net::DHCPv6::Packet::Relay> for IPv6 address parsing and formatting.
 
 =item B<_resolve_ipv6>($arg)
 
-If C<$arg> contains C<:>, treat as text and convert to 16-byte wire format
-via C<inet_pton>. Otherwise pass through as raw bytes.
+If C<$arg> is exactly 16 octets, treat as wire format and return
+unmodified. Otherwise, if it contains C<:>, parse as text and convert to
+16-byte wire format via C<inet_pton>. Otherwise croak.
 
 =item B<_format_ipv6>($bytes)
 
