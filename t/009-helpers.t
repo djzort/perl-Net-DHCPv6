@@ -38,6 +38,12 @@ ok( dies { $class->_resolve_ipv6( 'short' ) }, '_resolve_ipv6: non-16-byte witho
 
 ok( dies { $class->_resolve_ipv6( 'not:an:ip' ) }, '_resolve_ipv6: invalid text with colons dies' );
 
+# 16-char IPv6 text address — looks like text, should be parsed
+my $sixteen_char_text = 'aa:b:c:d:e:f:1:2';
+my $sixteen_char_wire = inet_pton( AF_INET6, $sixteen_char_text );
+is( $class->_resolve_ipv6( $sixteen_char_text ), $sixteen_char_wire,
+    '_resolve_ipv6: 16-char text address parsed via inet_pton' );
+
 # _format_ipv6
 
 ok( !defined $class->_format_ipv6( undef ), '_format_ipv6: undef returns undef' );
