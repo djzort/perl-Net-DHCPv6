@@ -17,7 +17,7 @@ my $hex =
 my $bytes = pack( 'H*', $hex );
 
 my ( $msg, $err ) = Net::DHCPv6->decode_with_error( $bytes );
-if ( $err ) { diag "err: $err"; done_testing; exit }
+ok( !$err, 'decode succeeds' ) or do { diag "err: $err"; done_testing; exit };
 
 subtest 'relay-forward' => sub {
     is( $msg->msg_type, 12, 'Checking msg_type is 12 (RELAY_FORW)' );
