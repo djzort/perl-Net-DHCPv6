@@ -45,4 +45,34 @@ is( $class->_format_ipv6( $loop ),   '::1',         '_format_ipv6: loopback' );
 is( $class->_format_ipv6( $ll ),     'fe80::1',     '_format_ipv6: link-local' );
 is( $class->_format_ipv6( $global ), '2001:db8::1', '_format_ipv6: global' );
 
+# _pick_addr
+
+ok( !defined $class->_pick_addr( {}, 'addr' ), '_pick_addr: missing field returns undef' );
+
+is( $class->_pick_addr( { addr_raw => $loop }, 'addr' ), $loop, '_pick_addr: raw field returned directly' );
+
+is( $class->_pick_addr( { addr => '::1' }, 'addr' ), $loop, '_pick_addr: text field resolved' );
+
+ok( dies { $class->_pick_addr( { addr => 'bogus' }, 'addr' ) }, '_pick_addr: invalid text dies' );
+
+# _pick_addrs
+
+ok( !defined $class->_pick_addrs( {}, 'servers' ), '_pick_addrs: missing field returns undef' );
+
+is(
+    $class->_pick_addrs( { servers_raw => [ $loop, $ll ] }, 'servers' ),
+    [ $loop, $ll ],
+    '_pick_addrs: raw arrayref returned directly'
+);
+
+is(
+    $class->_pick_addrs( { servers => [ '::1', 'fe80::1' ] }, 'servers' ),
+    [ $loop, $ll ],
+    '_pick_addrs: arrayref of text resolved'
+);
+
+is( $class->_pick_addrs( { servers => '::1' }, 'servers' ), [$loop], '_pick_addrs: scalar text wrapped in arrayref' );
+
+ok( dies { $class->_pick_addrs( { servers => 'bogus' }, 'servers' ) }, '_pick_addrs: invalid scalar dies' );
+
 done_testing();
