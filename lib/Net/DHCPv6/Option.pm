@@ -6,7 +6,6 @@ package Net::DHCPv6::Option;
 use strictures 2;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;
-use Net::DHCPv6::OptionList;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Helpers';
 use namespace::clean;
@@ -46,6 +45,7 @@ sub from_bytes {
     my $payload = substr( $bytes, $OPT_HDR_SIZE, $optlen );
     my $remain  = substr( $bytes, $OPT_HDR_SIZE + $optlen );
 
+    require Net::DHCPv6::OptionList;
     my $class_name = $Net::DHCPv6::OptionList::OPTION_CLASS{$code}
         || 'Net::DHCPv6::Option::Generic';
     my $option = $class_name->from_bytes_inner( $code, $payload );
