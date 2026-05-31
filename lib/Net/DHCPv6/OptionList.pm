@@ -5,8 +5,8 @@ package Net::DHCPv6::OptionList;
 
 use strictures 2;
 use Net::DHCPv6::Option::Generic;
-use Carp             qw( croak );
-use Ref::Util        qw( is_ref );
+use Carp      qw( croak );
+use Ref::Util qw( is_ref );
 use namespace::clean;
 
 my $EMPTY        = q();

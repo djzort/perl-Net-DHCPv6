@@ -4,7 +4,7 @@
 package Test::Net::DHCPv6;
 
 use strictures 2;
-use Carp ();
+use Carp      ();
 use Exporter  qw(import);
 use Ref::Util qw( is_plain_ref );
 

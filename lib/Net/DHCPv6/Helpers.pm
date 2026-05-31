@@ -13,6 +13,7 @@ sub _resolve_ipv6 {
     my ( $class, $arg ) = @_;
     return unless defined $arg;
     if ( CORE::length( $arg ) == 16 ) {
+
         # If it looks like IPv6 text (hex digits + colons), parse it
         if ( $arg =~ m/^[0-9a-fA-F:]+$/ && $arg =~ m/:/ ) {
             my $bytes = inet_pton( AF_INET6, $arg );
