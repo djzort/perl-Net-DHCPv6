@@ -31,12 +31,6 @@ sub from_bytes_inner {
     return $class->new( centiseconds => $cs );
 }
 
-sub as_bytes {
-    my $self    = shift;
-    my $payload = pack( 'n', $self->{centiseconds} );
-    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
-}
-
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_ELAPSED_TIME} = __PACKAGE__;
 
 1;

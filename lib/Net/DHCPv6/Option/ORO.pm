@@ -31,12 +31,6 @@ sub from_bytes_inner {
     return $class->new( requested_options => \@codes );
 }
 
-sub as_bytes {
-    my $self    = shift;
-    my $payload = pack( 'n*', @{ $self->{requested_options} } );
-    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
-}
-
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_ORO} = __PACKAGE__;
 
 1;

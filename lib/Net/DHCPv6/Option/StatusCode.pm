@@ -36,12 +36,6 @@ sub from_bytes_inner {
     return $class->new( status_code => $sc, message => $msg );
 }
 
-sub as_bytes {
-    my $self    = shift;
-    my $payload = pack( 'n', $self->{status_code} ) . $self->{message};
-    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
-}
-
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_STATUS_CODE} = __PACKAGE__;
 
 1;

@@ -29,12 +29,6 @@ sub from_bytes_inner {
     return $class->new( duid => $duid );
 }
 
-sub as_bytes {
-    my $self    = shift;
-    my $payload = $self->{duid}->as_bytes;
-    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
-}
-
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_SERVERID} = __PACKAGE__;
 
 1;
