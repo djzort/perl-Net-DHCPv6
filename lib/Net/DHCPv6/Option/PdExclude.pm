@@ -19,7 +19,7 @@ sub new {
     my ( $class, %args ) = @_;
     croak 'PdExclude requires prefix_length' unless defined $args{prefix_length};
     my $addr = $class->_pick_addr( \%args, 'address' );
-    croak 'PdExclude requires address' unless $addr;
+    croak 'PdExclude requires address' unless defined $addr;
     my $addr_len = ( $args{prefix_length} + $BYTE_ALIGN_MASK ) >> $BYTE_SHIFT;
     $addr       = substr( $addr, 0, $addr_len );
     $args{code} = $OPTION_PD_EXCLUDE;
@@ -37,7 +37,7 @@ sub address       { return shift->{address} }
 sub from_bytes_inner {
     my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated PdExclude option' )
-        if CORE::length( $payload ) < 2;
+        if CORE::length( $payload ) < 1;
     my $plen     = unpack( 'C', substr( $payload, 0, 1 ) );
     my $addr_len = ( $plen + $BYTE_ALIGN_MASK ) >> $BYTE_SHIFT;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated PdExclude address' )

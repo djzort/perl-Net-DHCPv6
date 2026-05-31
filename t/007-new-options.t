@@ -874,6 +874,53 @@ my $EMPTY = q();
     ok( dies { Net::DHCPv6::Option::PdExclude->new( address => $addr ) },    'PdExclude dies without prefix_length' );
 }
 
+# PdExclude prefix-length=0 edge cases (RFC 6603)
+{
+    my $EMPTY = q();
+
+    # Build with prefix_length=0, address_raw => '' (valid: 0 bytes of prefix)
+    {
+        my $pe = Net::DHCPv6::Option::PdExclude->new(
+            prefix_length => 0,
+            address_raw   => $EMPTY,
+        );
+        is( $pe->code,          $OPTION_PD_EXCLUDE, 'PdExclude plen=0 code' );
+        is( $pe->prefix_length, 0,                  'PdExclude plen=0 prefix_length' );
+        is( $pe->address,       $EMPTY,             'PdExclude plen=0 address (empty)' );
+        is( $pe->address_raw,   $EMPTY,             'PdExclude plen=0 address_raw (empty)' );
+    }
+
+    # Build with prefix_length=0, address => '::' (text, truncated to 0 bytes)
+    {
+        my $pe = Net::DHCPv6::Option::PdExclude->new(
+            prefix_length => 0,
+            address       => '::',
+        );
+        is( $pe->prefix_length, 0,      'PdExclude plen=0 text address prefix_length' );
+        is( $pe->address,       $EMPTY, 'PdExclude plen=0 text address (empty after truncation)' );
+    }
+
+    # Wire decode of 1-byte payload (prefix-len=0, zero address bytes)
+    {
+        my ( $parsed ) = Net::DHCPv6::Option->from_bytes( pack( 'nnC', $OPTION_PD_EXCLUDE, 1, 0 ) );
+        ok( $parsed->isa( 'Net::DHCPv6::Option::PdExclude' ), 'PdExclude plen=0 parsed class' );
+        is( $parsed->prefix_length, 0,      'PdExclude plen=0 parsed prefix_length' );
+        is( $parsed->address_raw,   $EMPTY, 'PdExclude plen=0 parsed address (empty)' );
+    }
+
+    # Round-trip: build → as_bytes → parse → match
+    {
+        my $pe = Net::DHCPv6::Option::PdExclude->new(
+            prefix_length => 0,
+            address_raw   => $EMPTY,
+        );
+        my $bytes = $pe->as_bytes;
+        my ( $got ) = Net::DHCPv6::Option->from_bytes( $bytes );
+        is( $got->prefix_length, 0,      'PdExclude plen=0 round-trip prefix_length' );
+        is( $got->address_raw,   $EMPTY, 'PdExclude plen=0 round-trip address' );
+    }
+}
+
 # ----------------------------------------------------------------
 # ClientLinkLayerAddr (79) -- link-layer type + address
 # ----------------------------------------------------------------
