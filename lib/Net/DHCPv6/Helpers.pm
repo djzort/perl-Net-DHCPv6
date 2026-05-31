@@ -4,8 +4,9 @@
 package Net::DHCPv6::Helpers;
 
 use strictures 2;
-use Carp   qw( croak );
-use Socket qw( AF_INET6 inet_ntop inet_pton );
+use Carp      qw( croak );
+use Ref::Util qw( is_plain_arrayref );
+use Socket    qw( AF_INET6 inet_ntop inet_pton );
 use namespace::clean;
 
 sub _resolve_ipv6 {
@@ -37,7 +38,11 @@ sub _pick_addrs {    ## no critic (Subroutines::ProhibitUnusedPrivateSubroutines
     my $key = "${field}_raw";
     return $args->{$key} if exists $args->{$key};
     return unless defined $args->{$field};
-    return [ map { $class->_resolve_ipv6( $_ ) } @{ $args->{$field} } ];
+    my $list =
+        is_plain_arrayref( $args->{$field} )
+        ? $args->{$field}
+        : [ $args->{$field} ];
+    return [ map { $class->_resolve_ipv6( $_ ) } @{$list} ];
 }
 
 1;
@@ -72,7 +77,8 @@ L</_resolve_ipv6>. Otherwise return C<undef>.
 
 =item B<_pick_addrs>( \%args, $field )
 
-Like L</_pick_addr> but for arrayrefs of addresses.
+Like L</_pick_addr> but for multiple addresses. Accepts an arrayref or a
+single scalar value; a scalar is wrapped in an arrayref automatically.
 
 =back
 
