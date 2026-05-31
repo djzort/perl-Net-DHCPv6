@@ -38,6 +38,7 @@ use Net::DHCPv6::Option::NispServers;
 use Net::DHCPv6::Option::NtpServer;
 use Net::DHCPv6::Option::ORO;
 use Net::DHCPv6::Option::PdExclude;
+use Net::DHCPv6::Option::SntpServers;
 use Net::DHCPv6::Option::Preference;
 use Net::DHCPv6::Option::RapidCommit;
 use Net::DHCPv6::Option::ReconfAccept;

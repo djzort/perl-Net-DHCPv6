@@ -329,7 +329,7 @@ package DHCPv6Server {
     use Net::DHCPv6::Option::IANA;
     use Net::DHCPv6::Option::IAAddr;
     use Net::DHCPv6::Option::ClientId;
-    use Net::DHCPv6::Option::NtpServer;
+    use Net::DHCPv6::Option::SntpServers;
     use Net::DHCPv6::OptionList;
     use Socket qw( AF_INET6 inet_ntop inet_pton );
 
@@ -385,7 +385,7 @@ package DHCPv6Server {
             )
         );
         $reply->add_option(
-            Net::DHCPv6::Option::NtpServer->new(
+            Net::DHCPv6::Option::SntpServers->new(
                 servers => $self->{ntp_servers}
             )
         );
@@ -420,7 +420,7 @@ package DHCPv6Server {
             )
         );
         $reply->add_option(
-            Net::DHCPv6::Option::NtpServer->new(
+            Net::DHCPv6::Option::SntpServers->new(
                 servers => $self->{ntp_servers}
             )
         );

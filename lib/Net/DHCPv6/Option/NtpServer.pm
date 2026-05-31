@@ -1,91 +1,105 @@
 #!/bin/false
-# ABSTRACT: SNTP Servers option (code 31) -- list of IPv6 addresses
+# ABSTRACT: NTP Server option (code 56) -- sub-options for NTP configuration per RFC 5908
 # PODNAME: Net::DHCPv6::Option::NtpServer
 package Net::DHCPv6::Option::NtpServer;
 
 use strictures 2;
 use Net::DHCPv6::OptionList;
+use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
-use Ref::Util qw( is_plain_arrayref );
 use namespace::clean;
 my $EMPTY = q();
 
+my %SUBOPT_DECODE = (
+    1 => sub { my ( $v ) = @_; return { type_code => 1, type => 'address', value => $v } },
+    2 => sub { my ( $v ) = @_; return { type_code => 2, type => 'fqdn',    value => $v } },
+    3 => sub { my ( $v ) = @_; return { type_code => 3, type => 'domain',  value => $v } },
+);
+
 sub new {
     my ( $class, %args ) = @_;
-    my $addresses = $class->_pick_addrs( \%args, 'servers' );
-    if ( !defined $addresses && $args{addresses} ) {
-        my $list = is_plain_arrayref( $args{addresses} ) ? $args{addresses} : [ $args{addresses} ];
-        $addresses = [ map { $class->_resolve_ipv6( $_ ) } @{$list} ];
-    }
-    $addresses //= [];
-    $args{code} = $OPTION_SNTP_SERVERS;
-    $args{data} = join( $EMPTY, @{$addresses} );
+    $args{code} = $OPTION_NTP_SERVER;
+    my $entries = $args{entries} // [];
+    $args{data} =
+        join( $EMPTY, map { pack( 'C C', $_->{type_code}, CORE::length( $_->{value} ) ) . $_->{value} } @{$entries} );
     my $self = $class->SUPER::new( %args );
-    $self->{servers} = $addresses;
+    $self->{entries} = $entries;
     return bless $self, $class;
 }
 
-sub servers_raw { return shift->{servers} }
-
-sub servers {
-    my $self = shift;
-    return [ map { $self->_format_ipv6( $_ ) } @{ $self->{servers} } ];
-}
+sub entries { return shift->{entries} }
 
 sub from_bytes_inner {
     my ( $class, $code, $payload ) = @_;
-    Net::DHCPv6::X::Truncated->throw( message => 'Truncated NtpServer option' )
-        if CORE::length( $payload ) % $IPV6_ADDR_LEN != 0;
-    my @addrs;
-    while ( CORE::length( $payload ) ) {
-        push @addrs, substr( $payload, 0, $IPV6_ADDR_LEN, q() );
+    my @entries;
+    my $len = CORE::length( $payload );
+    my $off = 0;
+    while ( $off < $len ) {
+        Net::DHCPv6::X::Truncated->throw( message => 'Truncated NtpServer sub-option header' )
+            if $off + 2 > $len;
+        my $sc = unpack( 'C', substr( $payload, $off,     1 ) );
+        my $sl = unpack( 'C', substr( $payload, $off + 1, 1 ) );
+        $off += 2;
+        Net::DHCPv6::X::Truncated->throw( message => 'Truncated NtpServer sub-option value' )
+            if $off + $sl > $len;
+        my $sv = substr( $payload, $off, $sl );
+        $off += $sl;
+        my $decoder = $SUBOPT_DECODE{$sc};
+
+        if ( $decoder ) {
+            push @entries, $decoder->( $sv );
+        }
+        else {
+            push @entries, { type_code => $sc, value => $sv };
+        }
     }
-    return $class->new( servers_raw => \@addrs );
+    return $class->new( entries => \@entries );
 }
 
-$Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_SNTP_SERVERS} = __PACKAGE__;
+sub as_bytes {
+    my $self    = shift;
+    my $payload = join( $EMPTY,
+        map { pack( 'C C', $_->{type_code}, CORE::length( $_->{value} ) ) . $_->{value} } @{ $self->{entries} } );
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
+}
+
+$Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_NTP_SERVER} = __PACKAGE__;
 1;
 
 __END__
 
-
 =head1 SYNOPSIS
 
-  # Text form (auto-resolved to wire bytes)
-  my $opt = Net::DHCPv6::Option::NtpServer->new(
-      servers => [ '2001:db8::1', '2001:db8::2' ],
-  );
-  print $opt->servers->[0];           # '2001:db8::1'
-  print $opt->servers_raw->[0];       # 16-byte wire-format bytes
-
-  # Raw bytes
-  use Socket qw(inet_pton AF_INET6);
-  my $opt2 = Net::DHCPv6::Option::NtpServer->new(
-      servers_raw => [ inet_pton( AF_INET6, '2001:db8::1' ) ],
-  );
+  my $raw   = $dhcpv6_msg->options->get_option( 56 );
+  for my $e ( @{ $raw->entries } ) {
+      say "$e->{type}: $e->{value}";
+  }
 
 =head1 DESCRIPTION
 
-Carries a list of IPv6 addresses of SNTP servers available to
-the client.  See RFC 4075 (code 31).
+Carries NTP server configuration as a set of sub-options per
+RFC 5908 S<167>4.  Sub-option type codes:
+
+  1  NTP Sub-option Address (16-byte IPv6 address)
+  2  NTP Sub-option FQDN (domain name)
+  3  NTP Sub-option Domain (domain name)
 
 =head1 METHODS
 
 =head2 new
 
-Constructor.  Optional C<servers> (arrayref of IPv6 text addresses) or
-C<servers_raw> (arrayref of 16-byte IPv6 addresses).
+Constructor.  Optional C<entries> (arrayref of hashrefs with
+C<type_code> and C<value> keys).
 
-=head2 servers
+=head2 entries
 
-Returns an arrayref of IPv6 text addresses.
-
-=head2 servers_raw
-
-Returns an arrayref of 16-byte wire-format addresses.
+Returns the arrayref of sub-option hashrefs.  Each known type
+also includes a C<type> key (one of C<address>, C<fqdn>,
+C<domain>).
 
 =head1 SEE ALSO
 
-L<Net::DHCPv6::Option>, L<Net::DHCPv6::OptionList>
+L<Net::DHCPv6::Option>, L<Net::DHCPv6::OptionList>,
+RFC 5908 E<167>4.
