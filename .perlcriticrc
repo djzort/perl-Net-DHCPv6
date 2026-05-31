@@ -118,6 +118,7 @@ allow_secrets = Bang Bang, Venus
 [References::ProhibitRefChecks]
 [References::RequireSigils]
 [RegularExpressions::ProhibitCaptureWithoutTest]
+[RegularExpressions::ProhibitEscapedMetacharacters]
 [RegularExpressions::ProhibitFixedStringMatches]
 [RegularExpressions::ProhibitUnusedCapture]
 [RegularExpressions::ProhibitUnusualDelimiters]
