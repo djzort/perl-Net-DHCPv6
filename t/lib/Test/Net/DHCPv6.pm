@@ -4,14 +4,12 @@
 package Test::Net::DHCPv6;
 
 use strictures 2;
-use Carp      ();
-use Exporter  qw(import);
-use Ref::Util qw( is_plain_ref );
+use Carp     ();
+use Exporter qw(import);
 
 our @EXPORT_OK = qw(
     hex2bytes
     bytes2hex
-    is_hexstr
     solicit_hex
     advertise_hex
     request_hex
@@ -28,13 +26,6 @@ sub hex2bytes {
 sub bytes2hex {
     my ( $bytes ) = @_;
     return unpack( 'H*', $bytes );
-}
-
-sub is_hexstr {
-    my ( $got, $expected, $desc ) = @_;
-    my $got_hex = is_plain_ref( $got ) ? bytes2hex( $got ) : $got;
-    ( my $exp_hex = $expected ) =~ s/\s+//g;
-    return $got_hex eq $exp_hex;
 }
 
 sub solicit_hex {
