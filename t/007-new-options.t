@@ -29,6 +29,7 @@ use Net::DHCPv6::Option::NisDomainName;
 use Net::DHCPv6::Option::NisServers;
 use Net::DHCPv6::Option::NispDomainName;
 use Net::DHCPv6::Option::NispServers;
+use Net::DHCPv6::Option::SntpServers;
 use Net::DHCPv6::Option::NtpServer;
 use Net::DHCPv6::Option::PdExclude;
 use Net::DHCPv6::Option::ReconfAccept;
@@ -257,26 +258,26 @@ my $EMPTY = q();
 }
 
 # ----------------------------------------------------------------
-# NtpServer (31) -- list of IPv6 addresses (as SNTP_SERVERS per IANA)
+# SntpServers (31) -- list of IPv6 addresses (SNTP_SERVERS per RFC 4075)
 # ----------------------------------------------------------------
 {
     my $addr = pack( 'H*', '20010db8000000000000000000000001' );
-    my $ns   = Net::DHCPv6::Option::NtpServer->new( servers => ['2001:db8::1'], );
-    is( $ns->code,             $OPTION_SNTP_SERVERS, 'NtpServer code (SNTP_SERVERS)' );
-    is( $ns->servers->[0],     '2001:db8::1',        'NtpServer address' );
-    is( $ns->servers_raw->[0], $addr,                'NtpServer raw address' );
+    my $ns   = Net::DHCPv6::Option::SntpServers->new( servers => ['2001:db8::1'], );
+    is( $ns->code,             $OPTION_SNTP_SERVERS, 'SntpServers code (SNTP_SERVERS)' );
+    is( $ns->servers->[0],     '2001:db8::1',        'SntpServers address' );
+    is( $ns->servers_raw->[0], $addr,                'SntpServers raw address' );
 
     my $bytes = $ns->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
-    ok( $parsed->isa( 'Net::DHCPv6::Option::NtpServer' ), 'NtpServer parsed class' );
-    is( $parsed->servers->[0],     '2001:db8::1', 'NtpServer parsed address' );
-    is( $parsed->servers_raw->[0], $addr,         'NtpServer parsed raw' );
+    ok( $parsed->isa( 'Net::DHCPv6::Option::SntpServers' ), 'SntpServers parsed class' );
+    is( $parsed->servers->[0],     '2001:db8::1', 'SntpServers parsed address' );
+    is( $parsed->servers_raw->[0], $addr,         'SntpServers parsed raw' );
 
     ok(
         dies {
-            Net::DHCPv6::Option::NtpServer::from_bytes_inner( undef, $OPTION_SNTP_SERVERS, pack( 'C*', ( 1 ) x 15 ) )
+            Net::DHCPv6::Option::SntpServers::from_bytes_inner( undef, $OPTION_SNTP_SERVERS, pack( 'C*', ( 1 ) x 15 ) )
         },
-        'NtpServer dies on non-16-byte-aligned data'
+        'SntpServers dies on non-16-byte-aligned data'
     );
 }
 
