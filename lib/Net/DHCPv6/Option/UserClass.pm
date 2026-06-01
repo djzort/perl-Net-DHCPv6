@@ -8,7 +8,7 @@ use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
-use Ref::Util qw( is_plain_arrayref );
+use Ref::Util        qw( is_plain_arrayref );
 use namespace::clean ();
 
 sub new {
@@ -25,16 +25,16 @@ sub new {
 sub user_class_data { return shift->{user_class_data} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     my @items;
     my $offset = 0;
-    my $len    = CORE::length( $data );
+    my $len    = CORE::length( $payload );
     while ( $offset + 2 <= $len ) {
-        my $ilen = unpack( 'n', substr( $data, $offset, 2 ) );
+        my $ilen = unpack( 'n', substr( $payload, $offset, 2 ) );
         $offset += 2;
         Net::DHCPv6::X::Truncated->throw( message => 'Truncated UserClass data item' )
             if $offset + $ilen > $len;
-        push @items, substr( $data, $offset, $ilen );
+        push @items, substr( $payload, $offset, $ilen );
         $offset += $ilen;
     }
     return $class->new( user_class_data => \@items );

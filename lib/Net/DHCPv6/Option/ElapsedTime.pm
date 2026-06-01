@@ -24,17 +24,17 @@ sub new {
 sub centiseconds { return shift->{centiseconds} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::BadOption->throw( message => 'ElapsedTime option must be exactly 2 bytes' )
-        if CORE::length( $data ) != 2;
-    my $cs = unpack( 'n', $data );
+        if CORE::length( $payload ) != 2;
+    my $cs = unpack( 'n', $payload );
     return $class->new( centiseconds => $cs );
 }
 
 sub as_bytes {
-    my $self = shift;
-    my $data = pack( 'n', $self->{centiseconds} );
-    return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
+    my $self    = shift;
+    my $payload = pack( 'n', $self->{centiseconds} );
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_ELAPSED_TIME} = __PACKAGE__;

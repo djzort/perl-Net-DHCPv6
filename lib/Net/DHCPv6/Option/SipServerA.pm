@@ -8,7 +8,7 @@ use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
-use Ref::Util qw( is_plain_arrayref );
+use Ref::Util        qw( is_plain_arrayref );
 use namespace::clean ();
 
 sub new {
@@ -34,12 +34,12 @@ sub servers {
 }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated SipServerA option' )
-        if CORE::length( $data ) % 16 != 0;
+        if CORE::length( $payload ) % 16 != 0;
     my @addrs;
-    for ( my $i = 0 ; $i < CORE::length( $data ) ; $i += 16 ) {
-        push @addrs, substr( $data, $i, 16 );
+    for ( my $i = 0 ; $i < CORE::length( $payload ) ; $i += 16 ) {
+        push @addrs, substr( $payload, $i, 16 );
     }
     return $class->new( servers_raw => \@addrs );
 }

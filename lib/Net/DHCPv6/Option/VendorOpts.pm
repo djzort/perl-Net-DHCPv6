@@ -9,7 +9,7 @@ use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
-use Ref::Util qw( is_plain_arrayref );
+use Ref::Util        qw( is_plain_arrayref );
 use namespace::clean ();
 
 sub new {
@@ -27,11 +27,11 @@ sub new {
 sub enterprise_number { return shift->{enterprise_number} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated VendorOpts option' )
-        if CORE::length( $data ) < 4;
-    my $en = unpack( 'N', substr( $data, 0, 4 ) );
-    return $class->new( enterprise_number => $en, sub_options => substr( $data, 4 ) );
+        if CORE::length( $payload ) < 4;
+    my $en = unpack( 'N', substr( $payload, 0, 4 ) );
+    return $class->new( enterprise_number => $en, sub_options => substr( $payload, 4 ) );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_VENDOR_OPTS} = __PACKAGE__;

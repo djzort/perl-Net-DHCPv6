@@ -11,7 +11,7 @@ use Net::DHCPv6::OptionList;
 
 # Hex fixtures extracted from t/data/wireshark-sample-DHCPv6.pcap
 # Origin: https://wiki.wireshark.org/samplecaptures
-my @data = (
+my @entries = (
     [
         'solicit',
         pack( "H*",
@@ -77,8 +77,8 @@ my @expect = (
     },
 );
 
-for my $i ( 0 .. $#data ) {
-    my ( $desc, $bytes ) = @{ $data[$i] };
+for my $i ( 0 .. $#entries ) {
+    my ( $desc, $bytes ) = @{ $entries[$i] };
     my $exp = $expect[$i];
 
     my ( $msg, $err ) = Net::DHCPv6->decode_with_error( $bytes );
@@ -94,7 +94,7 @@ for my $i ( 0 .. $#data ) {
 
 # Spot-check specific option values per packet
 subtest 'solicit options' => sub {
-    my ( $msg ) = Net::DHCPv6->decode_or_croak( $data[0][1] );
+    my ( $msg ) = Net::DHCPv6->decode_or_croak( $entries[0][1] );
     my $ol = $msg->options;
 
     my $cid = $ol->get_option( 1 );
@@ -121,7 +121,7 @@ subtest 'solicit options' => sub {
 };
 
 subtest 'advertise options' => sub {
-    my ( $msg ) = Net::DHCPv6->decode_or_croak( $data[1][1] );
+    my ( $msg ) = Net::DHCPv6->decode_or_croak( $entries[1][1] );
     my $ol = $msg->options;
 
     my $pd = $ol->get_option( 25 );
@@ -148,7 +148,7 @@ subtest 'advertise options' => sub {
 };
 
 subtest 'request options' => sub {
-    my ( $msg ) = Net::DHCPv6->decode_or_croak( $data[2][1] );
+    my ( $msg ) = Net::DHCPv6->decode_or_croak( $entries[2][1] );
     my $ol = $msg->options;
 
     my $pd = $ol->get_option( 25 );
@@ -163,7 +163,7 @@ subtest 'request options' => sub {
 };
 
 subtest 'reply options' => sub {
-    my ( $msg ) = Net::DHCPv6->decode_or_croak( $data[3][1] );
+    my ( $msg ) = Net::DHCPv6->decode_or_croak( $entries[3][1] );
     my $ol = $msg->options;
 
     my $pd = $ol->get_option( 25 );
@@ -177,7 +177,7 @@ subtest 'reply options' => sub {
 };
 
 subtest 'release options' => sub {
-    my ( $msg ) = Net::DHCPv6->decode_or_croak( $data[4][1] );
+    my ( $msg ) = Net::DHCPv6->decode_or_croak( $entries[4][1] );
     my $ol = $msg->options;
 
     my $pd = $ol->get_option( 25 );
@@ -192,7 +192,7 @@ subtest 'release options' => sub {
 };
 
 subtest 'reply2 (release ack) options' => sub {
-    my ( $msg ) = Net::DHCPv6->decode_or_croak( $data[5][1] );
+    my ( $msg ) = Net::DHCPv6->decode_or_croak( $entries[5][1] );
     my $ol = $msg->options;
 
     my $sc = $ol->get_option( 13 );

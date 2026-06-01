@@ -32,21 +32,21 @@ sub address_raw   { return shift->{address} }
 sub address       { return shift->{address} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated PdExclude option' )
-        if CORE::length( $data ) < 2;
-    my $plen     = unpack( 'C', substr( $data, 0, 1 ) );
+        if CORE::length( $payload ) < 2;
+    my $plen     = unpack( 'C', substr( $payload, 0, 1 ) );
     my $addr_len = ( $plen + 7 ) >> 3;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated PdExclude address' )
-        if 1 + $addr_len > CORE::length( $data );
-    my $addr = substr( $data, 1, $addr_len );
+        if 1 + $addr_len > CORE::length( $payload );
+    my $addr = substr( $payload, 1, $addr_len );
     return $class->new( prefix_length => $plen, address_raw => $addr );
 }
 
 sub as_bytes {
-    my $self = shift;
-    my $data = pack( 'C', $self->{prefix_length} ) . $self->{address};
-    return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
+    my $self    = shift;
+    my $payload = pack( 'C', $self->{prefix_length} ) . $self->{address};
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_PD_EXCLUDE} = __PACKAGE__;

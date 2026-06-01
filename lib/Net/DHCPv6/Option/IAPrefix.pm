@@ -4,12 +4,12 @@
 package Net::DHCPv6::Option::IAPrefix;
 
 use strictures 2;
-use Carp qw(croak);
+use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean;
+use namespace::clean ();
 
 sub new {
     my ( $class, %args ) = @_;
@@ -20,12 +20,12 @@ sub new {
     $args{valid_lifetime}     = $args{valid_lifetime}     // 0;
     $args{prefix_length}      = $args{prefix_length}      // 0;
     $args{options}            = $args{options}            // Net::DHCPv6::OptionList->new;
-    my $data =
+    my $payload =
           pack( 'N N', $args{preferred_lifetime}, $args{valid_lifetime} )
         . pack( 'C', $args{prefix_length} )
         . $addr
         . $args{options}->as_bytes;
-    $args{data} = $data;
+    $args{data} = $payload;
     my $self = $class->SUPER::new( %args );
     $self->{address}            = $addr;
     $self->{preferred_lifetime} = $args{preferred_lifetime};
@@ -57,13 +57,13 @@ sub get_option {
 }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated IAPrefix option' )
-        if CORE::length( $data ) < 25;
-    my ( $pl, $vl ) = unpack( 'N N', substr( $data, 0, 8 ) );
-    my $plen     = unpack( 'C', substr( $data, 8, 1 ) );
-    my $addr     = substr( $data, 9, 16 );
-    my $opt_data = substr( $data, 25 );
+        if CORE::length( $payload ) < 25;
+    my ( $pl, $vl ) = unpack( 'N N', substr( $payload, 0, 8 ) );
+    my $plen     = unpack( 'C', substr( $payload, 8, 1 ) );
+    my $addr     = substr( $payload, 9, 16 );
+    my $opt_data = substr( $payload, 25 );
     my $opts     = Net::DHCPv6::OptionList->from_bytes( $opt_data );
     return $class->new(
         address_raw        => $addr,
@@ -76,12 +76,12 @@ sub from_bytes_inner {
 
 sub as_bytes {
     my $self = shift;
-    my $data =
+    my $payload =
           pack( 'N N', $self->{preferred_lifetime}, $self->{valid_lifetime} )
         . pack( 'C', $self->{prefix_length} )
         . $self->{address}
         . $self->{options}->as_bytes;
-    return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_IAPREFIX} = __PACKAGE__;

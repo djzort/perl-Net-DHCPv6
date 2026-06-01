@@ -37,16 +37,16 @@ sub replay    { return shift->{replay} }
 sub auth_info { return shift->{auth_info} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated Auth option' )
-        if CORE::length( $data ) < 11;
-    my ( $proto, $alg, $rdm, $replay, $info ) = unpack( 'C C C a8 a*', $data );
+        if CORE::length( $payload ) < 11;
+    my ( $proto, $alg, $rdm, $replay, $auth_info ) = unpack( 'C C C a8 a*', $payload );
     return $class->new(
         protocol  => $proto,
         algorithm => $alg,
         rdm       => $rdm,
         replay    => $replay,
-        auth_info => $info,
+        auth_info => $auth_info,
     );
 }
 

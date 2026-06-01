@@ -16,7 +16,7 @@ sub new {
 }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     return $class->new;
 }
 

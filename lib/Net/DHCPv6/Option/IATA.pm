@@ -4,20 +4,20 @@
 package Net::DHCPv6::Option::IATA;
 
 use strictures 2;
-use Carp qw(croak);
+use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean;
+use namespace::clean ();
 
 sub new {
     my ( $class, %args ) = @_;
     croak 'IATA requires iaid' unless defined $args{iaid};
     $args{code}    = $OPTION_IA_TA;
     $args{options} = $args{options} // Net::DHCPv6::OptionList->new;
-    my $data = pack( 'N', $args{iaid} ) . $args{options}->as_bytes;
-    $args{data} = $data;
+    my $payload = pack( 'N', $args{iaid} ) . $args{options}->as_bytes;
+    $args{data} = $payload;
     my $self = $class->SUPER::new( %args );
     $self->{iaid}    = $args{iaid};
     $self->{options} = $args{options};
@@ -38,19 +38,19 @@ sub get_option {
 }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated IATA option' )
-        if CORE::length( $data ) < 4;
-    my $iaid     = unpack( 'N', substr( $data, 0, 4 ) );
-    my $opt_data = substr( $data, 4 );
+        if CORE::length( $payload ) < 4;
+    my $iaid     = unpack( 'N', substr( $payload, 0, 4 ) );
+    my $opt_data = substr( $payload, 4 );
     my $opts     = Net::DHCPv6::OptionList->from_bytes( $opt_data );
     return $class->new( iaid => $iaid, options => $opts );
 }
 
 sub as_bytes {
-    my $self = shift;
-    my $data = pack( 'N', $self->{iaid} ) . $self->{options}->as_bytes;
-    return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
+    my $self    = shift;
+    my $payload = pack( 'N', $self->{iaid} ) . $self->{options}->as_bytes;
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_IA_TA} = __PACKAGE__;

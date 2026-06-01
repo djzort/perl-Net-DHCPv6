@@ -21,8 +21,8 @@ sub new {
 sub message { return shift->{message} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
-    return $class->new( message => $data );
+    my ( $class, $code, $payload ) = @_;
+    return $class->new( message => $payload );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_RELAY_MSG} = __PACKAGE__;

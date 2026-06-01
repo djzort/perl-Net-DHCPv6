@@ -5,11 +5,11 @@ package Net::DHCPv6::Option::Generic;
 
 use strictures 2;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean;
+use namespace::clean ();
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
-    return $class->new( code => $code, data => $data );
+    my ( $class, $code, $payload ) = @_;
+    return $class->new( code => $code, data => $payload );
 }
 
 1;
@@ -23,7 +23,7 @@ __END__
 
     my ($msg, $err) = Net::DHCPv6->decode_with_error($bytes);
     my $opt = $msg->options->get_option(999);  # unknown code
-    my $data = $opt->data if $opt;
+    my $payload = $opt->data if $opt;
 
     # Or construct directly
     use Net::DHCPv6::Option::Generic;

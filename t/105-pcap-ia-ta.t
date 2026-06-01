@@ -11,7 +11,7 @@ use Net::DHCPv6::OptionList;
 
 # Hex fixtures extracted from t/data/dhcpv6-ia-ta.pcap
 # Origin: https://git.codelinaro.org/clo/la/platform/external/tcpdump/-/tree/aosp-new/aosp-new/master/tests
-my @data = (
+my @entries = (
     [ 'solicit', pack( "H*", "0128b0400001000a0003000100010203040500060004001700180008000200000004000402030405" ) ],
     [
         'advertise',
@@ -40,8 +40,8 @@ my @expect = (
     { msg_type => 7, transaction_id => 0x2B0E45 },
 );
 
-for my $i ( 0 .. $#data ) {
-    my ( $desc, $bytes ) = @{ $data[$i] };
+for my $i ( 0 .. $#entries ) {
+    my ( $desc, $bytes ) = @{ $entries[$i] };
     my $exp = $expect[$i];
 
     my ( $msg, $err ) = Net::DHCPv6->decode_with_error( $bytes );
@@ -55,7 +55,7 @@ for my $i ( 0 .. $#data ) {
 }
 
 subtest 'solicit options' => sub {
-    my ( $msg ) = Net::DHCPv6->decode_or_croak( $data[0][1] );
+    my ( $msg ) = Net::DHCPv6->decode_or_croak( $entries[0][1] );
     my $ol = $msg->options;
 
     my $cid = $ol->get_option( 1 );
@@ -78,7 +78,7 @@ subtest 'solicit options' => sub {
 };
 
 subtest 'advertise options' => sub {
-    my ( $msg ) = Net::DHCPv6->decode_or_croak( $data[1][1] );
+    my ( $msg ) = Net::DHCPv6->decode_or_croak( $entries[1][1] );
     my $ol = $msg->options;
 
     my $ta = $ol->get_option( 4 );
@@ -100,7 +100,7 @@ subtest 'advertise options' => sub {
 };
 
 subtest 'request options' => sub {
-    my ( $msg ) = Net::DHCPv6->decode_or_croak( $data[2][1] );
+    my ( $msg ) = Net::DHCPv6->decode_or_croak( $entries[2][1] );
     my $ol = $msg->options;
 
     my $ta = $ol->get_option( 4 );
@@ -113,7 +113,7 @@ subtest 'request options' => sub {
 };
 
 subtest 'reply options' => sub {
-    my ( $msg ) = Net::DHCPv6->decode_or_croak( $data[3][1] );
+    my ( $msg ) = Net::DHCPv6->decode_or_croak( $entries[3][1] );
     my $ol = $msg->options;
 
     my $ta = $ol->get_option( 4 );

@@ -5,8 +5,8 @@ package Net::DHCPv6::OptionList;
 
 use strictures 2;
 use Net::DHCPv6::Option::Generic;
-use Carp qw( croak );
-use Ref::Util qw( is_ref );
+use Carp             qw( croak );
+use Ref::Util        qw( is_ref );
 use namespace::clean ();
 
 our %OPTION_CLASS;
@@ -75,16 +75,16 @@ sub try_from_bytes {
             $error = "Truncated option $code: need $optlen bytes, have " . ( $len - $offset );
             last;
         }
-        my $data = substr( $bytes, $offset, $optlen );
+        my $payload = substr( $bytes, $offset, $optlen );
         $offset += $optlen;
 
         my $class_name = $OPTION_CLASS{$code} || 'Net::DHCPv6::Option::Generic';
         my $option;
-        eval { $option = $class_name->from_bytes_inner( $code, $data ); };
+        eval { $option = $class_name->from_bytes_inner( $code, $payload ); };
         if ( my $err = $@ ) {
             is_ref( $err ) && $err->isa( 'Net::DHCPv6::X' )
                 ? do {
-                $option = Net::DHCPv6::Option::Generic->new( code => $code, data => $data );
+                $option = Net::DHCPv6::Option::Generic->new( code => $code, data => $payload );
                 }
                 : do {
                 $error = "Option $code parse error: $err";

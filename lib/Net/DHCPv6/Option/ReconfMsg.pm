@@ -24,10 +24,10 @@ sub new {
 sub msg_type { return shift->{msg_type} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated ReconfMsg option' )
-        if CORE::length( $data ) < 1;
-    my $type = unpack( 'C', $data );
+        if CORE::length( $payload ) < 1;
+    my $type = unpack( 'C', $payload );
     return $class->new( msg_type => $type );
 }
 

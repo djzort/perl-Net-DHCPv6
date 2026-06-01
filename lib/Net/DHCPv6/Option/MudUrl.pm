@@ -24,10 +24,10 @@ sub new {
 sub url { return shift->{url} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated MudUrl option' )
-        if CORE::length( $data ) == 0;
-    return $class->new( url => $data );
+        if CORE::length( $payload ) == 0;
+    return $class->new( url => $payload );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_MUD_URL} = __PACKAGE__;

@@ -4,12 +4,12 @@
 package Net::DHCPv6::Option::IAPD;
 
 use strictures 2;
-use Carp qw(croak);
+use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean;
+use namespace::clean ();
 
 sub new {
     my ( $class, %args ) = @_;
@@ -18,8 +18,8 @@ sub new {
     $args{t1}      = $args{t1}      // 0;
     $args{t2}      = $args{t2}      // 0;
     $args{options} = $args{options} // Net::DHCPv6::OptionList->new;
-    my $data = pack( 'N N N', $args{iaid}, $args{t1}, $args{t2} ) . $args{options}->as_bytes;
-    $args{data} = $data;
+    my $payload = pack( 'N N N', $args{iaid}, $args{t1}, $args{t2} ) . $args{options}->as_bytes;
+    $args{data} = $payload;
     my $self = $class->SUPER::new( %args );
     $self->{iaid}    = $args{iaid};
     $self->{t1}      = $args{t1};
@@ -44,19 +44,19 @@ sub get_option {
 }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated IAPD option' )
-        if CORE::length( $data ) < 12;
-    my ( $iaid, $t1, $t2 ) = unpack( 'N N N', substr( $data, 0, 12 ) );
-    my $opt_data = substr( $data, 12 );
+        if CORE::length( $payload ) < 12;
+    my ( $iaid, $t1, $t2 ) = unpack( 'N N N', substr( $payload, 0, 12 ) );
+    my $opt_data = substr( $payload, 12 );
     my $opts     = Net::DHCPv6::OptionList->from_bytes( $opt_data );
     return $class->new( iaid => $iaid, t1 => $t1, t2 => $t2, options => $opts );
 }
 
 sub as_bytes {
-    my $self = shift;
-    my $data = pack( 'N N N', $self->{iaid}, $self->{t1}, $self->{t2} ) . $self->{options}->as_bytes;
-    return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
+    my $self    = shift;
+    my $payload = pack( 'N N N', $self->{iaid}, $self->{t1}, $self->{t2} ) . $self->{options}->as_bytes;
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_IA_PD} = __PACKAGE__;

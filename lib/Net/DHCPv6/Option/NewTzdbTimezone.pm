@@ -23,8 +23,8 @@ sub new {
 sub tz_name { return shift->{tz_name} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
-    return $class->new( tz_name => $data );
+    my ( $class, $code, $payload ) = @_;
+    return $class->new( tz_name => $payload );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_NEW_TZDB_TIMEZONE} = __PACKAGE__;

@@ -10,7 +10,7 @@ use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
 use Net::DHCPv6::X::BadOption;
 use parent 'Net::DHCPv6::Option';
-use Ref::Util qw( is_plain_arrayref );
+use Ref::Util        qw( is_plain_arrayref );
 use namespace::clean ();
 
 sub _encode_domain {
@@ -21,10 +21,10 @@ sub _encode_domain {
 }
 
 sub _read_labels_at {
-    my ( $data, $offset_ref, $len ) = @_;
+    my ( $payload, $offset_ref, $len ) = @_;
     my @labels;
     while ( ${$offset_ref} < $len ) {
-        my $llen = unpack( 'C', substr( $data, ${$offset_ref}, 1 ) );
+        my $llen = unpack( 'C', substr( $payload, ${$offset_ref}, 1 ) );
         if ( $llen == 0 ) {
             ++${$offset_ref};
             last;
@@ -33,12 +33,12 @@ sub _read_labels_at {
             if ( $Net::DHCPv6::Option::FOLLOW_COMPRESSION ) {
                 Net::DHCPv6::X::Truncated->throw( message => 'Truncated compression pointer' )
                     if ${$offset_ref} + 2 > $len;
-                my $ptr = ( ( $llen & 0x3F ) << 8 ) | unpack( 'C', substr( $data, ${$offset_ref} + 1, 1 ) );    ## no critic (Bangs::ProhibitBitwiseOperators)
+                my $ptr = ( ( $llen & 0x3F ) << 8 ) | unpack( 'C', substr( $payload, ${$offset_ref} + 1, 1 ) );    ## no critic (Bangs::ProhibitBitwiseOperators)
                 Net::DHCPv6::X::BadOption->throw( message => 'Compression pointer out of range' )
                     if $ptr >= $len;
                 ${$offset_ref} += 2;
                 my $ptr_ref = \$ptr;
-                push @labels, _read_labels_at( $data, $ptr_ref, $len );
+                push @labels, _read_labels_at( $payload, $ptr_ref, $len );
                 last;
             }
             Net::DHCPv6::X::BadOption->throw( message => 'Compression pointer in domain name' );
@@ -47,19 +47,19 @@ sub _read_labels_at {
         ++${$offset_ref};
         Net::DHCPv6::X::Truncated->throw( message => 'Truncated domain label' )
             if ${$offset_ref} + $llen > $len;
-        push @labels, substr( $data, ${$offset_ref}, $llen );
+        push @labels, substr( $payload, ${$offset_ref}, $llen );
         ${$offset_ref} += $llen;
     }
     return @labels;
 }
 
 sub _decode_domains {
-    my ( $data ) = @_;
+    my ( $payload ) = @_;
     my @domains;
     my $offset = 0;
-    my $len    = CORE::length( $data );
+    my $len    = CORE::length( $payload );
     while ( $offset < $len ) {
-        my @labels = _read_labels_at( $data, \$offset, $len );
+        my @labels = _read_labels_at( $payload, \$offset, $len );
         push @domains, @labels ? join( '.', @labels ) : '';
     }
     return \@domains;
@@ -79,8 +79,8 @@ sub new {
 sub domains { return shift->{domains} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
-    my $domains = _decode_domains( $data );
+    my ( $class, $code, $payload ) = @_;
+    my $domains = _decode_domains( $payload );
     return $class->new( domains => $domains );
 }
 

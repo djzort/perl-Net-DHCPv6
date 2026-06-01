@@ -27,11 +27,11 @@ sub enterprise_number { return shift->{enterprise_number} }
 sub remote_data       { return shift->{remote_data} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated RemoteId option' )
-        if CORE::length( $data ) < 4;
-    my $en   = unpack( 'N', substr( $data, 0, 4 ) );
-    my $rest = substr( $data, 4 );
+        if CORE::length( $payload ) < 4;
+    my $en   = unpack( 'N', substr( $payload, 0, 4 ) );
+    my $rest = substr( $payload, 4 );
     return $class->new( enterprise_number => $en, remote_data => $rest );
 }
 

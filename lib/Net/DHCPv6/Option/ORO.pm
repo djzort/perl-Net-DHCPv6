@@ -24,17 +24,17 @@ sub new {
 sub requested_options { return shift->{requested_options} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::BadOption->throw( message => 'ORO data must have even length' )
-        if CORE::length( $data ) % 2 != 0;
-    my @codes = unpack( 'n*', $data );
+        if CORE::length( $payload ) % 2 != 0;
+    my @codes = unpack( 'n*', $payload );
     return $class->new( requested_options => \@codes );
 }
 
 sub as_bytes {
-    my $self = shift;
-    my $data = pack( 'n*', @{ $self->{requested_options} } );
-    return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
+    my $self    = shift;
+    my $payload = pack( 'n*', @{ $self->{requested_options} } );
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_ORO} = __PACKAGE__;

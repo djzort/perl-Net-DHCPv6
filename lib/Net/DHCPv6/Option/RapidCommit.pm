@@ -18,9 +18,9 @@ sub new {
 }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::BadOption->throw( message => 'RapidCommit option must be empty' )
-        if CORE::length( $data ) > 0;
+        if CORE::length( $payload ) > 0;
     return $class->new;
 }
 

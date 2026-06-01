@@ -31,10 +31,10 @@ sub address {
 }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated Unicast option' )
-        if CORE::length( $data ) < 16;
-    return $class->new( address_raw => substr( $data, 0, 16 ) );
+        if CORE::length( $payload ) < 16;
+    return $class->new( address_raw => substr( $payload, 0, 16 ) );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_UNICAST} = __PACKAGE__;
