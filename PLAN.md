@@ -70,17 +70,17 @@ perlcritic --profile .perlcriticrc --verbose "%p\n" lib/ t/ 2>&1 | \
 
 ### Real Bugs
 
-| Severity | File | Issue |
-|---|---|---|
+| Severity | File | Issue | Status |
+|---|---|---|---|
 | **Medium** | `Option/PdExclude.pm:14-24` | `prefix_length=0` ⇒ `$addr_len=0` ⇒ `$addr` truncated to empty ⇒ `unless $addr` (falsy) throws false "requires address" croak | ✅ `55e0ede` |
-| Low | `Option/NtpServer.pm` | Named `NtpServer` but implements SNTP Servers (code 31). Option 56 (`$OPTION_NTP_SERVER`) has no module — falls through to Generic |
+| Low | `Option/NtpServer.pm` | Named `NtpServer` but implements SNTP Servers (code 31). Option 56 (`$OPTION_NTP_SERVER`) has no module — falls through to Generic | ✅ `87aa3bd` |
 
 ### CI-Blocking
 
 | File | Issue | Fix |
 |---|---|---|
-| `dist.ini` | `[Covenant]` requires `AUTHOR_PLEDGE` file which doesn't exist | Auto-generated; not a blocker | ✅ N/A |
-| `.github/workflows/test.yml` | CI matrix only covers 5.36/5.42, but minimum declared is 5.024 | Toolchain requires newer Perl; won't add 5.24 | ❌ deferred |
+| `dist.ini` | `[Covenant]` requires `AUTHOR_PLEDGE` file which doesn't exist | Auto-generated; not a blocker (✅ N/A) |
+| `.github/workflows/test.yml` | CI matrix only covers 5.36/5.42, but minimum declared is 5.024 | Toolchain requires newer Perl; won't add 5.24 (❌ deferred) |
 
 ### Test Coverage Gaps — TODO
 
