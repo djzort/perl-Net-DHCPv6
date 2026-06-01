@@ -12,7 +12,8 @@ use Net::DHCPv6::X::Truncated;
 use Net::DHCPv6::X::BadOption;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean;
-my $EMPTY = q();
+my $EMPTY         = q();
+my $MAX_PTR_DEPTH = 255;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
 
 sub _encode_domain {
     my ( $domain ) = @_;
@@ -22,7 +23,8 @@ sub _encode_domain {
 }
 
 sub _read_labels_at {
-    my ( $payload, $offset_ref, $len ) = @_;
+    my ( $payload, $offset_ref, $len, $depth ) = @_;
+    $depth //= 0;
     my @labels;
     while ( ${$offset_ref} < $len ) {
         my $llen = unpack( 'C', substr( $payload, ${$offset_ref}, 1 ) );
@@ -38,9 +40,11 @@ sub _read_labels_at {
                     ( ( $llen & $DN_LABEL_MASK ) << 8 ) | unpack( 'C', substr( $payload, ${$offset_ref} + 1, 1 ) );    ## no critic (Bangs::ProhibitBitwiseOperators ValuesAndExpressions::ProhibitMagicNumbers)
                 Net::DHCPv6::X::BadOption->throw( message => 'Compression pointer out of range' )
                     if $ptr >= $len;
+                Net::DHCPv6::X::BadOption->throw( message => 'Compression pointer depth exceeded' )
+                    if $depth > $MAX_PTR_DEPTH;
                 ${$offset_ref} += 2;
                 my $ptr_ref = \$ptr;
-                push @labels, _read_labels_at( $payload, $ptr_ref, $len );
+                push @labels, _read_labels_at( $payload, $ptr_ref, $len, $depth + 1 );
                 last;
             }
             Net::DHCPv6::X::BadOption->throw( message => 'Compression pointer in domain name' );
