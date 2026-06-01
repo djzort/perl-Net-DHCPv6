@@ -4,6 +4,7 @@
 use strictures 2;
 
 package Net::DHCPv6::Message::Reconfigure;
+
 use Net::DHCPv6::Packet;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Packet';

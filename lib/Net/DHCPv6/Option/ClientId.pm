@@ -4,6 +4,7 @@
 use strictures 2;
 
 package Net::DHCPv6::Option::ClientId;
+
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::DUID;
 use Carp qw( croak );

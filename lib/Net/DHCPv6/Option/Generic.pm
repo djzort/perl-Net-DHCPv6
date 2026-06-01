@@ -4,6 +4,7 @@
 use strictures 2;
 
 package Net::DHCPv6::Option::Generic;
+
 use parent 'Net::DHCPv6::Option';
 use namespace::clean;
 

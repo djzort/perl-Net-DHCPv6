@@ -4,6 +4,7 @@
 use strictures 2;
 
 package Net::DHCPv6::Constants;
+
 use Const::Fast::Exporter qw( const );
 
 # Message types (RFC 8415 Section 14)

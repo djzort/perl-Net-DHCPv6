@@ -4,6 +4,7 @@
 use strictures 2;
 
 package Net::DHCPv6::Packet::Relay;
+
 use Net::DHCPv6::Constants qw( $IPV6_ADDR_LEN );
 use Net::DHCPv6::Packet;
 use Carp qw( croak );

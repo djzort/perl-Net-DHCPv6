@@ -4,6 +4,7 @@
 use strictures 2;
 
 package Net::DHCPv6::Option::ReconfAccept;
+
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Option';

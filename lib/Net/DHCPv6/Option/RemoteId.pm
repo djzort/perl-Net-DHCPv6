@@ -4,6 +4,7 @@
 use strictures 2;
 
 package Net::DHCPv6::Option::RemoteId;
+
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

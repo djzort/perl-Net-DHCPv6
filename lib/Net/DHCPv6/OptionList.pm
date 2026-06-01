@@ -4,6 +4,7 @@
 use strictures 2;
 
 package Net::DHCPv6::OptionList;
+
 use Net::DHCPv6::Option::Generic;
 use Carp      qw( croak );
 use Ref::Util qw( is_ref );
