@@ -4,6 +4,7 @@
 use strictures 2;
 
 package Test::Net::DHCPv6;
+
 use Carp     ();
 use Exporter qw(import);
 

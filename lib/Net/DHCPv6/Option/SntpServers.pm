@@ -4,6 +4,7 @@
 use strictures 2;
 
 package Net::DHCPv6::Option::SntpServers;
+
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;
