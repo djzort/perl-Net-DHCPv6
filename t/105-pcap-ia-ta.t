@@ -46,6 +46,7 @@ for my $i ( 0 .. $#entries ) {
     my $exp = $expect[$i];
 
     my ( $msg, $err ) = Net::DHCPv6->decode_with_error( $bytes );
+    ok( !$err, "decode $desc succeeds" );
     if ( $err ) { diag "err: $err"; next }
 
     subtest $desc => sub {
