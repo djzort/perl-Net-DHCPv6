@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Status Code option (code 13)
 # PODNAME: Net::DHCPv6::Option::StatusCode
-package Net::DHCPv6::Option::StatusCode;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::StatusCode;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

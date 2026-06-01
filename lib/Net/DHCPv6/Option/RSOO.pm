@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Relay-Supplied Options option (code 66) -- opaque
 # PODNAME: Net::DHCPv6::Option::RSOO
-package Net::DHCPv6::Option::RSOO;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::RSOO;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Option';

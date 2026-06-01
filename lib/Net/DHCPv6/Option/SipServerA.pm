@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: SIP Server A option (code 22) -- list of IPv6 addresses
 # PODNAME: Net::DHCPv6::Option::SipServerA
-package Net::DHCPv6::Option::SipServerA;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::SipServerA;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;

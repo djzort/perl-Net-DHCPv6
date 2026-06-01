@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: DHCPv6 packet decoder/encoder
 # PODNAME: Net::DHCPv6
-package Net::DHCPv6;
-
 use strictures 2;
+
+package Net::DHCPv6;
 use Carp qw( croak );
 use Net::DHCPv6::DUID;
 

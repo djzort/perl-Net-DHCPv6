@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: NIS Domain Name option (code 29) -- RFC 1035 domain name
 # PODNAME: Net::DHCPv6::Option::NisDomainName
-package Net::DHCPv6::Option::NisDomainName;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::NisDomainName;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Option;
 use Carp qw( croak );

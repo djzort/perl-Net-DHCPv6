@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Identity Association for Prefix Delegation option (code 25)
 # PODNAME: Net::DHCPv6::Option::IAPD
-package Net::DHCPv6::Option::IAPD;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::IAPD;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;

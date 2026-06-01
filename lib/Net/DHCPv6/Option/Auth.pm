@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Authentication option (code 11) -- protocol/algorithm/rdm/replay/auth-info
 # PODNAME: Net::DHCPv6::Option::Auth
-package Net::DHCPv6::Option::Auth;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::Auth;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

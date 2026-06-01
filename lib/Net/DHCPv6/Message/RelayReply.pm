@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Relay-Reply message (type 13)
 # PODNAME: Net::DHCPv6::Message::RelayReply
-package Net::DHCPv6::Message::RelayReply;
-
 use strictures 2;
+
+package Net::DHCPv6::Message::RelayReply;
 use Net::DHCPv6::Packet;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Packet::Relay';

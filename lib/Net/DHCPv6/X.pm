@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Exception base class for Net::DHCPv6
 # PODNAME: Net::DHCPv6::X
-package Net::DHCPv6::X;
-
 use strictures 2;
+
+package Net::DHCPv6::X;
 use Carp qw( croak );
 use namespace::clean;
 

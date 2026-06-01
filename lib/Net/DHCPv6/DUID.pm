@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: DUID parse/emit and helper constructors
 # PODNAME: Net::DHCPv6::DUID
-package Net::DHCPv6::DUID;
-
 use strictures 2;
+
+package Net::DHCPv6::DUID;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::BadDUID;

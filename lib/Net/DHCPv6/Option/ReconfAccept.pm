@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Reconfigure Accept option (code 20) -- zero-length data
 # PODNAME: Net::DHCPv6::Option::ReconfAccept
-package Net::DHCPv6::Option::ReconfAccept;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::ReconfAccept;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Option';

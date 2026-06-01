@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Internal helper methods for IPv6 address resolution
 # PODNAME: Net::DHCPv6::Helpers
-package Net::DHCPv6::Helpers;
-
 use strictures 2;
+
+package Net::DHCPv6::Helpers;
 use Carp      qw( croak );
 use Ref::Util qw( is_plain_arrayref );
 use Socket    qw( AF_INET6 inet_ntop inet_pton );

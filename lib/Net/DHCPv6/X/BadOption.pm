@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Thrown when option data violates expected format
 # PODNAME: Net::DHCPv6::X::BadOption
-package Net::DHCPv6::X::BadOption;
-
 use strictures 2;
+
+package Net::DHCPv6::X::BadOption;
 use parent 'Net::DHCPv6::X';
 use namespace::clean;
 

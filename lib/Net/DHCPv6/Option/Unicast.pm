@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: UNICAST option (code 12) -- server IPv6 address
 # PODNAME: Net::DHCPv6::Option::Unicast
-package Net::DHCPv6::Option::Unicast;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::Unicast;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

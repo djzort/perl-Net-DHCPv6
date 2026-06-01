@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Shared container for a collection of DHCPv6 options
 # PODNAME: Net::DHCPv6::OptionList
-package Net::DHCPv6::OptionList;
-
 use strictures 2;
+
+package Net::DHCPv6::OptionList;
 use Net::DHCPv6::Option::Generic;
 use Carp      qw( croak );
 use Ref::Util qw( is_ref );

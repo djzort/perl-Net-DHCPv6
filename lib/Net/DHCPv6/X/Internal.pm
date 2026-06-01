@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Thrown on internal logic errors in the library
 # PODNAME: Net::DHCPv6::X::Internal
-package Net::DHCPv6::X::Internal;
-
 use strictures 2;
+
+package Net::DHCPv6::X::Internal;
 use parent 'Net::DHCPv6::X';
 use namespace::clean;
 

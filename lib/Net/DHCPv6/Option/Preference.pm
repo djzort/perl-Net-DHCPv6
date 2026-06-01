@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Preference option (code 7) -- 8-bit server preference value
 # PODNAME: Net::DHCPv6::Option::Preference
-package Net::DHCPv6::Option::Preference;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::Preference;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

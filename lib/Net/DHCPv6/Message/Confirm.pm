@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Confirm message (type 4)
 # PODNAME: Net::DHCPv6::Message::Confirm
-package Net::DHCPv6::Message::Confirm;
-
 use strictures 2;
+
+package Net::DHCPv6::Message::Confirm;
 use Net::DHCPv6::Packet;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Packet';

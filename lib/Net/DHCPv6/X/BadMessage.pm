@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Thrown when a message header is invalid
 # PODNAME: Net::DHCPv6::X::BadMessage
-package Net::DHCPv6::X::BadMessage;
-
 use strictures 2;
+
+package Net::DHCPv6::X::BadMessage;
 use parent 'Net::DHCPv6::X';
 use namespace::clean;
 

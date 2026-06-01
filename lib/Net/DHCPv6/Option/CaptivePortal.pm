@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: DHCP Captive-Portal option (code 103) -- captive portal API URI
 # PODNAME: Net::DHCPv6::Option::CaptivePortal
-package Net::DHCPv6::Option::CaptivePortal;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::CaptivePortal;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

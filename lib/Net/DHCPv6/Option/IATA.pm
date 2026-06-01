@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Identity Association for Temporary Addresses option (code 4)
 # PODNAME: Net::DHCPv6::Option::IATA
-package Net::DHCPv6::Option::IATA;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::IATA;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;

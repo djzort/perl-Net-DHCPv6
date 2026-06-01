@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Thrown when DUID data is invalid
 # PODNAME: Net::DHCPv6::X::BadDUID
-package Net::DHCPv6::X::BadDUID;
-
 use strictures 2;
+
+package Net::DHCPv6::X::BadDUID;
 use parent 'Net::DHCPv6::X';
 use namespace::clean;
 

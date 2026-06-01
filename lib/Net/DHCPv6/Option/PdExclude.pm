@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: PD Exclude option (code 67) -- prefix to exclude from IA_PD
 # PODNAME: Net::DHCPv6::Option::PdExclude
-package Net::DHCPv6::Option::PdExclude;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::PdExclude;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Fallback option for unknown codes -- stores raw code+data
 # PODNAME: Net::DHCPv6::Option::Generic
-package Net::DHCPv6::Option::Generic;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::Generic;
 use parent 'Net::DHCPv6::Option';
 use namespace::clean;
 

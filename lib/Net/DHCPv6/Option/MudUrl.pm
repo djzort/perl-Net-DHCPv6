@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: MUD URL option (code 112) -- Manufacturer Usage Description URL
 # PODNAME: Net::DHCPv6::Option::MudUrl
-package Net::DHCPv6::Option::MudUrl;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::MudUrl;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

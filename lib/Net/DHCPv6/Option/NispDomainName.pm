@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: NIS+ Domain Name option (code 30) -- NIS+ domain name string
 # PODNAME: Net::DHCPv6::Option::NispDomainName
-package Net::DHCPv6::Option::NispDomainName;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::NispDomainName;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

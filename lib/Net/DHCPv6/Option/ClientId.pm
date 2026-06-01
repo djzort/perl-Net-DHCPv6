@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Client Identifier option (code 1)
 # PODNAME: Net::DHCPv6::Option::ClientId
-package Net::DHCPv6::Option::ClientId;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::ClientId;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::DUID;
 use Carp qw( croak );

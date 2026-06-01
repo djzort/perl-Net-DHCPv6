@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Option Request option (code 6)
 # PODNAME: Net::DHCPv6::Option::ORO
-package Net::DHCPv6::Option::ORO;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::ORO;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

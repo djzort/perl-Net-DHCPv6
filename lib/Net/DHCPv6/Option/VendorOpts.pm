@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Vendor-specific Information option (code 17) -- enterprise + sub-options
 # PODNAME: Net::DHCPv6::Option::VendorOpts
-package Net::DHCPv6::Option::VendorOpts;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::VendorOpts;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

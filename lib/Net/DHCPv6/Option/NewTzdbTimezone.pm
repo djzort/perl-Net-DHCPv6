@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: NEW_TZDB_TIMEZONE option (code 42) -- IANA timezone DB name
 # PODNAME: Net::DHCPv6::Option::NewTzdbTimezone
-package Net::DHCPv6::Option::NewTzdbTimezone;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::NewTzdbTimezone;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

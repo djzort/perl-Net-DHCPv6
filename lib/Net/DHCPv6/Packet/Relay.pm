@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Base class for DHCPv6 relay messages (RelayForw/RelayReply)
 # PODNAME: Net::DHCPv6::Packet::Relay
-package Net::DHCPv6::Packet::Relay;
-
 use strictures 2;
+
+package Net::DHCPv6::Packet::Relay;
 use Net::DHCPv6::Constants qw( $IPV6_ADDR_LEN );
 use Net::DHCPv6::Packet;
 use Carp qw( croak );

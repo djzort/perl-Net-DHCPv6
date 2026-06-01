@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Identity Association for Non-temporary Addresses option (code 3)
 # PODNAME: Net::DHCPv6::Option::IANA
-package Net::DHCPv6::Option::IANA;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::IANA;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;

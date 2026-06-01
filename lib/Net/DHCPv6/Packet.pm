@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: DHCPv6 packet base class
 # PODNAME: Net::DHCPv6::Packet
-package Net::DHCPv6::Packet;
-
 use strictures 2;
+
+package Net::DHCPv6::Packet;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;

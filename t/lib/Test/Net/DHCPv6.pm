@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Test helper for Net::DHCPv6 -- hex fixtures and common checks
 # PODNAME: Test::Net::DHCPv6
-package Test::Net::DHCPv6;
-
 use strictures 2;
+
+package Test::Net::DHCPv6;
 use Carp     ();
 use Exporter qw(import);
 

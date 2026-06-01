@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Reconfigure Message option (code 19) -- 1-byte msg-type
 # PODNAME: Net::DHCPv6::Option::ReconfMsg
-package Net::DHCPv6::Option::ReconfMsg;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::ReconfMsg;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;
