@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Information-Request message (type 11)
 # PODNAME: Net::DHCPv6::Message::InformationRequest
-package Net::DHCPv6::Message::InformationRequest;
-
 use strictures 2;
+
+package Net::DHCPv6::Message::InformationRequest;
 use Net::DHCPv6::Packet;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Packet';

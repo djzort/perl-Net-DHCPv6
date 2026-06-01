@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Relay-Forward message (type 12)
 # PODNAME: Net::DHCPv6::Message::RelayForw
-package Net::DHCPv6::Message::RelayForw;
-
 use strictures 2;
+
+package Net::DHCPv6::Message::RelayForw;
 use Net::DHCPv6::Packet;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Packet::Relay';

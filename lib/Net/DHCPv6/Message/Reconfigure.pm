@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Reconfigure message (type 10)
 # PODNAME: Net::DHCPv6::Message::Reconfigure
-package Net::DHCPv6::Message::Reconfigure;
-
 use strictures 2;
+
+package Net::DHCPv6::Message::Reconfigure;
 use Net::DHCPv6::Packet;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Packet';

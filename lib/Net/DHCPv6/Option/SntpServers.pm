@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: SNTP Servers option (code 31) -- list of IPv6 addresses per RFC 4075
 # PODNAME: Net::DHCPv6::Option::SntpServers
-package Net::DHCPv6::Option::SntpServers;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::SntpServers;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;

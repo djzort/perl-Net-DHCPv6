@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: NIS Servers option (code 27) -- list of IPv6 addresses
 # PODNAME: Net::DHCPv6::Option::NisServers
-package Net::DHCPv6::Option::NisServers;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::NisServers;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;

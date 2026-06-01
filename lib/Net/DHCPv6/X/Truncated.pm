@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Thrown when a buffer is too short for expected data
 # PODNAME: Net::DHCPv6::X::Truncated
-package Net::DHCPv6::X::Truncated;
-
 use strictures 2;
+
+package Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::X';
 use namespace::clean;
 

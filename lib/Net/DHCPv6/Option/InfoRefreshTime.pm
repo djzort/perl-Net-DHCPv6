@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Information Refresh Time option (code 32) -- 32-bit refresh duration
 # PODNAME: Net::DHCPv6::Option::InfoRefreshTime
-package Net::DHCPv6::Option::InfoRefreshTime;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::InfoRefreshTime;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

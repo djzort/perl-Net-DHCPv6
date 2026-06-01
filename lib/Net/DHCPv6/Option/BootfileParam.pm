@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Boot File Parameters option (code 60) -- list of boot parameters
 # PODNAME: Net::DHCPv6::Option::BootfileParam
-package Net::DHCPv6::Option::BootfileParam;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::BootfileParam;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;

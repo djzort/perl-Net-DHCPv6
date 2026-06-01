@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Vendor Class option (code 16) -- enterprise-number + opaque data
 # PODNAME: Net::DHCPv6::Option::VendorClass
-package Net::DHCPv6::Option::VendorClass;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::VendorClass;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

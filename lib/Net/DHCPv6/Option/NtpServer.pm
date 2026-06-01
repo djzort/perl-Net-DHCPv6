@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: NTP Server option (code 56) -- sub-options for NTP configuration per RFC 5908
 # PODNAME: Net::DHCPv6::Option::NtpServer
-package Net::DHCPv6::Option::NtpServer;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::NtpServer;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

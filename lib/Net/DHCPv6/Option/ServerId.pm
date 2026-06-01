@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Server Identifier option (code 2)
 # PODNAME: Net::DHCPv6::Option::ServerId
-package Net::DHCPv6::Option::ServerId;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::ServerId;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::DUID;
 use Carp qw( croak );

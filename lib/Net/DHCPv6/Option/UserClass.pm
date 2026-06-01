@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: User Class option (code 15) -- list of opaque user class data
 # PODNAME: Net::DHCPv6::Option::UserClass
-package Net::DHCPv6::Option::UserClass;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::UserClass;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::X::Truncated;

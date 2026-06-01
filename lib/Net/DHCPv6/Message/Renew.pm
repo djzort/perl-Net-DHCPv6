@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Renew message (type 5)
 # PODNAME: Net::DHCPv6::Message::Renew
-package Net::DHCPv6::Message::Renew;
-
 use strictures 2;
+
+package Net::DHCPv6::Message::Renew;
 use Net::DHCPv6::Packet;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Packet';

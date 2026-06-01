@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Elapsed Time option (code 8) -- 16-bit centiseconds
 # PODNAME: Net::DHCPv6::Option::ElapsedTime
-package Net::DHCPv6::Option::ElapsedTime;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::ElapsedTime;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

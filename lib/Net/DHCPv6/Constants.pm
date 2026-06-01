@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: DHCPv6 numeric constants (message types, option codes, status codes, DUID types, client architecture types, link-layer types)
 # PODNAME: Net::DHCPv6::Constants
-package Net::DHCPv6::Constants;
-
 use strictures 2;
+
+package Net::DHCPv6::Constants;
 use Const::Fast::Exporter qw( const );
 
 # Message types (RFC 8415 Section 14)

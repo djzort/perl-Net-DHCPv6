@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: IA Prefix option (code 26) -- prefix delegation sub-option
 # PODNAME: Net::DHCPv6::Option::IAPrefix
-package Net::DHCPv6::Option::IAPrefix;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::IAPrefix;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;

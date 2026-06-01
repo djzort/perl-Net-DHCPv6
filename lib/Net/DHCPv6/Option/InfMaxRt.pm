@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: INF_MAX_RT option (code 83) -- maximum Information-Request retransmission duration
 # PODNAME: Net::DHCPv6::Option::InfMaxRt
-package Net::DHCPv6::Option::InfMaxRt;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::InfMaxRt;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

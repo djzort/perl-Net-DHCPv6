@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Client FQDN option (code 39) -- flags + domain name
 # PODNAME: Net::DHCPv6::Option::ClientFqdn
-package Net::DHCPv6::Option::ClientFqdn;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::ClientFqdn;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Option;
 use Carp qw( croak );

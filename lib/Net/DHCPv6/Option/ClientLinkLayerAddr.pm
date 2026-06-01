@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Client Link-Layer Address option (code 79) -- link-layer type + address
 # PODNAME: Net::DHCPv6::Option::ClientLinkLayerAddr
-package Net::DHCPv6::Option::ClientLinkLayerAddr;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::ClientLinkLayerAddr;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

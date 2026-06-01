@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Interface-ID option (code 18) -- opaque interface identifier
 # PODNAME: Net::DHCPv6::Option::InterfaceId
-package Net::DHCPv6::Option::InterfaceId;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::InterfaceId;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Option';

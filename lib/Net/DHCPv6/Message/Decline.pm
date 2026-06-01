@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Decline message (type 9)
 # PODNAME: Net::DHCPv6::Message::Decline
-package Net::DHCPv6::Message::Decline;
-
 use strictures 2;
+
+package Net::DHCPv6::Message::Decline;
 use Net::DHCPv6::Packet;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Packet';

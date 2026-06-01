@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: Advertise message (type 2)
 # PODNAME: Net::DHCPv6::Message::Advertise
-package Net::DHCPv6::Message::Advertise;
-
 use strictures 2;
+
+package Net::DHCPv6::Message::Advertise;
 use Net::DHCPv6::Packet;
 use Net::DHCPv6::Constants;
 use parent 'Net::DHCPv6::Packet';

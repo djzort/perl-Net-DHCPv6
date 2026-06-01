@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: NEW_POSIX_TIMEZONE option (code 41) -- POSIX timezone string
 # PODNAME: Net::DHCPv6::Option::NewPosixTimezone
-package Net::DHCPv6::Option::NewPosixTimezone;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::NewPosixTimezone;
 use Net::DHCPv6::OptionList;
 use Carp qw( croak );
 use Net::DHCPv6::Constants;

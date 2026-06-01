@@ -1,9 +1,9 @@
 #!/bin/false
 # ABSTRACT: SIP Server Domain Name option (code 21) -- list of domain names
 # PODNAME: Net::DHCPv6::Option::SipServerD
-package Net::DHCPv6::Option::SipServerD;
-
 use strictures 2;
+
+package Net::DHCPv6::Option::SipServerD;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::Option;
 use Net::DHCPv6::Constants;
