@@ -57,13 +57,6 @@ sub from_bytes_inner {
     return $class->new( entries => \@entries );
 }
 
-sub as_bytes {
-    my $self    = shift;
-    my $payload = join( $EMPTY,
-        map { pack( 'n n', $_->{subopt}, CORE::length( $_->{value} ) ) . $_->{value} } @{ $self->{entries} } );
-    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
-}
-
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_NTP_SERVER} = __PACKAGE__;
 1;
 
