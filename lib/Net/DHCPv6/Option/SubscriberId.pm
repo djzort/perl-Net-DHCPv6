@@ -22,8 +22,8 @@ sub new {
 sub subscriber_id { return shift->{subscriber_id} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
-    return $class->new( subscriber_id => $data );
+    my ( $class, $code, $payload ) = @_;
+    return $class->new( subscriber_id => $payload );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_SUBSCRIBER_ID} = __PACKAGE__;

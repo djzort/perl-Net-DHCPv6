@@ -24,17 +24,17 @@ sub new {
 sub type { return shift->{type} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::BadOption->throw( message => 'ClientArchType must be exactly 2 bytes' )
-        if CORE::length( $data ) != 2;
-    my $type = unpack( 'n', $data );
+        if CORE::length( $payload ) != 2;
+    my $type = unpack( 'n', $payload );
     return $class->new( type => $type );
 }
 
 sub as_bytes {
-    my $self = shift;
-    my $data = pack( 'n', $self->{type} );
-    return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
+    my $self    = shift;
+    my $payload = pack( 'n', $self->{type} );
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_CLIENT_ARCH_TYPE} = __PACKAGE__;

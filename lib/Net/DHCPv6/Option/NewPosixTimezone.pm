@@ -23,8 +23,8 @@ sub new {
 sub tz_string { return shift->{tz_string} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
-    return $class->new( tz_string => $data );
+    my ( $class, $code, $payload ) = @_;
+    return $class->new( tz_string => $payload );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_NEW_POSIX_TIMEZONE} = __PACKAGE__;

@@ -23,8 +23,8 @@ sub new {
 sub domain_name { return shift->{domain_name} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
-    return $class->new( domain_name => $data );
+    my ( $class, $code, $payload ) = @_;
+    return $class->new( domain_name => $payload );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_NISP_DOMAIN_NAME} = __PACKAGE__;

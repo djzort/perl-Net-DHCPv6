@@ -27,18 +27,18 @@ sub status_code { return shift->{status_code} }
 sub message     { return shift->{message} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated StatusCode option' )
-        if CORE::length( $data ) < 2;
-    my $sc  = unpack( 'n', substr( $data, 0, 2 ) );
-    my $msg = substr( $data, 2 );
+        if CORE::length( $payload ) < 2;
+    my $sc  = unpack( 'n', substr( $payload, 0, 2 ) );
+    my $msg = substr( $payload, 2 );
     return $class->new( status_code => $sc, message => $msg );
 }
 
 sub as_bytes {
-    my $self = shift;
-    my $data = pack( 'n', $self->{status_code} ) . $self->{message};
-    return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
+    my $self    = shift;
+    my $payload = pack( 'n', $self->{status_code} ) . $self->{message};
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_STATUS_CODE} = __PACKAGE__;

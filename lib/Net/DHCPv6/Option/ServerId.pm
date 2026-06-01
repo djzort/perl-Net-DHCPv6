@@ -24,15 +24,15 @@ sub new {
 sub duid { return shift->{duid} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
-    my $duid = Net::DHCPv6::DUID->from_bytes( $data );
+    my ( $class, $code, $payload ) = @_;
+    my $duid = Net::DHCPv6::DUID->from_bytes( $payload );
     return $class->new( duid => $duid );
 }
 
 sub as_bytes {
-    my $self = shift;
-    my $data = $self->{duid}->as_bytes;
-    return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
+    my $self    = shift;
+    my $payload = $self->{duid}->as_bytes;
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_SERVERID} = __PACKAGE__;

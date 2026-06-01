@@ -19,8 +19,8 @@ sub new {
 sub interface_id { return shift->{data} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
-    return $class->new( interface_id => $data );
+    my ( $class, $code, $payload ) = @_;
+    return $class->new( interface_id => $payload );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_INTERFACE_ID} = __PACKAGE__;

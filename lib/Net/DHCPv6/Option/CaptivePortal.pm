@@ -24,10 +24,10 @@ sub new {
 sub uri { return shift->{uri} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated CaptivePortal option' )
-        if CORE::length( $data ) == 0;
-    return $class->new( uri => $data );
+        if CORE::length( $payload ) == 0;
+    return $class->new( uri => $payload );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_CAPTIVE_PORTAL} = __PACKAGE__;

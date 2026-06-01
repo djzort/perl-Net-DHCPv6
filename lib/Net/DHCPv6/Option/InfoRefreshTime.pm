@@ -24,17 +24,17 @@ sub new {
 sub value { return shift->{value} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::BadOption->throw( message => 'InfoRefreshTime must be exactly 4 bytes' )
-        if CORE::length( $data ) != 4;
-    my $value = unpack( 'N', $data );
+        if CORE::length( $payload ) != 4;
+    my $value = unpack( 'N', $payload );
     return $class->new( value => $value );
 }
 
 sub as_bytes {
-    my $self = shift;
-    my $data = pack( 'N', $self->{value} );
-    return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
+    my $self    = shift;
+    my $payload = pack( 'N', $self->{value} );
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_INFORMATION_REFRESH_TIME} = __PACKAGE__;

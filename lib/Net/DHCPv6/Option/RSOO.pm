@@ -19,8 +19,8 @@ sub new {
 sub option_data { return shift->{data} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
-    return $class->new( option_data => $data );
+    my ( $class, $code, $payload ) = @_;
+    return $class->new( option_data => $payload );
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_RSOO} = __PACKAGE__;

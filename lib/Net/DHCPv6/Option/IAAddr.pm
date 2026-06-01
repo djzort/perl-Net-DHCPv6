@@ -4,12 +4,12 @@
 package Net::DHCPv6::Option::IAAddr;
 
 use strictures 2;
-use Carp qw(croak);
+use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Option';
-use namespace::clean;
+use namespace::clean ();
 
 sub new {
     my ( $class, %args ) = @_;
@@ -19,9 +19,9 @@ sub new {
     $args{preferred_lifetime} = $args{preferred_lifetime} // 0;
     $args{valid_lifetime}     = $args{valid_lifetime}     // 0;
     $args{options}            = $args{options}            // Net::DHCPv6::OptionList->new;
-    my $data =
+    my $payload =
         $addr . pack( 'N N', $args{preferred_lifetime}, $args{valid_lifetime} ) . $args{options}->as_bytes;
-    $args{data} = $data;
+    $args{data} = $payload;
     my $self = $class->SUPER::new( %args );
     $self->{address}            = $addr;
     $self->{preferred_lifetime} = $args{preferred_lifetime};
@@ -51,12 +51,12 @@ sub get_option {
 }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated IAAddr option' )
-        if CORE::length( $data ) < 24;
-    my $addr = substr( $data, 0, 16 );
-    my ( $pl, $vl ) = unpack( 'N N', substr( $data, 16, 8 ) );
-    my $opt_data = substr( $data, 24 );
+        if CORE::length( $payload ) < 24;
+    my $addr = substr( $payload, 0, 16 );
+    my ( $pl, $vl ) = unpack( 'N N', substr( $payload, 16, 8 ) );
+    my $opt_data = substr( $payload, 24 );
     my $opts     = Net::DHCPv6::OptionList->from_bytes( $opt_data );
     return $class->new(
         address_raw        => $addr,
@@ -68,11 +68,11 @@ sub from_bytes_inner {
 
 sub as_bytes {
     my $self = shift;
-    my $data =
+    my $payload =
           $self->{address}
         . pack( 'N N', $self->{preferred_lifetime}, $self->{valid_lifetime} )
         . $self->{options}->as_bytes;
-    return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_IAADDR} = __PACKAGE__;

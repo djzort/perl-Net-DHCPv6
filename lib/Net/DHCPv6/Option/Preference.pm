@@ -24,17 +24,17 @@ sub new {
 sub value { return shift->{value} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::BadOption->throw( message => 'Preference option must be exactly 1 byte' )
-        if CORE::length( $data ) != 1;
-    my $value = unpack( 'C', $data );
+        if CORE::length( $payload ) != 1;
+    my $value = unpack( 'C', $payload );
     return $class->new( value => $value );
 }
 
 sub as_bytes {
-    my $self = shift;
-    my $data = pack( 'C', $self->{value} );
-    return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
+    my $self    = shift;
+    my $payload = pack( 'C', $self->{value} );
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
 $Net::DHCPv6::OptionList::OPTION_CLASS{$OPTION_PREFERENCE} = __PACKAGE__;

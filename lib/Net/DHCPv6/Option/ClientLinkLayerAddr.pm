@@ -27,11 +27,11 @@ sub link_layer_type { return shift->{link_layer_type} }
 sub link_layer_addr { return shift->{link_layer_addr} }
 
 sub from_bytes_inner {
-    my ( $class, $code, $data ) = @_;
+    my ( $class, $code, $payload ) = @_;
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated ClientLinkLayerAddr option' )
-        if CORE::length( $data ) < 3;
-    my $type = unpack( 'n', substr( $data, 0, 2 ) );
-    my $addr = substr( $data, 2 );
+        if CORE::length( $payload ) < 3;
+    my $type = unpack( 'n', substr( $payload, 0, 2 ) );
+    my $addr = substr( $payload, 2 );
     return $class->new( link_layer_type => $type, link_layer_addr => $addr );
 }
 

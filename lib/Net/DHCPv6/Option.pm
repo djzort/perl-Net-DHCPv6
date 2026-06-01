@@ -4,12 +4,12 @@
 package Net::DHCPv6::Option;
 
 use strictures 2;
-use Carp qw(croak);
+use Carp qw( croak );
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;
 use Net::DHCPv6::X::Truncated;
 use parent 'Net::DHCPv6::Helpers';
-use namespace::clean;
+use namespace::clean ();
 
 our $FOLLOW_COMPRESSION = 0;
 
@@ -21,7 +21,7 @@ sub new {
 }
 
 sub code { return shift->{code} }
-sub data { return shift->{data} }
+sub data { return shift->{data} }    ## no critic (Bangs::ProhibitVagueNames)
 
 sub type {
     my $self = shift;
@@ -29,9 +29,9 @@ sub type {
 }
 
 sub as_bytes {
-    my $self = shift;
-    my $data = $self->{data} // '';
-    return pack( 'nn', $self->{code}, CORE::length( $data ) ) . $data;
+    my $self    = shift;
+    my $payload = $self->{data} // '';
+    return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
 sub from_bytes {
@@ -42,12 +42,12 @@ sub from_bytes {
     my $optlen = unpack( 'n', substr( $bytes, 2, 2 ) );
     Net::DHCPv6::X::Truncated->throw( message => 'Truncated option TLV payload' )
         if 4 + $optlen > CORE::length( $bytes );
-    my $data   = substr( $bytes, 4, $optlen );
-    my $remain = substr( $bytes, 4 + $optlen );
+    my $payload = substr( $bytes, 4, $optlen );
+    my $remain  = substr( $bytes, 4 + $optlen );
 
     my $class_name = $Net::DHCPv6::OptionList::OPTION_CLASS{$code}
         || 'Net::DHCPv6::Option::Generic';
-    my $option = $class_name->from_bytes_inner( $code, $data );
+    my $option = $class_name->from_bytes_inner( $code, $payload );
     return ( $option, $remain );
 }
 
@@ -119,7 +119,7 @@ Concrete option classes should:
 
 =item Override C<as_bytes> if the wire format differs from standard TLV
 
-=item Implement C<from_bytes_inner($code, $data)> for parse-from-wire
+=item Implement C<from_bytes_inner($code, $payload)> for parse-from-wire
 
 =item Register with C<$Net::DHCPv6::OptionList::OPTION_CLASS{$code} = __PACKAGE__>
 

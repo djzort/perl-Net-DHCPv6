@@ -448,30 +448,30 @@ use Test::Net::DHCPv6 qw(bytes2hex);
 # Auth (11) -- protocol/algorithm/rdm/replay/auth-info
 # ----------------------------------------------------------------
 {
-    my $replay = pack( 'H*', '0102030405060708' );
-    my $info   = pack( 'H*', 'deadbeef' );
-    my $auth   = Net::DHCPv6::Option::Auth->new(
+    my $replay    = pack( 'H*', '0102030405060708' );
+    my $auth_info = pack( 'H*', 'deadbeef' );
+    my $auth      = Net::DHCPv6::Option::Auth->new(
         protocol  => 3,
         algorithm => 1,
         rdm       => 0,
         replay    => $replay,
-        auth_info => $info,
+        auth_info => $auth_info,
     );
     is( $auth->code,      $OPTION_AUTH, 'Auth code' );
     is( $auth->protocol,  3,            'Auth protocol' );
     is( $auth->algorithm, 1,            'Auth algorithm' );
     is( $auth->rdm,       0,            'Auth rdm' );
     is( $auth->replay,    $replay,      'Auth replay' );
-    is( $auth->auth_info, $info,        'Auth auth_info' );
+    is( $auth->auth_info, $auth_info,   'Auth auth_info' );
 
     my $bytes = $auth->as_bytes;
     my ( $parsed ) = Net::DHCPv6::Option->from_bytes( $bytes );
     ok( $parsed->isa( 'Net::DHCPv6::Option::Auth' ), 'Auth parsed class' );
-    is( $parsed->protocol,  3,       'Auth parsed protocol' );
-    is( $parsed->algorithm, 1,       'Auth parsed algorithm' );
-    is( $parsed->rdm,       0,       'Auth parsed rdm' );
-    is( $parsed->replay,    $replay, 'Auth parsed replay' );
-    is( $parsed->auth_info, $info,   'Auth parsed auth_info' );
+    is( $parsed->protocol,  3,          'Auth parsed protocol' );
+    is( $parsed->algorithm, 1,          'Auth parsed algorithm' );
+    is( $parsed->rdm,       0,          'Auth parsed rdm' );
+    is( $parsed->replay,    $replay,    'Auth parsed replay' );
+    is( $parsed->auth_info, $auth_info, 'Auth parsed auth_info' );
 
     ok( dies { Net::DHCPv6::Option::Auth->new( protocol => 1 ) }, 'Auth dies without algorithm' );
     ok(
