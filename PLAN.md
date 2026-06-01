@@ -72,30 +72,37 @@ perlcritic --profile .perlcriticrc --verbose "%p\n" lib/ t/ 2>&1 | \
 
 | Severity | File | Issue |
 |---|---|---|
-| **Medium** | `Option/PdExclude.pm:14-24` | `prefix_length=0` ⇒ `$addr_len=0` ⇒ `$addr` truncated to empty ⇒ `unless $addr` (falsy) throws false "requires address" croak |
+| **Medium** | `Option/PdExclude.pm:14-24` | `prefix_length=0` ⇒ `$addr_len=0` ⇒ `$addr` truncated to empty ⇒ `unless $addr` (falsy) throws false "requires address" croak | ✅ `55e0ede` |
 | Low | `Option/NtpServer.pm` | Named `NtpServer` but implements SNTP Servers (code 31). Option 56 (`$OPTION_NTP_SERVER`) has no module — falls through to Generic |
 
 ### CI-Blocking
 
 | File | Issue | Fix |
 |---|---|---|
-| `dist.ini` | `[Covenant]` requires `AUTHOR_PLEDGE` file which doesn't exist | Create the file or remove the plugin |
-| `.github/workflows/test.yml` | CI matrix only covers 5.36/5.42, but minimum declared is 5.024 | Add a 5.24 (or 5.26) entry to the matrix |
+| `dist.ini` | `[Covenant]` requires `AUTHOR_PLEDGE` file which doesn't exist | Auto-generated; not a blocker | ✅ N/A |
+| `.github/workflows/test.yml` | CI matrix only covers 5.36/5.42, but minimum declared is 5.024 | Toolchain requires newer Perl; won't add 5.24 | ❌ deferred |
 
-### Test Coverage Gaps
+### Test Coverage Gaps (4 remaining)
+
+| File | Gap | Status |
+|---|---|---|
+| `t/006-streaming.t` | Streaming helpers only tested with DUID-LLT — no EN, LL, UUID, or unknown DUID types | ❌ not yet |
+| All `t/1xx-pcap-*.t` | No round-trip (re-encode) tests — only decode + field checks | ❌ not yet |
+
+The following gaps were closed in commit `<commit>`:
 
 | File | Gap |
 |---|---|
-| `OptionList.pm:99-100` | Trailing-garbage branch in `try_from_bytes` never tested |
-| `OptionList.pm:88-94` | Non-X exception fallback (option class throws non-X, parse continues as Generic) never tested |
-| `t/006-streaming.t` | Streaming helpers only tested with DUID-LLT — no EN, LL, UUID, or unknown DUID types |
-| `t/002-duid.t` | `DUID::length()` method never tested |
-| `t/003-option.t` | Multiple options with same code not tested; `type()` on parsed options never tested |
-| `t/004-packet.t` | `msg_type_name()` alias never tested; relay truncation error never tested |
-| All `t/1xx-pcap-*.t` | No round-trip (re-encode) tests — only decode + field checks |
-| `t/103-pcap-ntp-server.t` | NtpServer accessed via `->data` (Generic) instead of `->servers` — class parsing never exercised from PCAP |
-| `t/104-pcap-aftr-name.t` | AftrName accessed via `->data` (Generic) instead of `->domain_name` |
-| `t/008-warnings.t` | Only one option class checked for clean-warning construction |
+| `OptionList.pm:99-100` | Trailing-garbage branch in `try_from_bytes` — tested via `t/003-option.t` |
+| `OptionList.pm:88-94` | Non-X exception fallback — tested via `t/003-option.t` (inline BadTest package) |
+| `t/002-duid.t` | `DUID::length()` method — tested for LLT, EN, LL, UUID, unknown |
+| `t/003-option.t` | Multiple options with same code — tested via `add_option` + same-code `options()` filtering |
+| `t/003-option.t` | `type()` on parsed options — tested for ClientId and IANA |
+| `t/004-packet.t` | `msg_type_name()` alias — tested for Solicit and RelayForw |
+| `t/004-packet.t` | Relay truncation error — tested for RelayForw and RelayReply with <34 bytes |
+| `t/008-warnings.t` | Only one option class — expanded to 9 classes (SipServerD, ORO, Preference, ElapsedTime, StatusCode, RapidCommit, DomainList, ClientId, SntpServers) |
+| `t/103-pcap-ntp-server.t` | NtpServer accessed via `->data` (Generic) — now uses `->entries` with sub-option structure from NtpServer module (option 56) |
+| `t/104-pcap-aftr-name.t` | AftrName accessed via `->data` — option 64 in PCAP is not AFTR_NAME (88); no change needed |
 
 ### Code Quality
 
@@ -114,5 +121,5 @@ perlcritic --profile .perlcriticrc --verbose "%p\n" lib/ t/ 2>&1 | \
 |---|---|---|
 | `.gitignore` | Missing trailing newline | ✅ `b3ca1cf` |
 | `.editorconfig` | Says `.gitignore` should have `insert_final_newline = false` — fixed by b3ca1cf | ✅ `b3ca1cf` |
-| `.perlcriticrc` | Exists with 192 policies but `[Test::Perl::Critic]` in `dist.ini` is commented out — dead config | |
-| `AGENTS.md` | Missing `Ref::Util` from dependency list (used in 14 files) | |
+| `.perlcriticrc` | Enabled `[Test::Perl::Critic]` in `dist.ini` | ✅ `7dd9240` |
+| `AGENTS.md` | Missing `Ref::Util` from dependency list (used in 14 files) | ✅ untracked, updated locally |

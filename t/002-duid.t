@@ -67,5 +67,12 @@ $bytes = $unknown->as_bytes;
 $got   = Net::DHCPv6::DUID->from_bytes( $bytes );
 is( $got->duid_type, 99, 'unknown DUID type preserved' );
 
+# DUID::length
+is( $duid->length,    14, 'LLT duid length' );
+is( $en->length,      10, 'EN duid length' );
+is( $ll->length,      10, 'LL duid length' );
+is( $uuid->length,    18, 'UUID duid length' );
+is( $unknown->length, 4,  'unknown DUID length' );
+
 ## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

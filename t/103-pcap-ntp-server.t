@@ -9,6 +9,7 @@ use lib 'lib';
 use Net::DHCPv6;
 use Net::DHCPv6::Constants;
 use Net::DHCPv6::OptionList;
+use Net::DHCPv6::Option::NtpServer;
 
 # Hex fixture extracted from t/data/dhcpv6-ntp-server.pcap
 # Origin: https://git.codelinaro.org/clo/la/platform/external/tcpdump/-/tree/aosp-new/aosp-new/master/tests
@@ -41,6 +42,12 @@ subtest 'reply options' => sub {
     my $ntp = $ol->get_option( 56 );
     ok( $ntp, 'NTP_SERVER (option 56) present' );
     like( $ntp->data, qr/ntp/, 'NTP data contains ntp domain' );
+    ok( $ntp->entries, 'NtpServer has entries' );
+    is( scalar @{ $ntp->entries },    3,        'NtpServer has 3 sub-entries' );
+    is( $ntp->entries->[2]->{type},   'domain', 'third entry is domain type' );
+    is( $ntp->entries->[2]->{subopt}, 3,        'domain subopt code is 3' );
+    my $domain_bytes = $ntp->entries->[2]->{value};
+    like( $domain_bytes, qr/ntp/, 'domain value contains ntp' );
 };
 
 ## use critic (ValuesAndExpressions::ProhibitMagicNumbers)

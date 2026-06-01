@@ -27,7 +27,8 @@ use Net::DHCPv6::Option::ORO;
 use Net::DHCPv6::Option::IANA;
 use Net::DHCPv6::Option::IAAddr;
 use Net::DHCPv6::Constants;
-use Test::Net::DHCPv6 qw(hex2bytes);
+use Test::Net::DHCPv6       qw(hex2bytes);
+use Test2::Tools::Exception qw( dies );
 
 # Solicit construction
 my $duid    = Net::DHCPv6::DUID->new_llt( $LINK_TYPE_ETHERNET, 123_456, pack( 'H*', '001122334455' ) );
@@ -223,6 +224,16 @@ $bytes   = hex2bytes( $unknown_hex );
 $decoded = Net::DHCPv6::Packet->from_bytes( $bytes );
 is( $decoded->msg_type, 255, 'Unknown msg_type preserved' );
 ok( !$decoded->isa( 'Net::DHCPv6::Message::Solicit' ), 'Unknown msg_type not subclassed' );
+
+# msg_type_name alias
+is( $solicit->msg_type_name,    'SOLICIT',    'msg_type_name Solicit' );
+is( $relay_forw->msg_type_name, 'RELAY_FORW', 'msg_type_name RelayForw' );
+
+# Relay truncation error
+ok( dies { Net::DHCPv6::Packet->from_bytes( hex2bytes( '0c 00 20010db8000000000000000000000001 20010db80000' ) ) },
+    'relay from_bytes with < 34 bytes dies' );
+ok( dies { Net::DHCPv6::Packet->from_bytes( hex2bytes( '0d 00 20010db8000000000000000000000001 20010db80000' ) ) },
+    'relay-reply from_bytes with < 34 bytes dies' );
 
 ## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;

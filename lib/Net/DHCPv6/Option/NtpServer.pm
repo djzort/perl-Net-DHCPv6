@@ -13,9 +13,9 @@ use namespace::clean;
 my $EMPTY = q();
 
 my %SUBOPT_DECODE = (
-    1 => sub { my ( $v ) = @_; return { type_code => 1, type => 'address', value => $v } },
-    2 => sub { my ( $v ) = @_; return { type_code => 2, type => 'fqdn',    value => $v } },
-    3 => sub { my ( $v ) = @_; return { type_code => 3, type => 'domain',  value => $v } },
+    1 => sub { my ( $v ) = @_; return { subopt => 1, type => 'address', value => $v } },
+    2 => sub { my ( $v ) = @_; return { subopt => 2, type => 'fqdn',    value => $v } },
+    3 => sub { my ( $v ) = @_; return { subopt => 3, type => 'domain',  value => $v } },
 );
 
 sub new {
@@ -23,7 +23,7 @@ sub new {
     $args{code} = $OPTION_NTP_SERVER;
     my $entries = $args{entries} // [];
     $args{data} =
-        join( $EMPTY, map { pack( 'C C', $_->{type_code}, CORE::length( $_->{value} ) ) . $_->{value} } @{$entries} );
+        join( $EMPTY, map { pack( 'n n', $_->{subopt}, CORE::length( $_->{value} ) ) . $_->{value} } @{$entries} );
     my $self = $class->SUPER::new( %args );
     $self->{entries} = $entries;
     return bless $self, $class;
@@ -36,32 +36,31 @@ sub from_bytes_inner {
     my @entries;
     my $len = CORE::length( $payload );
     my $off = 0;
-    while ( $off < $len ) {
-        Net::DHCPv6::X::Truncated->throw( message => 'Truncated NtpServer sub-option header' )
-            if $off + 2 > $len;
-        my $sc = unpack( 'C', substr( $payload, $off,     1 ) );
-        my $sl = unpack( 'C', substr( $payload, $off + 1, 1 ) );
-        $off += 2;
-        Net::DHCPv6::X::Truncated->throw( message => 'Truncated NtpServer sub-option value' )
-            if $off + $sl > $len;
-        my $sv = substr( $payload, $off, $sl );
-        $off += $sl;
+    while ( $off + 4 <= $len ) {
+        my $sc   = unpack( 'n', substr( $payload, $off,     2 ) );
+        my $slen = unpack( 'n', substr( $payload, $off + 2, 2 ) );
+        $off += 4;
+        Net::DHCPv6::X::Truncated->throw( message => 'Truncated NtpServer sub-option' )
+            if $off + $slen > $len;
+        my $sv = substr( $payload, $off, $slen );
+        $off += $slen;
         my $decoder = $SUBOPT_DECODE{$sc};
-
         if ( $decoder ) {
             push @entries, $decoder->( $sv );
         }
         else {
-            push @entries, { type_code => $sc, value => $sv };
+            push @entries, { subopt => $sc, value => $sv };
         }
     }
+    Net::DHCPv6::X::Truncated->throw( message => 'Truncated NtpServer sub-option header' )
+        if $off != $len;
     return $class->new( entries => \@entries );
 }
 
 sub as_bytes {
     my $self    = shift;
     my $payload = join( $EMPTY,
-        map { pack( 'C C', $_->{type_code}, CORE::length( $_->{value} ) ) . $_->{value} } @{ $self->{entries} } );
+        map { pack( 'n n', $_->{subopt}, CORE::length( $_->{value} ) ) . $_->{value} } @{ $self->{entries} } );
     return pack( 'nn', $self->{code}, CORE::length( $payload ) ) . $payload;
 }
 
@@ -80,7 +79,7 @@ __END__
 =head1 DESCRIPTION
 
 Carries NTP server configuration as a set of sub-options per
-RFC 5908 S<167>4.  Sub-option type codes:
+RFC 5908.  Sub-option codes:
 
   1  NTP Sub-option Address (16-byte IPv6 address)
   2  NTP Sub-option FQDN (domain name)
@@ -91,15 +90,14 @@ RFC 5908 S<167>4.  Sub-option type codes:
 =head2 new
 
 Constructor.  Optional C<entries> (arrayref of hashrefs with
-C<type_code> and C<value> keys).
+C<subopt> and C<value> keys).
 
 =head2 entries
 
-Returns the arrayref of sub-option hashrefs.  Each known type
-also includes a C<type> key (one of C<address>, C<fqdn>,
-C<domain>).
+Returns the arrayref of sub-option hashrefs.  Each known sub-option
+also includes a C<type> key (one of C<address>, C<fqdn>, C<domain>).
 
 =head1 SEE ALSO
 
 L<Net::DHCPv6::Option>, L<Net::DHCPv6::OptionList>,
-RFC 5908 E<167>4.
+RFC 5908.
