@@ -82,14 +82,14 @@ perlcritic --profile .perlcriticrc --verbose "%p\n" lib/ t/ 2>&1 | \
 | `dist.ini` | `[Covenant]` requires `AUTHOR_PLEDGE` file which doesn't exist | Auto-generated; not a blocker | ✅ N/A |
 | `.github/workflows/test.yml` | CI matrix only covers 5.36/5.42, but minimum declared is 5.024 | Toolchain requires newer Perl; won't add 5.24 | ❌ deferred |
 
-### Test Coverage Gaps (4 remaining)
+### Test Coverage Gaps — TODO
 
 | File | Gap | Status |
 |---|---|---|
-| `t/006-streaming.t` | Streaming helpers only tested with DUID-LLT — no EN, LL, UUID, or unknown DUID types | ❌ not yet |
-| All `t/1xx-pcap-*.t` | No round-trip (re-encode) tests — only decode + field checks | ❌ not yet |
+| `t/006-streaming.t` | Streaming helpers only tested with DUID-LLT — no EN, LL, UUID, or unknown DUID types | TODO |
+| All `t/1xx-pcap-*.t` | No round-trip (re-encode) tests — only decode + field checks | TODO |
 
-The following gaps were closed in commit `<commit>`:
+### Test Coverage Gaps — Closed
 
 | File | Gap |
 |---|---|
