@@ -298,5 +298,40 @@ ok( dies { Net::DHCPv6::Option::IAPD->new }, 'IAPD dies without iaid' );
 ok( dies { Net::DHCPv6::Option::IAPD::from_bytes_inner( undef, 25, pack( 'C*', ( 1 ) x 11 ) ) },
     'IAPD dies on data < 12 bytes' );
 
+# type() on parsed options
+is( $cid->type,  'CLIENTID', 'ClientId type from construction' );
+is( $iana->type, 'IA_NA',    'IANA type from construction' );
+
+# Multiple options with same code
+$ol->add_option( $cid );
+$ol->add_option( $cid );
+my $all_opts  = $ol->options;
+my $cid_count = scalar grep { $_->code == 1 } @{$all_opts};
+is( $cid_count,                       3,       'three ClientId options in list' );
+is( $ol->get_option( 1 )->duid->time, 123_456, 'get_option returns first' );
+
+# OptionList trailing garbage
+my $extra_opt = Net::DHCPv6::Option::Generic->new( code => 99, data => chr( 0 ) );
+my $trailing  = $ol->as_bytes . $extra_opt->as_bytes . chr( 0x42 );
+my ( $parsed_ol, $parse_err ) = Net::DHCPv6::OptionList->try_from_bytes( $trailing );
+ok( defined $parsed_ol, 'trailing garbage returns OptionList' );
+ok( defined $parse_err, 'trailing garbage returns error' );
+like( $parse_err, qr/Trailing garbage/, 'error mentions trailing garbage' );
+
+# OptionList non-X exception from option class stops parsing
+{
+
+    package Net::DHCPv6::Option::BadTest;
+    use strictures 2;
+    sub from_bytes_inner { die 'kaboom' }
+}
+my $saved_class = $Net::DHCPv6::OptionList::OPTION_CLASS{99};
+$Net::DHCPv6::OptionList::OPTION_CLASS{99} = 'Net::DHCPv6::Option::BadTest';
+my ( $bad_opt, $bad_err ) = Net::DHCPv6::OptionList->try_from_bytes( $extra_opt->as_bytes );
+ok( defined $bad_opt, 'non-X exception returns OptionList' );
+ok( defined $bad_err, 'non-X exception returns error' );
+like( $bad_err, qr/Option 99 parse error/, 'error mentions parse error' );
+$Net::DHCPv6::OptionList::OPTION_CLASS{99} = $saved_class;
+
 ## use critic (ValuesAndExpressions::ProhibitMagicNumbers)
 done_testing;
