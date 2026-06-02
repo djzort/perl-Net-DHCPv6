@@ -5,15 +5,16 @@ use strictures 2;
 
 package Net::DHCPv6::Helpers;
 
-use Carp      qw( croak );
-use Ref::Util qw( is_plain_arrayref );
-use Socket    qw( AF_INET6 inet_ntop inet_pton );
+use Carp                   qw( croak );
+use Net::DHCPv6::Constants qw( $IPV6_ADDR_LEN );
+use Ref::Util              qw( is_plain_arrayref );
+use Socket                 qw( AF_INET6 inet_ntop inet_pton );
 use namespace::clean;
 
 sub _resolve_ipv6 {
     my ( $class, $arg ) = @_;
     return unless defined $arg;
-    if ( CORE::length( $arg ) == 16 ) {
+    if ( CORE::length( $arg ) == $IPV6_ADDR_LEN ) {
 
         # If it looks like IPv6 text (hex digits + colons), parse it
         if ( $arg =~ m/^[0-9a-fA-F:]+$/ && $arg =~ m/:/ ) {

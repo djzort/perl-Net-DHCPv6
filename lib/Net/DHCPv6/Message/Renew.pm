@@ -5,8 +5,10 @@ use strictures 2;
 
 package Net::DHCPv6::Message::Renew;
 
-use Net::DHCPv6::Packet;
-use Net::DHCPv6::Constants;
+use Net::DHCPv6::Packet    ();
+use Net::DHCPv6::Constants qw(
+    $RENEW
+);
 use parent 'Net::DHCPv6::Packet';
 use namespace::clean;
 

@@ -5,9 +5,11 @@ use strictures 2;
 
 package Net::DHCPv6::Option::NewTzdbTimezone;
 
-use Net::DHCPv6::OptionList;
-use Carp qw( croak );
-use Net::DHCPv6::Constants;
+use Net::DHCPv6::OptionList ();
+use Carp                    qw( croak );
+use Net::DHCPv6::Constants  qw(
+    $OPTION_NEW_TZDB_TIMEZONE
+);
 use parent 'Net::DHCPv6::Option';
 use namespace::clean;
 

@@ -5,9 +5,11 @@ use strictures 2;
 
 package Net::DHCPv6::Option::NispDomainName;
 
-use Net::DHCPv6::OptionList;
-use Carp qw( croak );
-use Net::DHCPv6::Constants;
+use Net::DHCPv6::OptionList ();
+use Carp                    qw( croak );
+use Net::DHCPv6::Constants  qw(
+    $OPTION_NISP_DOMAIN_NAME
+);
 use parent 'Net::DHCPv6::Option';
 use namespace::clean;
 

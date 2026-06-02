@@ -5,11 +5,13 @@ use strictures 2;
 
 package Net::DHCPv6::Option::PdExclude;
 
-use Net::DHCPv6::OptionList;
-use Carp qw( croak );
-use Net::DHCPv6::Constants;
-use Net::DHCPv6::X::Truncated;
-use Net::DHCPv6::X::BadOption;
+use Net::DHCPv6::OptionList ();
+use Carp                    qw( croak );
+use Net::DHCPv6::Constants  qw(
+    $OPTION_PD_EXCLUDE
+);
+use Net::DHCPv6::X::Truncated ();
+use Net::DHCPv6::X::BadOption ();
 use parent 'Net::DHCPv6::Option';
 use namespace::clean;
 

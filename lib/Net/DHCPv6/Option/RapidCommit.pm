@@ -5,9 +5,11 @@ use strictures 2;
 
 package Net::DHCPv6::Option::RapidCommit;
 
-use Net::DHCPv6::OptionList;
-use Net::DHCPv6::Constants;
-use Net::DHCPv6::X::BadOption;
+use Net::DHCPv6::OptionList ();
+use Net::DHCPv6::Constants  qw(
+    $OPTION_RAPID_COMMIT
+);
+use Net::DHCPv6::X::BadOption ();
 use parent 'Net::DHCPv6::Option';
 use namespace::clean;
 

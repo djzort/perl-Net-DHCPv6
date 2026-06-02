@@ -5,9 +5,9 @@ use strictures 2;
 
 package Net::DHCPv6::Option;
 
-use Carp qw( croak );
-use Net::DHCPv6::Constants;
-use Net::DHCPv6::X::Truncated;
+use Carp                      qw( croak );
+use Net::DHCPv6::Constants    ();
+use Net::DHCPv6::X::Truncated ();
 use parent 'Net::DHCPv6::Helpers';
 use namespace::clean;
 my $EMPTY        = q();

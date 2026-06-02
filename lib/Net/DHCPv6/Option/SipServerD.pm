@@ -5,11 +5,13 @@ use strictures 2;
 
 package Net::DHCPv6::Option::SipServerD;
 
-use Net::DHCPv6::OptionList;
-use Net::DHCPv6::Option;
-use Net::DHCPv6::Constants;
-use Net::DHCPv6::X::Truncated;
-use Net::DHCPv6::X::BadOption;
+use Net::DHCPv6::OptionList ();
+use Net::DHCPv6::Option     ();
+use Net::DHCPv6::Constants  qw(
+    $DN_COMPRESS_MASK $DN_LABEL_MASK $OPTION_SIP_SERVER_D
+);
+use Net::DHCPv6::X::Truncated ();
+use Net::DHCPv6::X::BadOption ();
 use parent 'Net::DHCPv6::Option';
 use Ref::Util qw( is_plain_arrayref );
 use namespace::clean;
@@ -67,7 +69,7 @@ sub _decode_domains {
     my $len    = CORE::length( $payload );
     while ( $offset < $len ) {
         my @labels = _read_labels_at( $payload, \$offset, $len );
-        push @domain_list, @labels ? join( '.', @labels ) : $EMPTY;
+        push @domain_list, @labels ? join( q{.}, @labels ) : $EMPTY;
     }
     return \@domain_list;
 }
