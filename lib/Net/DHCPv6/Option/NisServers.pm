@@ -5,9 +5,11 @@ use strictures 2;
 
 package Net::DHCPv6::Option::NisServers;
 
-use Net::DHCPv6::OptionList;
-use Net::DHCPv6::Constants;
-use Net::DHCPv6::X::Truncated;
+use Net::DHCPv6::OptionList ();
+use Net::DHCPv6::Constants  qw(
+    $IPV6_ADDR_LEN $OPTION_NIS_SERVERS
+);
+use Net::DHCPv6::X::Truncated ();
 use parent 'Net::DHCPv6::Option';
 use Ref::Util qw( is_plain_arrayref );
 use namespace::clean;

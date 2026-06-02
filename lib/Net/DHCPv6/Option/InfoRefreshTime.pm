@@ -5,10 +5,12 @@ use strictures 2;
 
 package Net::DHCPv6::Option::InfoRefreshTime;
 
-use Net::DHCPv6::OptionList;
-use Carp qw( croak );
-use Net::DHCPv6::Constants;
-use Net::DHCPv6::X::BadOption;
+use Net::DHCPv6::OptionList ();
+use Carp                    qw( croak );
+use Net::DHCPv6::Constants  qw(
+    $OPTION_INFORMATION_REFRESH_TIME
+);
+use Net::DHCPv6::X::BadOption ();
 use parent 'Net::DHCPv6::Option';
 use namespace::clean;
 

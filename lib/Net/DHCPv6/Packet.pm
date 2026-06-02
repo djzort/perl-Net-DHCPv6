@@ -5,11 +5,13 @@ use strictures 2;
 
 package Net::DHCPv6::Packet;
 
-use Carp qw( croak );
-use Net::DHCPv6::Constants;
-use Net::DHCPv6::OptionList;
-use Net::DHCPv6::Packet::Relay;
-use Net::DHCPv6::X::BadMessage;
+use Carp                   qw( croak );
+use Net::DHCPv6::Constants qw(
+    $RELAY_FORW $RELAY_REPLY
+);
+use Net::DHCPv6::OptionList    ();
+use Net::DHCPv6::Packet::Relay ();
+use Net::DHCPv6::X::BadMessage ();
 use namespace::clean;
 
 my $TX_ID_MAX   = 0xFFFFFF;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)

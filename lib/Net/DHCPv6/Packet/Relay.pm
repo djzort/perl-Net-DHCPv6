@@ -5,11 +5,11 @@ use strictures 2;
 
 package Net::DHCPv6::Packet::Relay;
 
-use Net::DHCPv6::Constants qw( $IPV6_ADDR_LEN );
-use Net::DHCPv6::Packet;
-use Carp qw( croak );
-use Net::DHCPv6::OptionList;
-use Net::DHCPv6::X::BadMessage;
+use Net::DHCPv6::Constants     qw( $IPV6_ADDR_LEN );
+use Net::DHCPv6::Packet        ();
+use Carp                       qw( croak );
+use Net::DHCPv6::OptionList    ();
+use Net::DHCPv6::X::BadMessage ();
 use parent 'Net::DHCPv6::Helpers', 'Net::DHCPv6::Packet';
 use namespace::clean;
 

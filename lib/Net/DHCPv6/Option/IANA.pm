@@ -5,10 +5,12 @@ use strictures 2;
 
 package Net::DHCPv6::Option::IANA;
 
-use Carp qw( croak );
-use Net::DHCPv6::Constants;
-use Net::DHCPv6::OptionList;
-use Net::DHCPv6::X::Truncated;
+use Carp                   qw( croak );
+use Net::DHCPv6::Constants qw(
+    $OPTION_IA_NA
+);
+use Net::DHCPv6::OptionList   ();
+use Net::DHCPv6::X::Truncated ();
 use parent 'Net::DHCPv6::Option';
 use namespace::clean;
 

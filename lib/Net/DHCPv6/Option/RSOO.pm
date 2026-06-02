@@ -5,8 +5,10 @@ use strictures 2;
 
 package Net::DHCPv6::Option::RSOO;
 
-use Net::DHCPv6::OptionList;
-use Net::DHCPv6::Constants;
+use Net::DHCPv6::OptionList ();
+use Net::DHCPv6::Constants  qw(
+    $OPTION_RSOO
+);
 use parent 'Net::DHCPv6::Option';
 use namespace::clean;
 my $EMPTY = q();

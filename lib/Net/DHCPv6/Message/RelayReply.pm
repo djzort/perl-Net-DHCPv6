@@ -5,8 +5,10 @@ use strictures 2;
 
 package Net::DHCPv6::Message::RelayReply;
 
-use Net::DHCPv6::Packet;
-use Net::DHCPv6::Constants;
+use Net::DHCPv6::Packet    ();
+use Net::DHCPv6::Constants qw(
+    $RELAY_REPLY
+);
 use parent 'Net::DHCPv6::Packet::Relay';
 use namespace::clean;
 

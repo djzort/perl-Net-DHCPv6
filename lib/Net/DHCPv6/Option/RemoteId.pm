@@ -5,10 +5,12 @@ use strictures 2;
 
 package Net::DHCPv6::Option::RemoteId;
 
-use Net::DHCPv6::OptionList;
-use Carp qw( croak );
-use Net::DHCPv6::Constants;
-use Net::DHCPv6::X::Truncated;
+use Net::DHCPv6::OptionList ();
+use Carp                    qw( croak );
+use Net::DHCPv6::Constants  qw(
+    $OPTION_REMOTE_ID
+);
+use Net::DHCPv6::X::Truncated ();
 use parent 'Net::DHCPv6::Option';
 use namespace::clean;
 my $ENT_NUM_LEN = 4;    ## no critic (ValuesAndExpressions::ProhibitMagicNumbers)
